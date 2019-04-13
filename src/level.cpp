@@ -2,6 +2,8 @@
 
 Level::Level()
 {
+    state = State::playing;
+
     tileSize = 30;
 }
 
@@ -41,21 +43,31 @@ void Level::loadFromFile( std::string file )
     // Initialize ball starting position
     initBall();
 
+    // Initialize floor count
+    floorTileCount = countFloorTiles();
+    paintedTiles = 0;
+
     levelFile.close();
 }
 
 void Level::update()
 {
-    ball.handleInput();
-    ball.move();
-
-    if( ball.state != Ball::State::stationary)
-        paintTile();
-
-    if( ballHittingWall() )
+    if( state == State::playing )
     {
-        ball.moveBack();
-        ball.stop();
+        ball.handleInput();
+        ball.move();
+
+        if( ball.state != Ball::State::stationary)
+            paintTile();
+
+        if( ballHittingWall() )
+        {
+            ball.moveBack();
+            ball.stop();
+        }
+
+        if( checkWinCondition() )
+            state = State::finished;
     }
 }
 
@@ -84,20 +96,8 @@ void Level::draw()
     // Draw ball
     ball.draw();
 
-    // DEBUG
-    /*
-    if( ball.state == Ball::State::stationary )
-        Gui::drawText( 100, 200, 20, "Stationary" );
-    else
-        Gui::drawText( 100, 200, 20, "Moving" );
-    
-    if( ballHittingWall() )
-        Gui::drawText( 100, 300, 20, "HITTING WALL!" );
-    */
-
-    Gui::drawTextf( 40, 450, 20, "Ball tile: (%i, %i)", (int)getBallTile().x, (int)getBallTile().y );
-
-    //vita2d_draw_rectangle( getWorldPosFromTilePos(Vec2(3,6)).x, getWorldPosFromTilePos(Vec2(3,6)).y, 30, 30, RGBA8(255, 0, 0, 255) );
+    if( state == State::finished )
+        Gui::drawText_color_position( Gui::Position::centeredX, SCREEN_WIDTH/2, 60, 60, RGBA8( 255, 0, 0, 255 ), "you can never win" );
 }
 
 Vec2 Level::getWorldPosFromTilePos( Vec2 tilePos )
@@ -113,9 +113,6 @@ Vec2 Level::getWorldPosFromTilePos( Vec2 tilePos )
 
 Vec2 Level::getBallTile()
 {
-    // Get the initial distance value
-    float smallestBallDistance = Vec2::distance( ball.getWorldPos(), getWorldPosFromTilePos( Vec2( 0, 0 ) ) );
-
     Vec2 ballTile = Vec2( 0, 0 );
 
     // Find the tile that is the nearest to the ball
@@ -123,15 +120,14 @@ Vec2 Level::getBallTile()
     {
         for( int j = 0; j < tiles[ i ].size(); ++j )
         {
-            float ballDistance = Vec2::distance( ball.getWorldPos(), getWorldPosFromTilePos( Vec2( j, i ) ) );
-            if( ballDistance < smallestBallDistance )
+            // Check what tile the ball origin is on
+            if( ball.getRect().x + ( ball.getRect().w / 2 ) > getWorldPosFromTilePos( Vec2( j, i ) ).x && 
+                ball.getRect().y + ( ball.getRect().h / 2 ) > getWorldPosFromTilePos( Vec2( j, i ) ).y && 
+                ball.getRect().x + ( ball.getRect().w / 2 ) < getWorldPosFromTilePos( Vec2( j, i ) ).x + ball.getRect().w && 
+                ball.getRect().y + ( ball.getRect().h / 2 ) < getWorldPosFromTilePos( Vec2( j, i ) ).y + ball.getRect().h
+            )
             {
-                smallestBallDistance = ballDistance;
-                ballTile.x = j;
-                ballTile.y = i;
-
-                if( smallestBallDistance < (tileSize / 2) )
-                    return ballTile;
+                return Vec2( j, i );
             }
         }
     }
@@ -223,7 +219,11 @@ void Level::paintTile()
 
     if( dynamic_cast<FloorTile*>( ballTile ) )
     {
-        ballTile->paint();
+        if( ballTile->paintable() )
+        {
+            paintedTiles++;
+            ballTile->paint();
+        }
     }
     else
     {
@@ -232,12 +232,38 @@ void Level::paintTile()
     }
 }
 
-Tile::Tile()
+int Level::countFloorTiles()
 {
+    int floorCount = 0;
 
+    for( int i = 0; i < tiles.size(); ++i )
+    {
+        for( int j = 0; j < tiles[ i ].size(); ++j )
+        {
+            if( dynamic_cast<FloorTile*>( tiles[i][j] ) )
+            {
+                floorCount++;
+            }
+        }
+    }
+
+    return floorCount;
 }
 
+bool Level::checkWinCondition()
+{
+    return ( paintedTiles == floorTileCount );
+}
+
+
+Tile::Tile() { }
+
 void Tile::paint() { }
+
+bool Tile::paintable()
+{
+    return false;
+}
 
 void Tile::draw( Rect rect )
 {
@@ -275,6 +301,13 @@ void FloorTile::paint()
     state = State::painted;
 }
 
+bool FloorTile::paintable()
+{
+    if( state == State::blank )
+        return true;
+    else
+        return false;
+}
 
 void WallTile::draw( Rect rect )
 {

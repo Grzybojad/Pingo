@@ -115,12 +115,13 @@ void Ball::moveBack()
 
 void Ball::draw()
 {
-    vita2d_draw_rectangle( worldPos.x - (tileSize/2), worldPos.y - (tileSize/2), 30, 30, RGBA8( 255, 0, 0, 255 ) );
-    vita2d_draw_fill_circle( worldPos.x, worldPos.y, 15, RGBA8( 0, 255, 0, 255 ) );
+    vita2d_draw_fill_circle( worldPos.x, worldPos.y, 15, RGBA8( 255, 0, 0, 255 ) );
 
     // DEBUG
+    /*
     Gui::drawTextf( 50, 340, 20, "worldPos.x = %.2f", worldPos.x );
     Gui::drawTextf( 50, 370, 20, "worldPos.y = %.2f", worldPos.y );
+    */
 }
 
 void Ball::stop()
