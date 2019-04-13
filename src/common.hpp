@@ -1,44 +1,63 @@
 #pragma once
 
+#include <cmath>
+
+#include <psp2/kernel/processmgr.h>
+
 const int SCREEN_WIDTH = 960;
 const int SCREEN_HEIGHT = 544;
 
 struct Rect
 {
-    int x;
-    int y;
-    int w;
-    int h;
+    public:
+        float x;
+        float y;
+        float w;
+        float h;
 
-    Rect() { }
-    Rect( int x, int y, int w, int h )
-    {
-        this->x = x;
-        this->y = y;
-        this->w = w;
-        this->h = h;
+        Rect() { }
+        Rect( float x, float y, float w, float h )
+        {
+            this->x = x;
+            this->y = y;
+            this->w = w;
+            this->h = h;
     }
 };
 
 struct Vec2
 {
-    int x;
-    int y;
+    public:
+        float x;
+        float y;
 
-    Vec2() { }
-    Vec2( int x, int y )
-    {
-        this->x = x;
-        this->y = y;
-    }
+        Vec2() { }
+        Vec2( float x, float y )
+        {
+            this->x = x;
+            this->y = y;
+        }
 
-    Rect toRect( int w, int h )
-    {
-        return Rect(
-            x,
-            y,
-            w,
-            h
-        );
-    }
+        Rect toRect( float w, float h )
+        {
+            return Rect(
+                x,
+                y,
+                w,
+                h
+            );
+        }
+
+        static float distance( Vec2 a, Vec2 b )
+        {
+            return sqrt( pow( b.x - a.x, 2 ) + pow( b.y - a.y, 2 ) );
+        }
 };
+
+// Framerate independance
+extern SceUInt64 prevFrameClock;    // The time between the start of the program and the previous frame (in microseconds)
+extern SceUInt64 frameTime;		    // Time between frames (in microseconds)
+extern float timestep;              // The multiplier for time sensitive actions (1.0 for 60FPS)
+
+// Calculate the frameTime and timestep (call after each frame!)
+void calcFrameTime();

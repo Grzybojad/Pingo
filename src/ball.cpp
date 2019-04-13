@@ -4,27 +4,34 @@ Ball::Ball()
 {
     state = State::stationary;
 
-    tilePos.x = 0;
-    tilePos.y = 0;
+    tilePosOffset.x = 0;
+    tilePosOffset.y = 0;
     worldPos.x = 0;
     worldPos.y = 0;
 
-    ballSpeed = 5.0f;
+    ballSpeed = 12.0f;
+
+    tileSize = 30;
 }
 
 Ball::~Ball()
 {
 
 }
-
+/*
 void Ball::setTilePos( Vec2 spawnTile )
 {
     tilePos = spawnTile;
 }
-
+*/
 void Ball::setWorldPos( Vec2 worldPos )
 {
     this->worldPos = worldPos;
+}
+
+Vec2 Ball::getWorldPos()
+{
+    return worldPos;
 }
 
 void Ball::handleInput()
@@ -50,21 +57,31 @@ void Ball::move()
             break;
 
         case State::movingUp:
-            worldPos.y -= ballSpeed;
+            worldPos.y -= ballSpeed * timestep;
+            tilePosOffset.y -= ballSpeed * timestep;
             break;
 
         case State::movingRight:
-            worldPos.x += ballSpeed;
+            worldPos.x += ballSpeed * timestep;
+            tilePosOffset.x += ballSpeed * timestep;
             break;
 
         case State::movingDown:
-            worldPos.y += ballSpeed;
+            worldPos.y += ballSpeed * timestep;
+            tilePosOffset.y += ballSpeed * timestep;
             break;
 
         case State::movingLeft:
-            worldPos.x -= ballSpeed;
+            worldPos.x -= ballSpeed * timestep;
+            tilePosOffset.x -= ballSpeed * timestep;
             break;
     }
+
+    // Normalize position offset
+    if( tilePosOffset.x >= (tileSize/2) ) tilePosOffset.x -= (tileSize/2);
+    if( tilePosOffset.y >= (tileSize/2) ) tilePosOffset.y -= (tileSize/2);
+    if( tilePosOffset.x <= -(tileSize/2) ) tilePosOffset.x += (tileSize/2);
+    if( tilePosOffset.y <= -(tileSize/2) ) tilePosOffset.y += (tileSize/2);
 }
 
 void Ball::moveBack()
@@ -75,31 +92,47 @@ void Ball::moveBack()
             break;
 
         case State::movingUp:
-            worldPos.y += ballSpeed;
+            worldPos.y += ballSpeed * timestep;
+            tilePosOffset.y += ballSpeed * timestep;
             break;
 
         case State::movingRight:
-            worldPos.x -= ballSpeed;
+            worldPos.x -= ballSpeed * timestep;
+            tilePosOffset.x -= ballSpeed * timestep;
             break;
 
         case State::movingDown:
-            worldPos.y -= ballSpeed;
+            worldPos.y -= ballSpeed * timestep;
+            tilePosOffset.y -= ballSpeed * timestep;
             break;
 
         case State::movingLeft:
-            worldPos.x += ballSpeed;
+            worldPos.x += ballSpeed * timestep;
+            tilePosOffset.x += ballSpeed * timestep;
             break;
     }
 }
 
 void Ball::draw()
 {
-    vita2d_draw_fill_circle( worldPos.x, worldPos.y, 10, RGBA8( 0, 255, 0, 255 ) );
+    vita2d_draw_rectangle( worldPos.x - (tileSize/2), worldPos.y - (tileSize/2), 30, 30, RGBA8( 255, 0, 0, 255 ) );
+    vita2d_draw_fill_circle( worldPos.x, worldPos.y, 15, RGBA8( 0, 255, 0, 255 ) );
+
+    // DEBUG
+    Gui::drawTextf( 50, 340, 20, "worldPos.x = %.2f", worldPos.x );
+    Gui::drawTextf( 50, 370, 20, "worldPos.y = %.2f", worldPos.y );
 }
 
 void Ball::stop()
 {
     state = State::stationary;
+
+    // Fix ball position
+    worldPos.x -= tilePosOffset.x;
+    worldPos.y -= tilePosOffset.y;
+
+    tilePosOffset.x = 0;
+    tilePosOffset.y = 0;
 }
 
 void Ball::moveUp()

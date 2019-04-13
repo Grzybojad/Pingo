@@ -11,6 +11,7 @@ void Level::loadFromFile( std::string file )
 
     if( levelFile.fail() )
     {
+        // TODO
         // Handle level load fail
     }
     else
@@ -48,12 +49,14 @@ void Level::update()
     ball.handleInput();
     ball.move();
 
+    if( ball.state != Ball::State::stationary)
+        paintTile();
+
     if( ballHittingWall() )
     {
         ball.moveBack();
         ball.stop();
     }
-    
 }
 
 void Level::draw()
@@ -82,13 +85,19 @@ void Level::draw()
     ball.draw();
 
     // DEBUG
+    /*
     if( ball.state == Ball::State::stationary )
         Gui::drawText( 100, 200, 20, "Stationary" );
     else
         Gui::drawText( 100, 200, 20, "Moving" );
-
+    
     if( ballHittingWall() )
         Gui::drawText( 100, 300, 20, "HITTING WALL!" );
+    */
+
+    Gui::drawTextf( 40, 450, 20, "Ball tile: (%i, %i)", (int)getBallTile().x, (int)getBallTile().y );
+
+    //vita2d_draw_rectangle( getWorldPosFromTilePos(Vec2(3,6)).x, getWorldPosFromTilePos(Vec2(3,6)).y, 30, 30, RGBA8(255, 0, 0, 255) );
 }
 
 Vec2 Level::getWorldPosFromTilePos( Vec2 tilePos )
@@ -102,6 +111,39 @@ Vec2 Level::getWorldPosFromTilePos( Vec2 tilePos )
     return worldPos;
 }
 
+Vec2 Level::getBallTile()
+{
+    // Get the initial distance value
+    float smallestBallDistance = Vec2::distance( ball.getWorldPos(), getWorldPosFromTilePos( Vec2( 0, 0 ) ) );
+
+    Vec2 ballTile = Vec2( 0, 0 );
+
+    // Find the tile that is the nearest to the ball
+    for( int i = 0; i < tiles.size(); ++i )
+    {
+        for( int j = 0; j < tiles[ i ].size(); ++j )
+        {
+            float ballDistance = Vec2::distance( ball.getWorldPos(), getWorldPosFromTilePos( Vec2( j, i ) ) );
+            if( ballDistance < smallestBallDistance )
+            {
+                smallestBallDistance = ballDistance;
+                ballTile.x = j;
+                ballTile.y = i;
+
+                if( smallestBallDistance < (tileSize / 2) )
+                    return ballTile;
+            }
+        }
+    }
+
+    return ballTile;
+}
+
+Vec2 Level::getBallTilePosition()
+{
+    return getWorldPosFromTilePos( getBallTile() );
+}
+
 void Level::initBall()
 {
     int startTileCounter = 0;
@@ -113,7 +155,6 @@ void Level::initBall()
         {
             if( dynamic_cast<StartTile*>( tiles[i][j] ) )
             {
-                ball.setTilePos( Vec2( i, j ) );
                 ball.setWorldPos( getWorldPosFromTilePos( Vec2( i, j ) ) );
                 startTileCounter++;
             }
@@ -167,7 +208,7 @@ bool Level::ballHittingWall()
         {
             if( dynamic_cast<WallTile*>( tiles[i][j] ) )
             {
-                if( checkCollision( ball.getRect(), getWorldPosFromTilePos( Vec2( j, i ) ).toRect( tileSize, tileSize ) ) )
+                if( checkCollision( ball.getRect(), getWorldPosFromTilePos( Vec2( j, i ) ).toRect( tileSize-5, tileSize-5 ) ) )
                     return true;
             }
         }
@@ -176,11 +217,27 @@ bool Level::ballHittingWall()
     return false;
 }
 
+void Level::paintTile()
+{
+    Tile* ballTile = tiles[ getBallTile().y ][ getBallTile().x ];
+
+    if( dynamic_cast<FloorTile*>( ballTile ) )
+    {
+        ballTile->paint();
+    }
+    else
+    {
+        // TODO
+        // Why isn't the player on a floor tile? Throw some error maybe
+    }
+}
+
 Tile::Tile()
 {
 
 }
 
+void Tile::paint() { }
 
 void Tile::draw( Rect rect )
 {
@@ -205,10 +262,17 @@ Tile* Level::charToTile( char c )
     }
 }
 
-
 void FloorTile::draw( Rect rect )
 {
-    vita2d_draw_rectangle( rect.x, rect.y, rect.w, rect.h, RGBA8( 0, 0, 0, 255) );
+    if( state == State::blank )
+        vita2d_draw_rectangle( rect.x, rect.y, rect.w, rect.h, RGBA8( 0, 0, 0, 255) );
+    else if( state == State::painted )
+        vita2d_draw_rectangle( rect.x, rect.y, rect.w, rect.h, RGBA8( 0, 255, 0, 255) );
+}
+
+void FloorTile::paint()
+{
+    state = State::painted;
 }
 
 

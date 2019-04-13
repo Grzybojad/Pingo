@@ -16,6 +16,7 @@ class Tile
         Tile();
 
         virtual void draw( Rect rect );
+        virtual void paint();
 
     protected:
 
@@ -40,6 +41,8 @@ class Level
 
         Tile* charToTile( char c );
         Vec2 getWorldPosFromTilePos( Vec2 tilePos );
+        Vec2 getBallTile();
+        Vec2 getBallTilePosition();
         void initBall();
 
         // Check if rects collide
@@ -47,6 +50,9 @@ class Level
 
         // Is the ball hitting a wall?
         bool ballHittingWall();
+
+        // Paint the tile the ball is on
+        void paintTile();
 };
 
 class WallTile : public Tile
@@ -75,7 +81,7 @@ class FloorTile : public Tile
         };
         State state;
 
-        void paint();
+        void paint() override;
 };
 
 class StartTile : public FloorTile

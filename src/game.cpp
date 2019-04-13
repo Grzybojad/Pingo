@@ -38,6 +38,8 @@ void Game::loop()
         level1.update();
 
         draw();
+
+        calcFrameTime();
     }
 }
 
@@ -47,14 +49,6 @@ void Game::draw()
     vita2d_clear_screen();
 
     level1.draw();
-
-    Gui::drawTextf_color_position( Gui::Position::alignTop, 0, 0, 20, RGBA8( 255, 255, 0, 255 ), "Text drawing test" );
-
-    // DEBUG
-    if( Input::wasPressed( Input::Button::cross ) )
-        Gui::drawTextf_color_position( Gui::Position::alignTop, 100, 100, 50, RGBA8( 255, 0, 0, 255 ), "X pressed!" );
-    else if( Input::isHeld( Input::Button::cross ) )
-        Gui::drawTextf_color_position( Gui::Position::alignTop, 100, 100, 50, RGBA8( 255, 0, 0, 255 ), "X!" );
 
     vita2d_end_drawing();
     vita2d_swap_buffers();

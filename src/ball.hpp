@@ -3,6 +3,9 @@
 #include "input.hpp"
 #include "common.hpp"
 
+//DEBUG
+#include "gui.hpp"
+
 #include <vita2d.h>
 
 class Ball
@@ -11,8 +14,9 @@ class Ball
         Ball();
         ~Ball();
 
-        void setTilePos( Vec2 spawnTile );
+        //void setTilePos( Vec2 spawnTile );
         void setWorldPos( Vec2 worldPos );
+        Vec2 getWorldPos();
         void handleInput();
         void move();
         void moveBack();
@@ -34,9 +38,11 @@ class Ball
 
     protected:
         Vec2 worldPos;
-        Vec2 tilePos;
+        //Vec2 tilePos;
+        Vec2 tilePosOffset;
 
         double ballSpeed;
+        int tileSize;
 
         void moveUp();
         void moveRight();

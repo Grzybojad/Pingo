@@ -47,6 +47,7 @@ add_executable(${VITA_APP_NAME}
   src/timer.hpp
   src/timer.cpp
   src/common.hpp
+  src/common.cpp
 )
 
 target_link_libraries(${VITA_APP_NAME}
