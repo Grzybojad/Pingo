@@ -1,32 +1,35 @@
-# Prerequisites
-*.d
+# Vita build
+*.vpk
+*.velf
+*.self
+*.sfo
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+gameJam
 
-# Precompiled Headers
-*.gch
-*.pch
+# Cmake files
+CMakeFiles
+Makefile
+vitaSnake
+vitaSnake.self
+vitaSnake.velf
+vitaSnake.vpk_param.sfo
+vitaSnake.vpk.6LWgOo
+cmake_install.cmake
+CMakeCache.txt
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
+# Visual Studio files
+Debug
+*.sln
+*.db
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*.VC.VC.opendb
 
-# Fortran module files
-*.mod
-*.smod
+.vscode
 
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
+*.aps
+*.rc
+resource.h
 
-# Executables
-*.exe
-*.out
-*.app
+imgui.ini
