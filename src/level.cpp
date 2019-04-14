@@ -100,8 +100,14 @@ void Level::draw()
 {
     int levelWidth = tiles[ tiles.size() / 2 ].size() * tileSize;
     int levelHeight = tiles.size() * tileSize;
+
     int paddingLeft = ( SCREEN_WIDTH - levelWidth ) / 2;
-    int paddingTop = ( SCREEN_HEIGHT - levelHeight ) / 2;
+
+    int paddingTop = 0;
+    if( levelHeight < ( SCREEN_WIDTH / 2 ) )
+        paddingTop = ( SCREEN_HEIGHT - levelHeight ) / 2;
+    else
+        paddingTop = SCREEN_HEIGHT * 0.1;
 
     // Draw level tiles
     for( int i = 0; i < tiles.size(); ++i )
@@ -145,7 +151,12 @@ Vec2 Level::getWorldPosFromTilePos( Vec2 tilePos )
     int levelWidth = tiles[ tiles.size() / 2 ].size() * tileSize;
     int levelHeight = tiles.size() * tileSize;
     int paddingLeft = ( SCREEN_WIDTH - levelWidth ) / 2;
-    int paddingTop = ( SCREEN_HEIGHT - levelHeight ) / 2;
+
+    int paddingTop = 0;
+    if( levelHeight < ( SCREEN_WIDTH / 2 ) )
+        paddingTop = ( SCREEN_HEIGHT - levelHeight ) / 2;
+    else
+        paddingTop = SCREEN_HEIGHT * 0.1;
 
     Vec2 worldPos = Vec2( paddingLeft + ( tilePos.x * tileSize ) + ( tileSize / 2 ), paddingTop + ( tilePos.y * tileSize ) + ( tileSize / 2 ) );
     return worldPos;
@@ -328,13 +339,12 @@ Tile* Level::charToTile( char c )
 void FloorTile::draw( Rect rect )
 {
     if( state == State::blank )
-        vita2d_draw_rectangle( rect.x, rect.y, rect.w, rect.h, RGBA8( 0, 0, 0, 255) );
+        vita2d_draw_rectangle( rect.x, rect.y, rect.w, rect.h, RGBA8( 0, 0, 0, 255 ) );
     else if( state == State::painted )
     {
-        vita2d_draw_rectangle( rect.x, rect.y, rect.w, rect.h, RGBA8( 0, 0, 0, 255) );
-        vita2d_draw_rectangle( rect.x + 10, rect.y + 10, rect.w - 20, rect.h - 20, RGBA8( 0, 255, 0, 255) );
+        vita2d_draw_rectangle( rect.x, rect.y, rect.w, rect.h, RGBA8( 0, 0, 0, 255 ) );
+        vita2d_draw_rectangle( rect.x + 10, rect.y + 10, rect.w - 20, rect.h - 20, RGBA8( 0, 255, 0, 255 ) );
     }
-        
 }
 
 void FloorTile::paint()
