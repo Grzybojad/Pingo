@@ -2,6 +2,11 @@
 
 Level::Level()
 {
+    
+}
+
+void Level::init()
+{
     state = State::playing;
 
     tileSize = 30;
@@ -48,6 +53,18 @@ void Level::loadFromFile( std::string file )
     paintedTiles = 0;
 
     levelFile.close();
+}
+
+void Level::unload()
+{
+    state = State::playing;
+
+    tiles.clear();
+    levelTime.stop();
+    floorTileCount = 0;
+    paintedTiles = 0;
+
+    tileSize = 0;
 }
 
 void Level::update()

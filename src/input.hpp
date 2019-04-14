@@ -38,6 +38,7 @@ namespace Input
     };
     // Array with a bool for each button to store key presses
     extern bool buttonIsHeld[ static_cast<int>( Button::count ) ];
+    extern bool helperPressed[ static_cast<int>( Button::count ) ];
     extern bool buttonWasPressed[ static_cast<int>( Button::count ) ];
 
     extern SceCtrlData pad;
@@ -55,4 +56,7 @@ namespace Input
 
     // Was the button pressed at this frame?
     bool wasPressed( Button id );
+
+    // Helper function to find pressed buttons
+    bool checkPressed( int i );
 }

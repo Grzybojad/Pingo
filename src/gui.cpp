@@ -14,6 +14,12 @@ namespace Gui
             mainFont[ i ] = vita2d_load_font_file( "app0:/font/Ubuntu-Medium.ttf" );
     }
 
+    void freeFont()
+    {
+        for( int i = 0; i <= 99; ++i )
+            vita2d_free_font( mainFont[ i ] );
+    }
+
     void drawText( int x, int y, unsigned int size, const char *text )
     {
         vita2d_font_draw_text( mainFont[ (int)(size * FONT_SCALE) ], x, y, MAIN_FONT_COLOR, (int)(size * FONT_SCALE), text );

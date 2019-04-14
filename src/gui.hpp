@@ -14,6 +14,9 @@ namespace Gui
     // Load font from file
     void loadFont();
 
+    // Free the loaded font
+    void freeFont();
+
     // Enum for positioning text
     enum class Position
     {

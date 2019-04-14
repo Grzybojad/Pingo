@@ -38,13 +38,13 @@ void Ball::handleInput()
 {
     if( state == State::stationary )
     {
-        if( Input::wasPressed (Input::Button::up ) )
+        if( Input::wasPressed( Input::Button::up ) )
             moveUp();
-        if( Input::wasPressed (Input::Button::right ) )
+        if( Input::wasPressed( Input::Button::right ) )
             moveRight();
-        if( Input::wasPressed (Input::Button::down ) )
+        if( Input::wasPressed( Input::Button::down ) )
             moveDown();
-        if( Input::wasPressed (Input::Button::left ) )
+        if( Input::wasPressed( Input::Button::left ) )
             moveLeft();
     }
 }

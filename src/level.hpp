@@ -30,7 +30,9 @@ class Level
     public:
         Level();
 
+        void init();
         void loadFromFile( std::string file );
+        void unload();
 
         void update();
         void draw();

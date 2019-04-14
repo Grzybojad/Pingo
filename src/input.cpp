@@ -2,8 +2,9 @@
 
 namespace Input
 {
-    bool buttonIsHeld[ 18 ];
-    bool buttonWasPressed[ 18 ];
+    bool buttonIsHeld[ static_cast<int>( Button::count ) ];
+    bool helperPressed[ static_cast<int>( Button::count ) ];
+    bool buttonWasPressed[ static_cast<int>( Button::count ) ];
     SceCtrlData pad;
     SceTouchData touch_old[ SCE_TOUCH_PORT_MAX_NUM ];
     SceTouchData touch[ SCE_TOUCH_PORT_MAX_NUM ];
@@ -47,6 +48,25 @@ namespace Input
         buttonIsHeld[ static_cast<int>( Button::square ) ] = ( pad.buttons & SCE_CTRL_SQUARE );
 
         // Add analog and touch checks
+        for( int i = 0; i < static_cast<int>( Button::count ); ++i )
+        {
+            buttonWasPressed[ i ] = checkPressed( i );
+        }
+    }
+
+    bool checkPressed( int i )
+    {
+        if( isHeld( static_cast<Button>( i ) ) && !helperPressed[ i ] )
+        {
+            helperPressed[ i ] = true;
+            return true;
+        }
+        else if( !isHeld( static_cast<Button>( i ) ) )
+        {
+            helperPressed[ i ] = false;
+        }
+
+        return false;
     }
 
     bool isHeld( Button id )
@@ -56,17 +76,7 @@ namespace Input
 
     bool wasPressed( Button id )
     {
-        if( isHeld( id ) && !buttonWasPressed[ static_cast<int>( id ) ] )
-        {
-            buttonWasPressed[ static_cast<int>( id ) ] = true;
-            return true;
-        }
-        else if( !isHeld( id ) )
-        {
-            buttonWasPressed[ static_cast<int>( id ) ] = false;
-        }
-
-        return false;
+        return buttonWasPressed[ static_cast<int>( id ) ];
     }
 }
 

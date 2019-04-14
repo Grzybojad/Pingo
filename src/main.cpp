@@ -6,7 +6,7 @@ int main()
 {
     Game game;
 
-	game.start();
+	game.mainLoop();
 
 	sceKernelExitProcess( 0 );
 	return 0;

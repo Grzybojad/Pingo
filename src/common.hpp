@@ -7,6 +7,8 @@
 const int SCREEN_WIDTH = 960;
 const int SCREEN_HEIGHT = 544;
 
+static const char *gameTitle = "gameJam game";
+
 struct Rect
 {
     public:

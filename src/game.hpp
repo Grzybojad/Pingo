@@ -19,11 +19,18 @@ class Game
         Game();
         ~Game();
 
-        void start();
+        void mainLoop();
 
     private:
-        void loop();
+        void inGame();
+        void inMenu();
+        
+        void initLevel();
+        void destroyLevel();
+
         void draw();
+
+        void exit();
 
         enum class GameState
         {
@@ -35,5 +42,8 @@ class Game
         };
         GameState gameState;
 
-        Level level1;
+        MainMenu mainMenu;
+        PauseMenu pauseMenu;
+
+        Level level;
 };
