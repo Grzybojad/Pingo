@@ -28,6 +28,7 @@ void Game::initLevelList()
 {
     levelList.add( "level1.txt" );
     levelList.add( "level2.txt" );
+    levelList.add( "level3.txt" );
 }
 
 void Game::mainLoop()

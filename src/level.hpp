@@ -55,7 +55,12 @@ class Level
         int floorTileCount;
         int paintedTiles;
 
+        std::string levelName;
+
         Ball ball;
+
+        // Reads level name from level file name
+        void readLevelName( std::string fileName );
 
         // Converts the char that's loaded from the level map to the corresponding Tile type
         Tile* charToTile( char c );

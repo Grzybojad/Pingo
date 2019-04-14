@@ -9,6 +9,8 @@ void Level::init()
 {
     state = State::playing;
 
+    levelName = "";
+
     tileSize = 30;
 }
 
@@ -23,6 +25,9 @@ void Level::loadFromFile( std::string file )
     }
     else
     {
+        // Get level name
+        readLevelName( file );
+
         // Get all lines from level file
         std::vector<std::string> lines;
         std::string line = "";
@@ -115,11 +120,24 @@ void Level::draw()
 
     // Draw ball
     ball.draw();
+
+    // Draw level name
+    Gui::drawTextf_position( Gui::Position::centered, SCREEN_WIDTH / 2, 40, 40, "Level %s", levelName.c_str() );
 }
 
 bool Level::complete()
 {
     return state == State::finished;
+}
+
+void Level::readLevelName( std::string fileName )
+{
+    std::string start = "levels/level";
+    std::string end = ".txt";
+    int startPos = fileName.find( start );
+    int endPos = fileName.find( end );
+
+    levelName = fileName.substr( startPos + start.length(), endPos - ( startPos + start.length() ) );
 }
 
 Vec2 Level::getWorldPosFromTilePos( Vec2 tilePos )
@@ -181,30 +199,25 @@ void Level::initBall()
 
     if( startTileCounter == 0 )
     {
-        // Handle no starting tile found
+        // TODO Handle no starting tile found
     }
     if( startTileCounter > 1 )
     {
-        // Handle more then one starting tile found
+        // TODO Handle more then one starting tile found
     }
 }
 
 bool Level::checkCollision( Rect a, Rect b )
 {
-    int leftA, leftB; 
-    int rightA, rightB; 
-    int topA, topB; 
-    int bottomA, bottomB;
+    int leftA = a.x; 
+    int rightA = a.x + a.w; 
+    int topA = a.y; 
+    int bottomA = a.y + a.h;
 
-    leftA = a.x; 
-    rightA = a.x + a.w; 
-    topA = a.y; 
-    bottomA = a.y + a.h;
-
-    leftB = b.x; 
-    rightB = b.x + b.w; 
-    topB = b.y; 
-    bottomB = b.y + b.h;
+    int leftB = b.x; 
+    int rightB = b.x + b.w; 
+    int topB = b.y; 
+    int bottomB = b.y + b.h;
 
     if( bottomA <= topB )
         return false;
@@ -317,7 +330,11 @@ void FloorTile::draw( Rect rect )
     if( state == State::blank )
         vita2d_draw_rectangle( rect.x, rect.y, rect.w, rect.h, RGBA8( 0, 0, 0, 255) );
     else if( state == State::painted )
-        vita2d_draw_rectangle( rect.x, rect.y, rect.w, rect.h, RGBA8( 0, 255, 0, 255) );
+    {
+        vita2d_draw_rectangle( rect.x, rect.y, rect.w, rect.h, RGBA8( 0, 0, 0, 255) );
+        vita2d_draw_rectangle( rect.x + 10, rect.y + 10, rect.w - 20, rect.h - 20, RGBA8( 0, 255, 0, 255) );
+    }
+        
 }
 
 void FloorTile::paint()
