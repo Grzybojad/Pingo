@@ -76,11 +76,12 @@ void Level::update()
         ball.handleInput();
         ball.move();
 
-        if( ball.state != Ball::State::stationary)
+        if( ball.state != Ball::State::stationary )
             paintTile();
 
         if( ballHittingWall() )
         {
+            ball.moveBack();
             ball.setWorldPos( getBallTilePosition() );
             ball.stop();
         }
@@ -114,9 +115,11 @@ void Level::draw()
 
     // Draw ball
     ball.draw();
+}
 
-    if( state == State::finished )
-        Gui::drawText_color_position( Gui::Position::centeredX, SCREEN_WIDTH/2, 60, 60, RGBA8( 255, 0, 0, 255 ), "you can never win" );
+bool Level::complete()
+{
+    return state == State::finished;
 }
 
 Vec2 Level::getWorldPosFromTilePos( Vec2 tilePos )
@@ -170,7 +173,7 @@ void Level::initBall()
         {
             if( dynamic_cast<StartTile*>( tiles[i][j] ) )
             {
-                ball.setWorldPos( getWorldPosFromTilePos( Vec2( i, j ) ) );
+                ball.setWorldPos( getWorldPosFromTilePos( Vec2( j, i ) ) );
                 startTileCounter++;
             }
         }
@@ -294,9 +297,11 @@ Tile* Level::charToTile( char c )
     switch( c )
     {
         case 'w':
+        case '#':
             return new WallTile();
 
         case 'f':
+        case '.':
             return new FloorTile();
             
         case 's':
@@ -331,4 +336,43 @@ bool FloorTile::paintable()
 void WallTile::draw( Rect rect )
 {
     vita2d_draw_rectangle( rect.x, rect.y, rect.w, rect.h, RGBA8( 255, 255, 255, 255) );
+}
+
+
+LevelListElement::LevelListElement( std::string filePath )
+{
+    completed = false;
+    this->filePath = filePath;
+}
+
+
+LevelList::LevelList()
+{
+    currentLevel = 0;
+}
+
+void LevelList::add( std::string filePath )
+{
+    levels.push_back( LevelListElement( "app0:levels/" + filePath ) );
+}
+
+std::string LevelList::getLevelPath( int index )
+{
+    return levels[ index ].filePath;
+}
+
+bool LevelList::getCompletion( int index )
+{
+    return levels[ index ].completed;
+}
+
+int LevelList::getCurrentLevel()
+{
+    return currentLevel;
+}
+
+void LevelList::nextLevel()
+{
+    if( currentLevel < levels.size() - 1 )
+        currentLevel++;
 }

@@ -1,8 +1,9 @@
 #pragma once
 
+#include <vector>
+
 #include <psp2/ctrl.h>
 #include <psp2/kernel/processmgr.h>
-
 #include <vita2d.h>
 
 #include "input.hpp"
@@ -25,6 +26,7 @@ class Game
         void inGame();
         void inMenu();
         
+        void initLevelList();
         void initLevel();
         void destroyLevel();
 
@@ -44,6 +46,9 @@ class Game
 
         MainMenu mainMenu;
         PauseMenu pauseMenu;
+        LevelFinish finishMenu;
 
         Level level;
+
+        LevelList levelList;
 };

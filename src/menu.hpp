@@ -41,18 +41,15 @@ class Menu
         // Returns cursor location
         int getCursor();
 
-        // Returns select value
-        bool selectPressed();
-
     protected:
         std::vector<MenuItem> menuItems;
         int cursor;
 
-        // Is set to true if the select button was pressed
-        bool select;
-
         // Handles all input from user
         void handleInput();
+
+        // Returns select value
+        bool selectPressed();
 
         // Move the cursor
         void selectUp();
@@ -65,6 +62,10 @@ class MainMenu : public Menu
         MainMenu();
 
         void draw() override;
+
+        // Returns true if the button was clicked
+        bool clickedStart();
+        bool clickedExit();
 };
 
 class PauseMenu : public Menu
@@ -73,4 +74,20 @@ class PauseMenu : public Menu
         PauseMenu();
 
         void draw() override;
+
+        // Returns true if the button was clicked
+        bool clickedResume();
+        bool clickedMainMenu();
+};
+
+class LevelFinish : public Menu
+{
+    public:
+        LevelFinish();
+
+        void draw() override;
+
+        // Returns true if the button was clicked
+        bool clickedNextLevel();
+        bool clickedMainMenu();
 };

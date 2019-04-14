@@ -12,8 +12,8 @@ Game::Game()
     // Initialize gui
     Gui::loadFont();
 
-    // Load levels
-    //level1.loadFromFile( "app0:levels/level1.txt" );
+    // Initialize level list
+    initLevelList();
 
     // TODO: change this
     gameState = GameState::initialized;
@@ -22,6 +22,12 @@ Game::Game()
 Game::~Game()
 {
     vita2d_fini();
+}
+
+void Game::initLevelList()
+{
+    levelList.add( "level1.txt" );
+    levelList.add( "level2.txt" );
 }
 
 void Game::mainLoop()
@@ -57,14 +63,43 @@ void Game::mainLoop()
 
 void Game::inGame()
 {
-    if( Input::wasPressed( Input::Button::start ) )
+    if( !level.complete() )
     {
-        gameState = GameState::paused;
+        if( Input::wasPressed( Input::Button::start ) )
+        {
+            gameState = GameState::paused;
+        }
+        else
+        {
+            level.update();
+            draw();
+        }
     }
     else
     {
-        level.update();
-        draw();
+        finishMenu.update();
+
+        if( finishMenu.clickedNextLevel() )
+        {
+            levelList.nextLevel();
+            destroyLevel();
+            initLevel();
+        }
+        else if( finishMenu.clickedMainMenu() )
+        {
+            gameState = GameState::mainMenu;
+            destroyLevel();
+        }
+
+        
+        vita2d_start_drawing();
+        vita2d_clear_screen();
+        
+        level.draw();
+        finishMenu.draw();
+
+        vita2d_end_drawing();
+        vita2d_swap_buffers();
     }
 
     calcFrameTime();
@@ -78,17 +113,14 @@ void Game::inMenu()
         mainMenu.update();
 
         // TODO make this more elegant
-        if( mainMenu.selectPressed() )
+        if( mainMenu.clickedStart() )
         {
-            if( mainMenu.getCursor() == 0 )
-            {
-                gameState = GameState::playing;
+            gameState = GameState::playing;
                 initLevel();
-            }
-            else if( mainMenu.getCursor() == 1 )
-            {
-                gameState = GameState::exiting;
-            }
+        }
+        else if( mainMenu.clickedExit() )
+        {
+            gameState = GameState::exiting;
         }
 
         vita2d_start_drawing();
@@ -103,18 +135,14 @@ void Game::inMenu()
     {
         pauseMenu.update();
 
-        // TODO make this more elegant
-        if( pauseMenu.selectPressed() )
+        if( pauseMenu.clickedResume() )
         {
-            if( pauseMenu.getCursor() == 0 )
-            {
-                gameState = GameState::playing;
-            }
-            else if( pauseMenu.getCursor() == 1 )
-            {
-                gameState = GameState::mainMenu;
-                destroyLevel();
-            }
+            gameState = GameState::playing;
+        }
+        else if( pauseMenu.clickedMainMenu() )
+        {
+            gameState = GameState::mainMenu;
+            destroyLevel();
         }
 
         vita2d_start_drawing();
@@ -133,7 +161,7 @@ void Game::inMenu()
 void Game::initLevel()
 {
     level.init();
-    level.loadFromFile( "app0:levels/level1.txt" );
+    level.loadFromFile( levelList.getLevelPath( levelList.getCurrentLevel() ) );
 }
 
 void Game::destroyLevel()
@@ -154,6 +182,8 @@ void Game::draw()
 {
     vita2d_start_drawing();
     vita2d_clear_screen();
+
+    // TODO move drawing here
 
     level.draw();
 

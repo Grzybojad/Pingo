@@ -9,6 +9,7 @@
 #include "common.hpp"
 
 #include "gui.hpp"
+#include "menu.hpp"
 
 class Tile
 {
@@ -36,6 +37,8 @@ class Level
 
         void update();
         void draw();
+
+        bool complete();
 
     protected:
         enum class State
@@ -119,4 +122,32 @@ class StartTile : public FloorTile
 {
     public:
         using FloorTile::FloorTile;
+};
+
+
+class LevelListElement
+{
+    public:
+        LevelListElement( std::string filePath );
+
+        bool completed;
+        std::string filePath;
+};
+
+class LevelList
+{
+    public:
+        LevelList();
+
+        void add( std::string filePath );
+
+        std::string getLevelPath( int index );
+        bool getCompletion( int index );
+        int getCurrentLevel();
+
+        void nextLevel();
+
+    private:
+        std::vector< LevelListElement > levels;
+        int currentLevel;
 };

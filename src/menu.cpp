@@ -36,8 +36,6 @@ void MenuItem::drawSelected()
 
 Menu::Menu()
 {
-    select = false;
-
     cursor = 0;
 }
 
@@ -57,11 +55,6 @@ void Menu::handleInput()
         selectUp();
     if( Input::wasPressed( Input::Button::down ) )
         selectDown();
-
-    if( Input::wasPressed( Input::Button::cross ) )
-        select = true;
-    else
-        select = false;
 }
 
 void Menu::draw()
@@ -82,7 +75,7 @@ int Menu::getCursor()
 
 bool Menu::selectPressed()
 {
-    return select;
+    return Input::wasPressed( Input::Button::cross );
 }
 
 void Menu::selectUp()
@@ -104,7 +97,6 @@ void Menu::selectDown()
 
 MainMenu::MainMenu()
 {
-    select = false;
     cursor = 0;
 
     MenuItem startButton = MenuItem( Rect( SCREEN_WIDTH/2 - 100, SCREEN_HEIGHT*0.6, 200, 70 ), "Start" );
@@ -127,17 +119,26 @@ void MainMenu::draw()
     }
 }
 
+bool MainMenu::clickedStart()
+{
+    return selectPressed() && cursor == 0;
+}
+
+bool MainMenu::clickedExit()
+{
+    return selectPressed() && cursor == 1;
+}
+
 
 PauseMenu::PauseMenu()
 {
-    select = false;
     cursor = 0;
 
     MenuItem startButton = MenuItem( Rect( SCREEN_WIDTH/2 - 100, SCREEN_HEIGHT*0.6, 200, 70 ), "Resume" );
     addItem( startButton );
 
-    MenuItem exitButton = MenuItem( Rect( SCREEN_WIDTH/2 - 100, SCREEN_HEIGHT*0.8, 200, 70 ), "Main menu" );
-    addItem( exitButton );
+    MenuItem menuButton = MenuItem( Rect( SCREEN_WIDTH/2 - 100, SCREEN_HEIGHT*0.8, 200, 70 ), "Main menu" );
+    addItem( menuButton );
 }
 
 void PauseMenu::draw()
@@ -154,4 +155,49 @@ void PauseMenu::draw()
         else
             menuItems[ i ].draw();
     }
+}
+
+bool PauseMenu::clickedResume()
+{
+    return selectPressed() && cursor == 0;
+}
+
+bool PauseMenu::clickedMainMenu()
+{
+    return selectPressed() && cursor == 1;
+}
+
+
+LevelFinish::LevelFinish()
+{
+    cursor = 0;
+
+    MenuItem nextButton = MenuItem( Rect( SCREEN_WIDTH/2 - 100, SCREEN_HEIGHT*0.6, 200, 70 ), "Next Level" );
+    addItem( nextButton );
+
+    MenuItem menuButton = MenuItem( Rect( SCREEN_WIDTH/2 - 100, SCREEN_HEIGHT*0.8, 200, 70 ), "Main menu" );
+    addItem( menuButton );
+}
+
+void LevelFinish::draw()
+{
+    Gui::drawText_color_position( Gui::Position::centered, SCREEN_WIDTH / 2, 100, 60, RGBA8( 0, 0, 0, 255 ), "Level complete!" );
+
+    for( int i = 0; i < menuItems.size(); ++i )
+    {
+        if( cursor == i )
+            menuItems[ i ].drawSelected();
+        else
+            menuItems[ i ].draw();
+    }
+}
+
+bool LevelFinish::clickedNextLevel()
+{
+    return selectPressed() && cursor == 0;
+}
+
+bool LevelFinish::clickedMainMenu()
+{
+    return selectPressed() && cursor == 1;
 }
