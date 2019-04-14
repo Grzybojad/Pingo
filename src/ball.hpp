@@ -14,7 +14,6 @@ class Ball
         Ball();
         ~Ball();
 
-        //void setTilePos( Vec2 spawnTile );
         void setWorldPos( Vec2 worldPos );
         Vec2 getWorldPos();
         void handleInput();
@@ -23,6 +22,8 @@ class Ball
         void draw();
 
         void stop();
+
+        void reset();
 
         Rect getRect();
 
@@ -38,8 +39,6 @@ class Ball
 
     protected:
         Vec2 worldPos;
-        //Vec2 tilePos;
-        Vec2 tilePosOffset;
 
         double ballSpeed;
         int tileSize;

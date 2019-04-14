@@ -65,6 +65,8 @@ void Level::unload()
     paintedTiles = 0;
 
     tileSize = 0;
+
+    ball.reset();
 }
 
 void Level::update()
@@ -79,7 +81,7 @@ void Level::update()
 
         if( ballHittingWall() )
         {
-            ball.moveBack();
+            ball.setWorldPos( getBallTilePosition() );
             ball.stop();
         }
 
