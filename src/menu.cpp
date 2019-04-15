@@ -213,10 +213,14 @@ bool LevelFinish::clickedMainMenu()
 }
 
 
-
 LevelSelectItem::LevelSelectItem()
 {
-
+    rect = Rect(
+        0,
+        0,
+        40,
+        50
+    );
 }
 
 LevelSelectItem::LevelSelectItem( Vec2 pos )
@@ -231,7 +235,7 @@ LevelSelectItem::LevelSelectItem( Vec2 pos )
 
 LevelSelectItem::LevelSelectItem( Rect rect )
 {
-
+    this->rect = rect;
 }
 
 void LevelSelectItem::draw()
@@ -254,7 +258,7 @@ LevelSelect::LevelSelect()
     columns = 10;
 
     // TODO remove temp
-    tempSize = 30;
+    tempSize = 21;
 }
 
 void LevelSelect::initLevels( LevelList levelList )
@@ -334,10 +338,47 @@ bool LevelSelect::selectPressed()
 
 void LevelSelect::selectUp()
 {
-    if( cursor > columns )
-        cursor -= columns;
-    else
-        cursor = /*menuItems.size()*/tempSize - ( columns - cursor );
+    if( tempSize > columns /*&& ( ( tempSize - ( columns - cursor ) % columns ) == cursor % columns )*/ )
+    {
+        if( cursor > columns )
+            cursor -= columns;
+        else
+        {
+            if( tempSize % columns >= cursor )
+                cursor = tempSize - ( ( tempSize % columns ) - cursor );
+            else
+                cursor += ( ( tempSize + 1 ) / columns - 1 ) * columns;//tempSize - ( columns - cursor );
+            /*
+            if( cursor + ( ( ( tempSize + 1 ) / columns ) + 1 ) * columns > tempSize )
+            {
+                cursor += ( ( tempSize + 1 ) / columns ) * columns - 1;
+            }
+            else
+            {
+                cursor += ( ( ( tempSize + 1 ) / columns ) + 1 ) * columns - 1;
+            }
+            */
+            
+            /*
+            if( tempSize % columns == 0 )
+            {
+                if( cursor + ( ( tempSize / columns ) - 1 ) * columns < tempSize )
+                    cursor += ( ( tempSize / columns ) - 1 ) * columns;
+                else
+                    cursor += ( ( tempSize / columns ) - 2 ) * columns;
+            } 
+            else
+            {
+                if( cursor + ( tempSize / columns ) * columns < tempSize )
+                    cursor += ( tempSize / columns ) * columns;
+                else
+                    cursor += ( ( tempSize / columns ) - 1 ) * columns;
+            }
+                //cursor += ( tempSize / columns ) * columns;
+            */
+        } /*menuItems.size()*/ //tempSize - ( columns - ( cursor % columns ) );
+    }
+    
     
 }
 
@@ -351,7 +392,7 @@ void LevelSelect::selectRight()
 
 void LevelSelect::selectDown()
 {
-    if( cursor < /*menuItems.size()*/ tempSize - columns )
+    if( cursor <= /*menuItems.size()*/ tempSize - columns )
         cursor += columns;
     else
         cursor %= columns;
