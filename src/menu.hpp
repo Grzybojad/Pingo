@@ -5,6 +5,7 @@
 
 #include <vita2d.h>
 
+#include "level.hpp"
 #include "gui.hpp"
 #include "input.hpp"
 #include "common.hpp"
@@ -34,7 +35,7 @@ class Menu
 
         void addItem( MenuItem item );
 
-        void update();
+        virtual void update();
 
         virtual void draw();
 
@@ -90,4 +91,53 @@ class LevelFinish : public Menu
         // Returns true if the button was clicked
         bool clickedNextLevel();
         bool clickedMainMenu();
+};
+
+
+class LevelSelectItem
+{
+    public:
+        LevelSelectItem();
+        LevelSelectItem( Rect rect, std::string label );
+
+        // Draw the menu item
+        virtual void draw();
+
+        // Draw the menu item the cursor is currently at
+        virtual void drawSelected();
+
+    protected:
+        bool selected;
+        Rect rect;
+        std::string label;
+};
+
+class LevelSelect
+{
+    public:
+        LevelSelect();
+
+        void initLevels( LevelList levelList );
+
+        void update();
+        void draw();
+
+        // Returns cursor location
+        Vec2 getCursor();
+
+    protected:
+        std::vector< LevelSelectItem > menuItems;
+        Vec2 cursor;
+
+        // Handles all input from user
+        void handleInput();
+
+        // Returns select value
+        bool selectPressed();
+
+        // Move the cursor
+        void selectUp();
+        void selectRight();
+        void selectDown();
+        void selectLeft();
 };

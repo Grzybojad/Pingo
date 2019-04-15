@@ -9,7 +9,7 @@
 #include "common.hpp"
 
 #include "gui.hpp"
-#include "menu.hpp"
+//#include "menu.hpp"
 
 class Tile
 {
@@ -149,6 +149,7 @@ class LevelList
         std::string getLevelPath( int index );
         bool getCompletion( int index );
         int getCurrentLevel();
+        int getNrOfLevels();
 
         void nextLevel();
 

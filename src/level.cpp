@@ -398,6 +398,11 @@ int LevelList::getCurrentLevel()
     return currentLevel;
 }
 
+int LevelList::getNrOfLevels()
+{
+    return levels.size();
+}
+
 void LevelList::nextLevel()
 {
     if( currentLevel < levels.size() - 1 )

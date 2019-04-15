@@ -201,3 +201,88 @@ bool LevelFinish::clickedMainMenu()
 {
     return selectPressed() && cursor == 1;
 }
+
+
+LevelSelect::LevelSelect()
+{
+    cursor.x = 0;
+    cursor.y = 0;
+}
+
+void LevelSelect::initLevels( LevelList levelList )
+{
+    int paddingSide = 40;
+    int paddingTop = 80;
+    int itemWidth = 30;
+    int itemHeight = 60;
+
+    int columns = 8;
+
+    int spacing = ( SCREEN_WIDTH - paddingSide * 2 - itemWidth * columns ) / ( columns - 1 );
+
+
+    for( int i = 0; i < levelList.getNrOfLevels(); ++i )
+    {
+        LevelSelectItem newItem = LevelSelectItem( 
+            Rect(
+                paddingSide + ( i * columns ) + ( i * spacing ),
+                paddingTop,
+                itemWidth,
+                itemHeight
+            ),
+            std::to_string( i )
+        );
+        menuItems.push_back( newItem );
+    }
+}
+
+void LevelSelect::update()
+{
+    
+}
+
+void LevelSelect::draw()
+{
+
+}
+
+void LevelSelect::selectUp()
+{
+
+}
+
+void LevelSelect::selectRight()
+{
+
+}
+
+void LevelSelect::selectDown()
+{
+
+}
+
+void LevelSelect::selectLeft()
+{
+
+}
+
+
+LevelSelectItem::LevelSelectItem()
+{
+
+}
+
+LevelSelectItem::LevelSelectItem( Rect rect, std::string label )
+{
+
+}
+
+void LevelSelectItem::draw()
+{
+    
+}
+
+void LevelSelectItem::drawSelected()
+{
+
+}
