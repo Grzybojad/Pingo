@@ -26,9 +26,15 @@ Game::~Game()
 
 void Game::initLevelList()
 {
+    // TODO make this automatic
     levelList.add( "level1.txt" );
     levelList.add( "level2.txt" );
     levelList.add( "level3.txt" );
+    levelList.add( "level4.txt" );
+    levelList.add( "level5.txt" );
+    levelList.add( "level6.txt" );
+    levelList.add( "level7.txt" );
+    levelList.add( "level8.txt" );
 }
 
 void Game::mainLoop()

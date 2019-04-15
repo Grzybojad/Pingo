@@ -258,7 +258,7 @@ LevelSelect::LevelSelect()
     columns = 10;
 
     // TODO remove temp
-    tempSize = 21;
+    tempSize = 8;
 }
 
 void LevelSelect::initLevels( LevelList levelList )
@@ -338,7 +338,7 @@ bool LevelSelect::selectPressed()
 
 void LevelSelect::selectUp()
 {
-    if( tempSize > columns /*&& ( ( tempSize - ( columns - cursor ) % columns ) == cursor % columns )*/ )
+    if( tempSize > columns )
     {
         if( cursor > columns )
             cursor -= columns;
@@ -347,39 +347,9 @@ void LevelSelect::selectUp()
             if( tempSize % columns >= cursor )
                 cursor = tempSize - ( ( tempSize % columns ) - cursor );
             else
-                cursor += ( ( tempSize + 1 ) / columns - 1 ) * columns;//tempSize - ( columns - cursor );
-            /*
-            if( cursor + ( ( ( tempSize + 1 ) / columns ) + 1 ) * columns > tempSize )
-            {
-                cursor += ( ( tempSize + 1 ) / columns ) * columns - 1;
-            }
-            else
-            {
-                cursor += ( ( ( tempSize + 1 ) / columns ) + 1 ) * columns - 1;
-            }
-            */
-            
-            /*
-            if( tempSize % columns == 0 )
-            {
-                if( cursor + ( ( tempSize / columns ) - 1 ) * columns < tempSize )
-                    cursor += ( ( tempSize / columns ) - 1 ) * columns;
-                else
-                    cursor += ( ( tempSize / columns ) - 2 ) * columns;
-            } 
-            else
-            {
-                if( cursor + ( tempSize / columns ) * columns < tempSize )
-                    cursor += ( tempSize / columns ) * columns;
-                else
-                    cursor += ( ( tempSize / columns ) - 1 ) * columns;
-            }
-                //cursor += ( tempSize / columns ) * columns;
-            */
-        } /*menuItems.size()*/ //tempSize - ( columns - ( cursor % columns ) );
+                cursor += ( ( tempSize + 1 ) / columns - 1 ) * columns;
+        }
     }
-    
-    
 }
 
 void LevelSelect::selectRight()
