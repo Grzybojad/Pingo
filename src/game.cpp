@@ -51,6 +51,7 @@ void Game::mainLoop()
                 break;
 
             case GameState::mainMenu:
+            case GameState::levelMenu:
             case GameState::paused:
                 inMenu();
                 break;
@@ -117,7 +118,11 @@ void Game::inMenu()
         if( mainMenu.clickedStart() )
         {
             gameState = GameState::playing;
-                initLevel();
+            initLevel();
+        }
+        else if( mainMenu.clickedLevelSelect() )
+        {
+            gameState = GameState::levelMenu;
         }
         else if( mainMenu.clickedExit() )
         {
@@ -155,6 +160,29 @@ void Game::inMenu()
         vita2d_end_drawing();
         vita2d_swap_buffers();
     }
+    else if( gameState == GameState::levelMenu )
+    {
+        // TODO make this a little more elegant maybe
+        if( Input::wasPressed( Input::Button::circle ) )
+        {
+            gameState = GameState::mainMenu;
+        }
+        if( levelMenu.selectPressed() )
+        {
+            gameState = GameState::playing;
+            initLevel( levelMenu.getCursor() );
+        }
+
+        levelMenu.update();
+
+        vita2d_start_drawing();
+        vita2d_clear_screen();
+
+        levelMenu.draw();
+
+        vita2d_end_drawing();
+        vita2d_swap_buffers();
+    }
 
     calcFrameTime();
 }
@@ -162,6 +190,14 @@ void Game::inMenu()
 void Game::initLevel()
 {
     level.init();
+    level.loadFromFile( levelList.getLevelPath( levelList.getCurrentLevel() ) );
+}
+
+void Game::initLevel( int levelIndex )
+{
+    level.init();
+    // TODO don't allow loading unexisting levels
+    levelList.setCurrentLevel( levelIndex );
     level.loadFromFile( levelList.getLevelPath( levelList.getCurrentLevel() ) );
 }
 

@@ -49,7 +49,7 @@ class Menu
         // Handles all input from user
         void handleInput();
 
-        // Returns select value
+        // Returns true if the select button was pressed
         bool selectPressed();
 
         // Move the cursor
@@ -66,6 +66,7 @@ class MainMenu : public Menu
 
         // Returns true if the button was clicked
         bool clickedStart();
+        bool clickedLevelSelect();
         bool clickedExit();
 };
 
@@ -98,7 +99,8 @@ class LevelSelectItem
 {
     public:
         LevelSelectItem();
-        LevelSelectItem( Rect rect, std::string label );
+        LevelSelectItem( Vec2 pos );
+        LevelSelectItem( Rect rect );
 
         // Draw the menu item
         virtual void draw();
@@ -109,7 +111,6 @@ class LevelSelectItem
     protected:
         bool selected;
         Rect rect;
-        std::string label;
 };
 
 class LevelSelect
@@ -122,22 +123,34 @@ class LevelSelect
         void update();
         void draw();
 
-        // Returns cursor location
-        Vec2 getCursor();
+        // Returns cursor location (should be pointed at the level of the same number)
+        int getCursor();
+
+        // Returns true if the select button was pressed
+        bool selectPressed();
 
     protected:
         std::vector< LevelSelectItem > menuItems;
-        Vec2 cursor;
+        //LevelSelectItem[]
+        int cursor;
 
         // Handles all input from user
         void handleInput();
 
-        // Returns select value
-        bool selectPressed();
+        
 
         // Move the cursor
         void selectUp();
         void selectRight();
         void selectDown();
         void selectLeft();
+
+        // Screen spacing
+        int paddingSide;
+        int paddingTop;
+        int columns;
+        int rows;
+
+        // TODO remove temp
+        int tempSize;
 };

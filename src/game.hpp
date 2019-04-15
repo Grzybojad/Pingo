@@ -28,6 +28,7 @@ class Game
         
         void initLevelList();
         void initLevel();
+        void initLevel( int levelIndex );
         void destroyLevel();
 
         void draw();
@@ -39,12 +40,14 @@ class Game
             exiting = -1,
             initialized = 0,
             mainMenu = 1,
-            playing = 2,
-            paused = 3
+            levelMenu = 2,
+            playing = 3,
+            paused = 4
         };
         GameState gameState;
 
         MainMenu mainMenu;
+        LevelSelect levelMenu;
         PauseMenu pauseMenu;
         LevelFinish finishMenu;
 

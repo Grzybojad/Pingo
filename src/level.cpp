@@ -375,7 +375,8 @@ LevelListElement::LevelListElement( std::string filePath )
 
 LevelList::LevelList()
 {
-    currentLevel = 0;
+    levels.push_back( LevelListElement( "app0:levels/level0.txt" ) );
+    currentLevel = 1;
 }
 
 void LevelList::add( std::string filePath )
@@ -396,6 +397,11 @@ bool LevelList::getCompletion( int index )
 int LevelList::getCurrentLevel()
 {
     return currentLevel;
+}
+
+void LevelList::setCurrentLevel( int index )
+{
+    currentLevel = index;
 }
 
 int LevelList::getNrOfLevels()

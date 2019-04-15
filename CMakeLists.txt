@@ -81,6 +81,7 @@ vita_create_vpk(${SHORT_NAME}.vpk ${VITA_TITLEID} ${SHORT_NAME}.self
   
   FILE font/Ubuntu-Medium.ttf  font/Ubuntu-Medium.ttf
 
+  FILE levels/level0.txt       levels/level0.txt
   FILE levels/level1.txt       levels/level1.txt
   FILE levels/level2.txt       levels/level2.txt
   FILE levels/level3.txt       levels/level3.txt

@@ -22,14 +22,14 @@ MenuItem::MenuItem( Rect rect, std::string label )
 void MenuItem::draw()
 {
     // Placeholder
-    vita2d_draw_rectangle( rect.x, rect.y, rect.w, rect.h, RGBA8( 255, 255, 255, 255 ) );
+    vita2d_draw_rectangle( rect.x, rect.y, rect.w, rect.h, RGBA8( 200, 200, 200, 255 ) );
     Gui::drawText_position( Gui::Position::centered, rect.x + (rect.w / 2), rect.y + (rect.h / 2), rect.h / 2, label.c_str() );
 }
 
 void MenuItem::drawSelected()
 {
     // Placeholder
-    vita2d_draw_rectangle( rect.x, rect.y, rect.w, rect.h, RGBA8( 255, 0, 0, 255 ) );
+    vita2d_draw_rectangle( rect.x, rect.y, rect.w, rect.h, RGBA8( 255, 117, 117, 255 ) );
     Gui::drawText_position( Gui::Position::centered, rect.x + (rect.w / 2), rect.y + (rect.h / 2), rect.h / 2, label.c_str() );
 }
 
@@ -80,29 +80,33 @@ bool Menu::selectPressed()
 
 void Menu::selectUp()
 {
-    if( cursor < menuItems.size() - 1 )
-        cursor++;
-    else
-        cursor = 0;
-}
-
-void Menu::selectDown()
-{
     if( cursor > 0 )
         cursor--;
     else
         cursor = menuItems.size() - 1;
 }
 
+void Menu::selectDown()
+{
+    if( cursor < menuItems.size() - 1 )
+        cursor++;
+    else
+        cursor = 0;
+}
+
 
 MainMenu::MainMenu()
 {
     cursor = 0;
+    int buttonWidth = 260;
 
-    MenuItem startButton = MenuItem( Rect( SCREEN_WIDTH/2 - 100, SCREEN_HEIGHT*0.6, 200, 70 ), "Start" );
+    MenuItem startButton = MenuItem( Rect( SCREEN_WIDTH / 2 - ( buttonWidth / 2 ), SCREEN_HEIGHT*0.4, buttonWidth, 70 ), "Start" );
     addItem( startButton );
 
-    MenuItem exitButton = MenuItem( Rect( SCREEN_WIDTH/2 - 100, SCREEN_HEIGHT*0.8, 200, 70 ), "Exit" );
+    MenuItem levelButton = MenuItem( Rect( SCREEN_WIDTH / 2 - ( buttonWidth / 2 ), SCREEN_HEIGHT*0.6, buttonWidth, 70 ), "Level Select" );
+    addItem( levelButton );
+
+    MenuItem exitButton = MenuItem( Rect( SCREEN_WIDTH / 2 - ( buttonWidth / 2 ), SCREEN_HEIGHT*0.8, buttonWidth, 70 ), "Exit" );
     addItem( exitButton );
 }
 
@@ -124,9 +128,14 @@ bool MainMenu::clickedStart()
     return selectPressed() && cursor == 0;
 }
 
-bool MainMenu::clickedExit()
+bool MainMenu::clickedLevelSelect()
 {
     return selectPressed() && cursor == 1;
+}
+
+bool MainMenu::clickedExit()
+{
+    return selectPressed() && cursor == 2;
 }
 
 
@@ -171,12 +180,13 @@ bool PauseMenu::clickedMainMenu()
 LevelFinish::LevelFinish()
 {
     cursor = 0;
+    int buttonWidth = 260;
 
-    MenuItem nextButton = MenuItem( Rect( SCREEN_WIDTH/2 - 100, SCREEN_HEIGHT*0.6, 200, 70 ), "Next Level" );
+    MenuItem nextButton = MenuItem( Rect( SCREEN_WIDTH / 2 - ( buttonWidth / 2 ), SCREEN_HEIGHT*0.6, buttonWidth, 70 ), "Next Level" );
     addItem( nextButton );
 
-    MenuItem menuButton = MenuItem( Rect( SCREEN_WIDTH/2 - 100, SCREEN_HEIGHT*0.8, 200, 70 ), "Main menu" );
-    addItem( menuButton );
+    MenuItem levelSelect = MenuItem( Rect( SCREEN_WIDTH / 2 - ( buttonWidth / 2 ), SCREEN_HEIGHT*0.8, buttonWidth, 70 ), "Main menu" );
+    addItem( levelSelect );
 }
 
 void LevelFinish::draw()
@@ -203,76 +213,23 @@ bool LevelFinish::clickedMainMenu()
 }
 
 
-LevelSelect::LevelSelect()
-{
-    cursor.x = 0;
-    cursor.y = 0;
-}
-
-void LevelSelect::initLevels( LevelList levelList )
-{
-    int paddingSide = 40;
-    int paddingTop = 80;
-    int itemWidth = 30;
-    int itemHeight = 60;
-
-    int columns = 8;
-
-    int spacing = ( SCREEN_WIDTH - paddingSide * 2 - itemWidth * columns ) / ( columns - 1 );
-
-
-    for( int i = 0; i < levelList.getNrOfLevels(); ++i )
-    {
-        LevelSelectItem newItem = LevelSelectItem( 
-            Rect(
-                paddingSide + ( i * columns ) + ( i * spacing ),
-                paddingTop,
-                itemWidth,
-                itemHeight
-            ),
-            std::to_string( i )
-        );
-        menuItems.push_back( newItem );
-    }
-}
-
-void LevelSelect::update()
-{
-    
-}
-
-void LevelSelect::draw()
-{
-
-}
-
-void LevelSelect::selectUp()
-{
-
-}
-
-void LevelSelect::selectRight()
-{
-
-}
-
-void LevelSelect::selectDown()
-{
-
-}
-
-void LevelSelect::selectLeft()
-{
-
-}
-
 
 LevelSelectItem::LevelSelectItem()
 {
 
 }
 
-LevelSelectItem::LevelSelectItem( Rect rect, std::string label )
+LevelSelectItem::LevelSelectItem( Vec2 pos )
+{
+    rect = Rect(
+        pos.x,
+        pos.y,
+        40,
+        50
+    );
+}
+
+LevelSelectItem::LevelSelectItem( Rect rect )
 {
 
 }
@@ -285,4 +242,125 @@ void LevelSelectItem::draw()
 void LevelSelectItem::drawSelected()
 {
 
+}
+
+
+LevelSelect::LevelSelect()
+{
+    cursor = 1;
+
+    paddingSide = 40;
+    paddingTop = 140;
+    columns = 10;
+
+    // TODO remove temp
+    tempSize = 30;
+}
+
+void LevelSelect::initLevels( LevelList levelList )
+{
+    /*
+    int spacing = ( SCREEN_WIDTH - paddingSide * 2 - itemWidth * columns ) / ( columns - 1 );
+
+    rows = levelList.getNrOfLevels() / columns;
+    if( levelList.getNrOfLevels() % columns != 0 )
+        rows += 1;
+
+    for( int i = 0; i < levelList.getNrOfLevels(); ++i )
+    {
+        LevelSelectItem newItem = LevelSelectItem( 
+            Vec2(
+                paddingSide + ( i * columns ) + ( i * spacing ),
+                paddingTop,
+            ),
+        );
+        menuItems.push_back( newItem );
+    }
+
+    rows = menuItems.size
+    */
+}
+
+void LevelSelect::update()
+{
+    handleInput();
+}
+
+void LevelSelect::draw()
+{
+    Gui::drawTextf_position( Gui::Position::centered, SCREEN_WIDTH / 2, 50, 60, "Level select" );
+
+    // TODO change
+    int itemWidth = 70;
+    int itemHeight = 90;
+
+    int spacing = ( SCREEN_WIDTH - paddingSide * 2 - itemWidth * columns ) / ( columns - 1 );
+
+    for( int i = 1; i <= tempSize; ++i )
+    {
+        int posX = paddingSide + ( ( ( i - 1 ) % columns ) * itemWidth ) + ( ( ( i - 1 ) % columns ) * spacing );
+        int posY = paddingTop + ( ( ( i - 1 ) / columns ) * ( itemHeight + 40 ) );
+
+        if( i == cursor)
+            vita2d_draw_rectangle( posX, posY, itemWidth, itemHeight, RGBA8( 128, 0, 0, 255 ) );
+        else
+            vita2d_draw_rectangle( posX, posY, itemWidth, itemHeight, RGBA8( 0, 0, 0, 255 ) );
+
+        Gui::drawTextf_color_position( Gui::Position::centeredX, posX + (itemWidth/2), posY + 45, 30, RGBA8( 255, 255, 255, 255 ), "%i", i );
+    }
+}
+
+int LevelSelect::getCursor()
+{
+    return cursor;
+}
+
+void LevelSelect::handleInput()
+{
+    if( Input::wasPressed( Input::Button::up ) )
+        selectUp();
+    if( Input::wasPressed( Input::Button::right ) )
+        selectRight();
+    if( Input::wasPressed( Input::Button::down ) )
+        selectDown();
+    if( Input::wasPressed( Input::Button::left ) )
+        selectLeft();
+}
+
+bool LevelSelect::selectPressed()
+{
+    return Input::wasPressed( Input::Button::cross );
+}
+
+void LevelSelect::selectUp()
+{
+    if( cursor > columns )
+        cursor -= columns;
+    else
+        cursor = /*menuItems.size()*/tempSize - ( columns - cursor );
+    
+}
+
+void LevelSelect::selectRight()
+{
+    if( cursor < tempSize )//menuItems.size() )
+        cursor++;
+    else
+        cursor = 1;
+}
+
+void LevelSelect::selectDown()
+{
+    if( cursor < /*menuItems.size()*/ tempSize - columns )
+        cursor += columns;
+    else
+        cursor %= columns;
+}
+
+void LevelSelect::selectLeft()
+{
+    if( cursor > 1 )
+        cursor--;
+    else
+        cursor = /*menuItems.size()*/tempSize;
 }

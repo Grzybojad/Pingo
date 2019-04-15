@@ -149,6 +149,7 @@ class LevelList
         std::string getLevelPath( int index );
         bool getCompletion( int index );
         int getCurrentLevel();
+        void setCurrentLevel( int index );
         int getNrOfLevels();
 
         void nextLevel();
