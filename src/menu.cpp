@@ -278,8 +278,6 @@ void LevelSelect::draw()
         else
             menuItems[ i ].draw();
     }
-
-    Gui::drawTextf( 100, 100, 30, "Cursor: %d", cursor );
 }
 
 int LevelSelect::getCursor()

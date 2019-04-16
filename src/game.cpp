@@ -109,15 +109,7 @@ void Game::inGame()
             destroyLevel();
         }
 
-        
-        vita2d_start_drawing();
-        vita2d_clear_screen();
-        
-        level.draw();
-        finishMenu.draw();
-
-        vita2d_end_drawing();
-        vita2d_swap_buffers();
+        draw();
     }
 
     calcFrameTime();
@@ -145,13 +137,7 @@ void Game::inMenu()
             gameState = GameState::exiting;
         }
 
-        vita2d_start_drawing();
-        vita2d_clear_screen();
-
-        mainMenu.draw();
-
-        vita2d_end_drawing();
-        vita2d_swap_buffers();
+        draw();
     }
     else if( gameState == GameState::paused )
     {
@@ -167,14 +153,7 @@ void Game::inMenu()
             destroyLevel();
         }
 
-        vita2d_start_drawing();
-        vita2d_clear_screen();
-
-        level.draw();
-        pauseMenu.draw();
-
-        vita2d_end_drawing();
-        vita2d_swap_buffers();
+        draw();
     }
     else if( gameState == GameState::levelMenu )
     {
@@ -191,13 +170,7 @@ void Game::inMenu()
 
         levelMenu.update();
 
-        vita2d_start_drawing();
-        vita2d_clear_screen();
-
-        levelMenu.draw();
-
-        vita2d_end_drawing();
-        vita2d_swap_buffers();
+        draw();
     }
 
     calcFrameTime();
@@ -236,9 +209,29 @@ void Game::draw()
     vita2d_start_drawing();
     vita2d_clear_screen();
 
-    // TODO move drawing here
+    switch( gameState )
+    {
+        case GameState::mainMenu:
+            mainMenu.draw();
+            break;
 
-    level.draw();
+        case GameState::playing:
+            level.draw();
+            
+            if( level.complete() )
+                finishMenu.draw();
+
+            break;
+
+        case GameState::levelMenu:
+            levelMenu.draw();
+            break;
+
+        case GameState::paused:
+            level.draw();
+            pauseMenu.draw();
+            break;
+    }
 
     vita2d_end_drawing();
     vita2d_swap_buffers();
