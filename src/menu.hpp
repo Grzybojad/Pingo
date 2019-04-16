@@ -98,9 +98,7 @@ class LevelFinish : public Menu
 class LevelSelectItem
 {
     public:
-        LevelSelectItem();
-        LevelSelectItem( Vec2 pos );
-        LevelSelectItem( Rect rect );
+        LevelSelectItem( Rect rect, int index );
 
         // Draw the menu item
         virtual void draw();
@@ -111,6 +109,7 @@ class LevelSelectItem
     protected:
         bool selected;
         Rect rect;
+        int index;
 };
 
 class LevelSelect
@@ -130,14 +129,11 @@ class LevelSelect
         bool selectPressed();
 
     protected:
-        std::vector< LevelSelectItem > menuItems;
-        //LevelSelectItem[]
+        std::vector<LevelSelectItem> menuItems;
         int cursor;
 
         // Handles all input from user
         void handleInput();
-
-        
 
         // Move the cursor
         void selectUp();
@@ -150,7 +146,4 @@ class LevelSelect
         int paddingTop;
         int columns;
         int rows;
-
-        // TODO remove temp
-        int tempSize;
 };

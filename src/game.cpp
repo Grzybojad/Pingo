@@ -15,7 +15,9 @@ Game::Game()
     // Initialize level list
     initLevelList();
 
-    // TODO: change this
+    // Initialize the level select menu
+    levelMenu.initLevels( levelList );
+
     gameState = GameState::initialized;
 }
 
@@ -26,15 +28,23 @@ Game::~Game()
 
 void Game::initLevelList()
 {
-    // TODO make this automatic
-    levelList.add( "level1.txt" );
-    levelList.add( "level2.txt" );
-    levelList.add( "level3.txt" );
-    levelList.add( "level4.txt" );
-    levelList.add( "level5.txt" );
-    levelList.add( "level6.txt" );
-    levelList.add( "level7.txt" );
-    levelList.add( "level8.txt" );
+    // Thanks to G33 for this part!
+    int dfd;
+    dfd = sceIoDopen( "app0:levels/" );
+    if( dfd > 0 )
+    {
+        SceIoDirent file;
+        while( sceIoDread( dfd, &file ) > 0 )
+        {
+            std::string fileName( file.d_name );
+            levelList.add( fileName );
+        }
+    }
+    else if( dfd < 0 )
+    {
+        // TODO handle error
+    }
+    sceIoDclose( dfd );
 }
 
 void Game::mainLoop()
@@ -203,7 +213,7 @@ void Game::initLevel( int levelIndex )
 {
     level.init();
     // TODO don't allow loading unexisting levels
-    levelList.setCurrentLevel( levelIndex );
+    levelList.setCurrentLevel( levelIndex - 1 );
     level.loadFromFile( levelList.getLevelPath( levelList.getCurrentLevel() ) );
 }
 

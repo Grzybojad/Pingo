@@ -81,14 +81,16 @@ vita_create_vpk(${SHORT_NAME}.vpk ${VITA_TITLEID} ${SHORT_NAME}.self
   
   FILE font/Ubuntu-Medium.ttf  font/Ubuntu-Medium.ttf
 
-  FILE levels/level0.txt       levels/level0.txt
-  FILE levels/level1.txt       levels/level1.txt
-  FILE levels/level2.txt       levels/level2.txt
-  FILE levels/level3.txt       levels/level3.txt
-  FILE levels/level4.txt       levels/level4.txt
-  FILE levels/level5.txt       levels/level5.txt
-  FILE levels/level6.txt       levels/level6.txt
-  FILE levels/level7.txt       levels/level7.txt
-  FILE levels/level8.txt       levels/level8.txt
+  FILE levels/level001.txt       levels/level001.txt
+  FILE levels/level002.txt       levels/level002.txt
+  FILE levels/level003.txt       levels/level003.txt
+  FILE levels/level004.txt       levels/level004.txt
+  FILE levels/level005.txt       levels/level005.txt
+  FILE levels/level006.txt       levels/level006.txt
+  FILE levels/level007.txt       levels/level007.txt
+  FILE levels/level008.txt       levels/level008.txt
+  FILE levels/level009.txt       levels/level009.txt
+  FILE levels/level010.txt       levels/level010.txt
+  FILE levels/level011.txt       levels/level011.txt
 )
 

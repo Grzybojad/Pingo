@@ -1,9 +1,11 @@
 #pragma once
 
 #include <vector>
+#include <string>
 
 #include <psp2/ctrl.h>
 #include <psp2/kernel/processmgr.h>
+#include <psp2/io/dirent.h>
 #include <vita2d.h>
 
 #include "input.hpp"

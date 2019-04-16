@@ -375,8 +375,7 @@ LevelListElement::LevelListElement( std::string filePath )
 
 LevelList::LevelList()
 {
-    levels.push_back( LevelListElement( "app0:levels/level0.txt" ) );
-    currentLevel = 1;
+    currentLevel = 0;
 }
 
 void LevelList::add( std::string filePath )

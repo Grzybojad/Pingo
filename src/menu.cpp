@@ -191,6 +191,7 @@ LevelFinish::LevelFinish()
 
 void LevelFinish::draw()
 {
+    vita2d_draw_rectangle( SCREEN_WIDTH / 2 - 240, 70, 480, 80, RGBA8( 255, 255, 255, 255 ) );
     Gui::drawText_color_position( Gui::Position::centered, SCREEN_WIDTH / 2, 100, 60, RGBA8( 0, 0, 0, 255 ), "Level complete!" );
 
     for( int i = 0; i < menuItems.size(); ++i )
@@ -213,39 +214,22 @@ bool LevelFinish::clickedMainMenu()
 }
 
 
-LevelSelectItem::LevelSelectItem()
-{
-    rect = Rect(
-        0,
-        0,
-        40,
-        50
-    );
-}
-
-LevelSelectItem::LevelSelectItem( Vec2 pos )
-{
-    rect = Rect(
-        pos.x,
-        pos.y,
-        40,
-        50
-    );
-}
-
-LevelSelectItem::LevelSelectItem( Rect rect )
+LevelSelectItem::LevelSelectItem( Rect rect, int index )
 {
     this->rect = rect;
+    this->index = index;
 }
 
 void LevelSelectItem::draw()
 {
-    
+    vita2d_draw_rectangle( rect.x, rect.y, rect.w, rect.h, RGBA8( 0, 0, 0, 255 ) );
+    Gui::drawTextf_color_position( Gui::Position::centeredX, rect.x + ( rect.w / 2 ), rect.y + 45, 30, RGBA8( 255, 255, 255, 255 ), "%d", index );
 }
 
 void LevelSelectItem::drawSelected()
 {
-
+    vita2d_draw_rectangle( rect.x, rect.y, rect.w, rect.h, RGBA8( 128, 0, 0, 255 ) );
+    Gui::drawTextf_color_position( Gui::Position::centeredX, rect.x + ( rect.w / 2 ), rect.y + 45, 30, RGBA8( 255, 255, 255, 255 ), "%d", index );
 }
 
 
@@ -257,32 +241,25 @@ LevelSelect::LevelSelect()
     paddingTop = 140;
     columns = 10;
 
-    // TODO remove temp
-    tempSize = 8;
+    // Add an empty "0" level
+    menuItems.push_back( LevelSelectItem( Rect(0,0,0,0), 0 ) );
 }
 
 void LevelSelect::initLevels( LevelList levelList )
 {
-    /*
+    int itemWidth = 70;
+    int itemHeight = 90;
     int spacing = ( SCREEN_WIDTH - paddingSide * 2 - itemWidth * columns ) / ( columns - 1 );
 
-    rows = levelList.getNrOfLevels() / columns;
-    if( levelList.getNrOfLevels() % columns != 0 )
-        rows += 1;
-
-    for( int i = 0; i < levelList.getNrOfLevels(); ++i )
+    for( int i = 1; i <= levelList.getNrOfLevels(); ++i )
     {
-        LevelSelectItem newItem = LevelSelectItem( 
-            Vec2(
-                paddingSide + ( i * columns ) + ( i * spacing ),
-                paddingTop,
-            ),
-        );
+        int posX = paddingSide + ( ( ( i - 1 ) % columns ) * itemWidth ) + ( ( ( i - 1 ) % columns ) * spacing );
+        int posY = paddingTop + ( ( ( i - 1 ) / columns ) * ( itemHeight + 40 ) );
+
+        Rect rect = Rect( posX, posY, itemWidth, itemHeight );
+        LevelSelectItem newItem = LevelSelectItem( rect, i );
         menuItems.push_back( newItem );
     }
-
-    rows = menuItems.size
-    */
 }
 
 void LevelSelect::update()
@@ -294,24 +271,15 @@ void LevelSelect::draw()
 {
     Gui::drawTextf_position( Gui::Position::centered, SCREEN_WIDTH / 2, 50, 60, "Level select" );
 
-    // TODO change
-    int itemWidth = 70;
-    int itemHeight = 90;
-
-    int spacing = ( SCREEN_WIDTH - paddingSide * 2 - itemWidth * columns ) / ( columns - 1 );
-
-    for( int i = 1; i <= tempSize; ++i )
-    {
-        int posX = paddingSide + ( ( ( i - 1 ) % columns ) * itemWidth ) + ( ( ( i - 1 ) % columns ) * spacing );
-        int posY = paddingTop + ( ( ( i - 1 ) / columns ) * ( itemHeight + 40 ) );
-
-        if( i == cursor)
-            vita2d_draw_rectangle( posX, posY, itemWidth, itemHeight, RGBA8( 128, 0, 0, 255 ) );
+    for( int i = 1; i < menuItems.size(); ++i )
+    { 
+        if( i == cursor )
+            menuItems[ i ].drawSelected();
         else
-            vita2d_draw_rectangle( posX, posY, itemWidth, itemHeight, RGBA8( 0, 0, 0, 255 ) );
-
-        Gui::drawTextf_color_position( Gui::Position::centeredX, posX + (itemWidth/2), posY + 45, 30, RGBA8( 255, 255, 255, 255 ), "%i", i );
+            menuItems[ i ].draw();
     }
+
+    Gui::drawTextf( 100, 100, 30, "Cursor: %d", cursor );
 }
 
 int LevelSelect::getCursor()
@@ -338,23 +306,23 @@ bool LevelSelect::selectPressed()
 
 void LevelSelect::selectUp()
 {
-    if( tempSize > columns )
+    if( menuItems.size() - 1 > columns )
     {
         if( cursor > columns )
             cursor -= columns;
         else
         {
-            if( tempSize % columns >= cursor )
-                cursor = tempSize - ( ( tempSize % columns ) - cursor );
+            if( ( menuItems.size() - 1 ) % columns >= cursor )
+                cursor = ( menuItems.size() - 1 ) - ( ( ( menuItems.size() - 1 ) % columns ) - cursor );
             else
-                cursor += ( ( tempSize + 1 ) / columns - 1 ) * columns;
+                cursor += ( ( menuItems.size() ) / columns - 1 ) * columns;
         }
     }
 }
 
 void LevelSelect::selectRight()
 {
-    if( cursor < tempSize )//menuItems.size() )
+    if( cursor < menuItems.size() - 1 )
         cursor++;
     else
         cursor = 1;
@@ -362,7 +330,7 @@ void LevelSelect::selectRight()
 
 void LevelSelect::selectDown()
 {
-    if( cursor <= /*menuItems.size()*/ tempSize - columns )
+    if( cursor < menuItems.size() - columns )
         cursor += columns;
     else
         cursor %= columns;
@@ -373,5 +341,5 @@ void LevelSelect::selectLeft()
     if( cursor > 1 )
         cursor--;
     else
-        cursor = /*menuItems.size()*/tempSize;
+        cursor = menuItems.size() - 1;
 }
