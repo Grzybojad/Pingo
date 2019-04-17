@@ -135,8 +135,16 @@ class LevelListElement
     public:
         LevelListElement( std::string filePath );
 
+        void drawLevelMenuElement( Vec2 pos, bool selected );
+
+        bool unlocked;
         bool completed;
         std::string filePath;
+
+        int index;
+        std::string name;
+        int stepsForTwoStars;
+        int stepsForThreeStars;
 };
 
 class LevelList
@@ -149,12 +157,16 @@ class LevelList
         std::string getLevelPath( int index );
         bool getCompletion( int index );
         int getCurrentLevel();
-        void setCurrentLevel( int index );
         int getNrOfLevels();
 
         void nextLevel();
+        void setCurrentLevel( int index );
+        void compleateCurrentLevel();
+
+        LevelListElement * accessElement( int index );
 
     private:
         std::vector< LevelListElement > levels;
         int currentLevel;
+        int progress;
 };

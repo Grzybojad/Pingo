@@ -95,29 +95,12 @@ class LevelFinish : public Menu
 };
 
 
-class LevelSelectItem
-{
-    public:
-        LevelSelectItem( Rect rect, int index );
-
-        // Draw the menu item
-        virtual void draw();
-
-        // Draw the menu item the cursor is currently at
-        virtual void drawSelected();
-
-    protected:
-        bool selected;
-        Rect rect;
-        int index;
-};
-
 class LevelSelect
 {
     public:
         LevelSelect();
 
-        void initLevels( LevelList levelList );
+        void initLevels( LevelList *levelList );
 
         void update();
         void draw();
@@ -129,7 +112,7 @@ class LevelSelect
         bool selectPressed();
 
     protected:
-        std::vector<LevelSelectItem> menuItems;
+        LevelList *levelList;
         int cursor;
 
         // Handles all input from user

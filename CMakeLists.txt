@@ -81,6 +81,7 @@ vita_create_vpk(${SHORT_NAME}.vpk ${VITA_TITLEID} ${SHORT_NAME}.self
   
   FILE font/Ubuntu-Medium.ttf  font/Ubuntu-Medium.ttf
 
+  #Figure out how to load all levels from file automatically
   FILE levels/level001.txt       levels/level001.txt
   FILE levels/level002.txt       levels/level002.txt
   FILE levels/level003.txt       levels/level003.txt

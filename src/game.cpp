@@ -16,7 +16,7 @@ Game::Game()
     initLevelList();
 
     // Initialize the level select menu
-    levelMenu.initLevels( levelList );
+    levelMenu.initLevels( &levelList );
 
     gameState = GameState::initialized;
 }
@@ -28,7 +28,6 @@ Game::~Game()
 
 void Game::initLevelList()
 {
-    // Thanks to G33 for this part!
     int dfd;
     dfd = sceIoDopen( "app0:levels/" );
     if( dfd > 0 )
@@ -96,6 +95,9 @@ void Game::inGame()
     else
     {
         finishMenu.update();
+
+        if( !levelList.getCompletion( levelList.getCurrentLevel() ) )
+            levelList.compleateCurrentLevel();
 
         if( finishMenu.clickedNextLevel() )
         {

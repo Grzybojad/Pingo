@@ -29,8 +29,11 @@ void Level::loadFromFile( std::string file )
         readLevelName( file );
 
         // Get all lines from level file
+        
+
         std::vector<std::string> lines;
         std::string line = "";
+        std::getline( levelFile, line ); // The first line contains metadata, so we don't save it
         while( std::getline( levelFile, line ) )
         {
             lines.push_back( line );
@@ -368,19 +371,89 @@ void WallTile::draw( Rect rect )
 
 LevelListElement::LevelListElement( std::string filePath )
 {
+    unlocked = false;
     completed = false;
     this->filePath = filePath;
+    name = "test";
+}
+
+void LevelListElement::drawLevelMenuElement( Vec2 pos, bool selected )
+{
+    int itemWidth = 70;
+    int itemHeight = 90;
+
+    std::string test = "test";
+
+    if( selected )
+    {
+        vita2d_draw_rectangle( pos.x, pos.y, itemWidth, itemHeight, RGBA8( 128, 0, 0, 255 ) );
+        Gui::drawTextf_color_position( Gui::Position::centeredX, pos.x + ( itemWidth / 2 ), pos.y + 45, 30, RGBA8( 255, 255, 255, 255 ), "%s", std::to_string( index ).c_str() );
+    }
+    else if( completed )
+    {
+        vita2d_draw_rectangle( pos.x, pos.y, itemWidth, itemHeight, RGBA8( 0, 0, 0, 255 ) );
+        Gui::drawTextf_color_position( Gui::Position::centeredX, pos.x + ( itemWidth / 2 ), pos.y + 45, 30, RGBA8( 255, 255, 255, 255 ), "%s", std::to_string( index ).c_str() );
+    }
+    else if( unlocked )
+    {
+        vita2d_draw_rectangle( pos.x, pos.y, itemWidth, itemHeight, RGBA8( 0, 0, 0, 255 ) );
+        Gui::drawTextf_color_position( Gui::Position::centeredX, pos.x + ( itemWidth / 2 ), pos.y + 45, 30, RGBA8( 255, 255, 255, 255 ), "%s", std::to_string( index ).c_str() );
+    }
+    else
+    {
+        vita2d_draw_rectangle( pos.x, pos.y, itemWidth, itemHeight, RGBA8( 128, 128, 128, 255 ) );
+        Gui::drawTextf_color_position( Gui::Position::centeredX, pos.x + ( itemWidth / 2 ), pos.y + 45, 30, RGBA8( 255, 255, 255, 255 ), "%s", std::to_string( index ).c_str() );
+    }
 }
 
 
 LevelList::LevelList()
 {
     currentLevel = 0;
+    progress = 1;
+
+    //levels.push_back( LevelListElement( "app0:levels/level0.txt" ) );
 }
 
 void LevelList::add( std::string filePath )
 {
     levels.push_back( LevelListElement( "app0:levels/" + filePath ) );
+
+    // Load level file meta data
+    std::ifstream levelFile( "app0:levels/" + filePath );
+    if( levelFile.fail() )
+    {
+        // TODO
+        // Handle level load fail
+    }
+    else
+    {
+        std::string line = "";
+        std::getline( levelFile, line );
+        int beg = 0;
+        int end = 0;
+
+        beg = line.find_first_of( "<" ) + 1;
+        end = line.find_first_of( ">" );
+        levels[ levels.size() - 1 ].index = std::stoi( line.substr( beg, end - beg ) );
+        line.erase( beg, end );
+        
+        beg = line.find_first_of( "<" ) + 1;
+        end = line.find_first_of( ">" );
+        levels[ levels.size() - 1 ].name = line.substr( beg, end - beg );
+        line.erase( beg, end );
+        /*
+        beg = line.find_first_of( "<" ) + 1;
+        end = line.find_first_of( ">" );
+        levels[ levels.size() - 1 ].stepsForTwoStars = std::stoi( line.substr( beg, end - beg ) );
+        line.erase( beg, end );
+
+        beg = line.find_first_of( "<" ) + 1;
+        end = line.find_first_of( ">" );
+        levels[ levels.size() - 1 ].stepsForThreeStars = std::stoi( line.substr( beg, end - beg ) );
+        line.erase( beg, end );*/
+    }
+    levelFile.close();
 }
 
 std::string LevelList::getLevelPath( int index )
@@ -403,6 +476,15 @@ void LevelList::setCurrentLevel( int index )
     currentLevel = index;
 }
 
+void LevelList::compleateCurrentLevel()
+{
+    levels[ currentLevel ].completed = true;
+
+    // Unlock the next level
+    if( currentLevel < levels.size() )
+        levels[ currentLevel + 1 ].unlocked = true;
+}
+
 int LevelList::getNrOfLevels()
 {
     return levels.size();
@@ -412,4 +494,10 @@ void LevelList::nextLevel()
 {
     if( currentLevel < levels.size() - 1 )
         currentLevel++;
+}
+
+LevelListElement * LevelList::accessElement( int index )
+{
+    LevelListElement *level = & levels[ index ];
+    return level;
 }
