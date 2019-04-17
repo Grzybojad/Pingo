@@ -29,8 +29,6 @@ void Level::loadFromFile( std::string file )
         readLevelName( file );
 
         // Get all lines from level file
-        
-
         std::vector<std::string> lines;
         std::string line = "";
         std::getline( levelFile, line ); // The first line contains metadata, so we don't save it
@@ -131,7 +129,7 @@ void Level::draw()
     ball.draw();
 
     // Draw level name
-    Gui::drawTextf_position( Gui::Position::centered, SCREEN_WIDTH / 2, 40, 40, "Level %s", levelName.c_str() );
+    Gui::drawTextf_position( Gui::Position::centered, SCREEN_WIDTH / 2, 40, 40, "%s", levelName.c_str() );
 }
 
 bool Level::complete()
@@ -141,12 +139,26 @@ bool Level::complete()
 
 void Level::readLevelName( std::string fileName )
 {
+    std::ifstream levelFile( fileName );
+
+    std::string line = "";
+    std::getline( levelFile, line );
+    int beg = 0;
+    int end = 0;
+
+    beg = line.find( "><" ) + 2;
+    end = line.find( ">", beg );
+    levelName = line.substr( beg, end - beg);
+
+    levelFile.close();
+    /*
     std::string start = "levels/level";
     std::string end = ".txt";
     int startPos = fileName.find( start );
     int endPos = fileName.find( end );
 
     levelName = fileName.substr( startPos + start.length(), endPos - ( startPos + start.length() ) );
+    */
 }
 
 Vec2 Level::getWorldPosFromTilePos( Vec2 tilePos )
@@ -411,8 +423,6 @@ LevelList::LevelList()
 {
     currentLevel = 0;
     progress = 1;
-
-    //levels.push_back( LevelListElement( "app0:levels/level0.txt" ) );
 }
 
 void LevelList::add( std::string filePath )
@@ -433,25 +443,21 @@ void LevelList::add( std::string filePath )
         int beg = 0;
         int end = 0;
 
-        beg = line.find_first_of( "<" ) + 1;
-        end = line.find_first_of( ">" );
+        beg = line.find( "<" ) + 1;
+        end = line.find( ">" );
         levels[ levels.size() - 1 ].index = std::stoi( line.substr( beg, end - beg ) );
-        line.erase( beg, end );
         
-        beg = line.find_first_of( "<" ) + 1;
-        end = line.find_first_of( ">" );
+        beg = line.find( "<" ) + 1;
+        end = line.find( ">" );
         levels[ levels.size() - 1 ].name = line.substr( beg, end - beg );
-        line.erase( beg, end );
-        /*
-        beg = line.find_first_of( "<" ) + 1;
-        end = line.find_first_of( ">" );
+        
+        beg = line.find( "<" ) + 1;
+        end = line.find( ">" );
         levels[ levels.size() - 1 ].stepsForTwoStars = std::stoi( line.substr( beg, end - beg ) );
-        line.erase( beg, end );
 
-        beg = line.find_first_of( "<" ) + 1;
-        end = line.find_first_of( ">" );
+        beg = line.find( "<" ) + 1;
+        end = line.find( ">" );
         levels[ levels.size() - 1 ].stepsForThreeStars = std::stoi( line.substr( beg, end - beg ) );
-        line.erase( beg, end );*/
     }
     levelFile.close();
 }
