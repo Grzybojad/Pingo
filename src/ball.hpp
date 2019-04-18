@@ -16,7 +16,7 @@ class Ball
 
         void setWorldPos( Vec2 worldPos );
         Vec2 getWorldPos();
-        void handleInput();
+        bool handleInput();
         void move();
         void moveBack();
         void draw();

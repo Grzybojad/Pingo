@@ -27,19 +27,27 @@ Vec2 Ball::getWorldPos()
     return worldPos;
 }
 
-void Ball::handleInput()
+bool Ball::handleInput()
 {
+    bool wasPressed = false;
+
     if( state == State::stationary )
     {
+        wasPressed = true;
+
         if( Input::wasPressed( Input::Button::up ) )
             moveUp();
-        if( Input::wasPressed( Input::Button::right ) )
+        else if( Input::wasPressed( Input::Button::right ) )
             moveRight();
-        if( Input::wasPressed( Input::Button::down ) )
+        else if( Input::wasPressed( Input::Button::down ) )
             moveDown();
-        if( Input::wasPressed( Input::Button::left ) )
+        else if( Input::wasPressed( Input::Button::left ) )
             moveLeft();
+        else
+            wasPressed = false;
     }
+
+    return wasPressed;
 }
 
 void Ball::move()

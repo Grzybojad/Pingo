@@ -57,6 +57,7 @@ void Level::loadFromFile( std::string file )
     // Initialize floor count
     floorTileCount = countFloorTiles();
     paintedTiles = 0;
+    steps = 0;
 
     levelFile.close();
 }
@@ -79,7 +80,9 @@ void Level::update()
 {
     if( state == State::playing )
     {
-        ball.handleInput();
+        bool newStep = true;
+        if( !ball.handleInput() ) newStep = false;
+
         ball.move();
 
         if( ball.state != Ball::State::stationary )
@@ -87,10 +90,14 @@ void Level::update()
 
         if( ballHittingWall() )
         {
+            newStep = false;
             ball.moveBack();
             ball.setWorldPos( getBallTilePosition() );
             ball.stop();
         }
+
+        if( newStep )
+            steps++;
 
         if( checkWinCondition() )
             state = State::finished;
@@ -130,6 +137,9 @@ void Level::draw()
 
     // Draw level name
     Gui::drawTextf_position( Gui::Position::centered, SCREEN_WIDTH / 2, 40, 40, "%s", levelName.c_str() );
+
+    // Draw step count
+    Gui::drawTextf_position( Gui::Position::alignTop, 10, 10, 20, "Steps: %d", steps );
 }
 
 bool Level::complete()
@@ -265,7 +275,7 @@ bool Level::ballHittingWall()
         {
             if( dynamic_cast<WallTile*>( tiles[i][j] ) )
             {
-                if( checkCollision( ball.getRect(), getWorldPosFromTilePos( Vec2( j, i ) ).toRect( tileSize-5, tileSize-5 ) ) )
+                if( checkCollision( ball.getRect(), getWorldPosFromTilePos( Vec2( j, i ) ).toRect( tileSize, tileSize ) ) )
                     return true;
             }
         }

@@ -54,6 +54,7 @@ class Level
         int tileSize;
         int floorTileCount;
         int paintedTiles;
+        int steps;
 
         std::string levelName;
 
