@@ -56,4 +56,6 @@ class Game
         Level level;
 
         LevelList levelList;
+
+        bool progressSaved;
 };

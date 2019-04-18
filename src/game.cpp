@@ -18,6 +18,8 @@ Game::Game()
     // Initialize the level select menu
     levelMenu.initLevels( &levelList );
 
+    progressSaved = false;
+
     gameState = GameState::initialized;
 }
 
@@ -44,6 +46,8 @@ void Game::initLevelList()
         // TODO handle error
     }
     sceIoDclose( dfd );
+
+    levelList.loadProgress();
 }
 
 void Game::mainLoop()
@@ -94,6 +98,15 @@ void Game::inGame()
     }
     else
     {
+        // Check to only save the data once
+        if( !progressSaved )
+        {
+            levelList.saveProgress();
+            progressSaved = true;
+        }
+
+        finishMenu.setStars( level.getStarRating() );
+
         finishMenu.update();
 
         if( !levelList.getCompletion( levelList.getCurrentLevel() ) )
@@ -101,12 +114,14 @@ void Game::inGame()
 
         if( finishMenu.clickedNextLevel() )
         {
+            progressSaved = false;
             levelList.nextLevel();
             destroyLevel();
             initLevel();
         }
         else if( finishMenu.clickedMainMenu() )
         {
+            progressSaved = false;
             gameState = GameState::mainMenu;
             destroyLevel();
         }
@@ -148,6 +163,12 @@ void Game::inMenu()
         if( pauseMenu.clickedResume() )
         {
             gameState = GameState::playing;
+        }
+        if( pauseMenu.clickedRestart() )
+        {
+            gameState = GameState::playing;
+            destroyLevel();
+            initLevel();
         }
         else if( pauseMenu.clickedMainMenu() )
         {

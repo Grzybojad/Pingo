@@ -99,7 +99,10 @@ void Level::update()
             steps++;
 
         if( checkWinCondition() )
+        {
+            setStarRating();
             state = State::finished;
+        }
     }
 }
 
@@ -141,8 +144,8 @@ void Level::draw()
     Gui::drawTextf_position( Gui::Position::alignTop, 10, 10, 20, "Steps: %d", steps );
 
     // Draw step requirements
-    Gui::drawTextf_position( Gui::Position::alignTopRight, SCREEN_WIDTH - 10, 10, 20, "Steps for 2 stars: %s", std::to_string( levelListElement->stepsForTwoStars ).c_str() );
-    Gui::drawTextf_position( Gui::Position::alignTopRight, SCREEN_WIDTH - 10, 40, 20, "Steps for 3 stars: %s", std::to_string( levelListElement->stepsForThreeStars ).c_str() );
+    Gui::drawTextf_position( Gui::Position::alignTopRight, SCREEN_WIDTH - 10, 10, 20, "Steps for 2 stars: %i", levelListElement->stepsForTwoStars );
+    Gui::drawTextf_position( Gui::Position::alignTopRight, SCREEN_WIDTH - 10, 40, 20, "Steps for 3 stars: %i", levelListElement->stepsForThreeStars );
 }
 
 bool Level::complete()
@@ -307,8 +310,18 @@ bool Level::checkWinCondition()
 
 int Level::getStarRating()
 {
-    // TODO implement
-    return 0;
+    if( steps <= levelListElement->stepsForThreeStars )
+        return 3;
+    else if( steps <= levelListElement->stepsForTwoStars )
+        return 2;
+    else
+        return 1;
+}
+
+void Level::setStarRating()
+{
+    if( getStarRating() > levelListElement->stars )
+        levelListElement->stars = getStarRating();
 }
 
 
@@ -385,6 +398,8 @@ LevelListElement::LevelListElement( std::string filePath )
 
     stepsForTwoStars = 0;
     stepsForThreeStars = 0;
+
+    stars = 0;
 }
 
 void LevelListElement::drawLevelMenuElement( Vec2 pos, bool selected )
@@ -395,30 +410,31 @@ void LevelListElement::drawLevelMenuElement( Vec2 pos, bool selected )
     if( selected )
     {
         vita2d_draw_rectangle( pos.x, pos.y, itemWidth, itemHeight, RGBA8( 128, 0, 0, 255 ) );
-        Gui::drawTextf_color_position( Gui::Position::centeredX, pos.x + ( itemWidth / 2 ), pos.y + 45, 30, RGBA8( 255, 255, 255, 255 ), "%s", std::to_string( index ).c_str() );
     }
     else if( completed )
     {
         vita2d_draw_rectangle( pos.x, pos.y, itemWidth, itemHeight, RGBA8( 0, 0, 0, 255 ) );
-        Gui::drawTextf_color_position( Gui::Position::centeredX, pos.x + ( itemWidth / 2 ), pos.y + 45, 30, RGBA8( 255, 255, 255, 255 ), "%s", std::to_string( index ).c_str() );
     }
     else if( unlocked )
     {
         vita2d_draw_rectangle( pos.x, pos.y, itemWidth, itemHeight, RGBA8( 0, 0, 0, 255 ) );
-        Gui::drawTextf_color_position( Gui::Position::centeredX, pos.x + ( itemWidth / 2 ), pos.y + 45, 30, RGBA8( 255, 255, 255, 255 ), "%s", std::to_string( index ).c_str() );
     }
     else
     {
         vita2d_draw_rectangle( pos.x, pos.y, itemWidth, itemHeight, RGBA8( 128, 128, 128, 255 ) );
-        Gui::drawTextf_color_position( Gui::Position::centeredX, pos.x + ( itemWidth / 2 ), pos.y + 45, 30, RGBA8( 255, 255, 255, 255 ), "%s", std::to_string( index ).c_str() );
     }
+
+    Gui::drawTextf_color_position( Gui::Position::centeredX, pos.x + ( itemWidth / 2 ), pos.y + 45, 30, RGBA8( 255, 255, 255, 255 ), "%i", index );
+
+    std::string starsText = "";
+    for( int i = 0; i < stars; ++i ) starsText += "*";
+    Gui::drawTextf_color_position( Gui::Position::centeredX, pos.x + ( itemWidth / 2 ), pos.y + 90, 26, RGBA8( 255, 255, 255, 255 ), "%s", starsText.c_str() );
 }
 
 
 LevelList::LevelList()
 {
     currentLevel = 0;
-    progress = 1;
 }
 
 void LevelList::add( std::string filePath )
@@ -500,4 +516,39 @@ LevelListElement * LevelList::accessElement( int index )
 {
     LevelListElement *level = & levels[ index ];
     return level;
+}
+
+void LevelList::saveProgress()
+{
+    std::ofstream saveData;
+    sceIoMkdir( "ux0:/data/Pingo", 0777 );
+    saveData.open( "ux0:/data/Pingo/saveData.txt" );
+
+    saveData << currentLevel << "\n";
+
+    for( int i = 0; i < levels.size(); ++i )
+    {
+        saveData << accessElement( i )->index << "\t"  << accessElement( i )->unlocked << "\t" << accessElement( i )->completed << "\t" << accessElement( i )->stars << "\n";
+    }
+
+    saveData.close();
+}
+
+void LevelList::loadProgress()
+{
+    std::ifstream saveData;
+    saveData.open( "ux0:/data/Pingo/saveData.txt" );
+
+    saveData >> currentLevel;
+
+    int loadIndex = 0;
+    for( int i = 0; i < levels.size(); ++i )
+    {
+        saveData >> loadIndex;
+        saveData >> accessElement( loadIndex - 1 )->unlocked;
+        saveData >> accessElement( loadIndex - 1 )->completed;
+        saveData >> accessElement( loadIndex - 1 )->stars;
+    }
+
+    saveData.close();
 }

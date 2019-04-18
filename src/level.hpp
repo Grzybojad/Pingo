@@ -4,12 +4,13 @@
 #include <vector>
 #include <fstream>
 
+#include <psp2/io/stat.h> 
+
 #include "ball.hpp"
 #include "timer.hpp"
+#include "gui.hpp"
 #include "common.hpp"
 
-#include "gui.hpp"
-//#include "menu.hpp"
 
 // Farward class declarations
 class LevelListElement;
@@ -43,6 +44,9 @@ class Level
         void draw();
 
         bool complete();
+
+        // Return the number of stars the player got for completing the level
+        int getStarRating();
 
     protected:
         enum class State
@@ -94,8 +98,8 @@ class Level
         // Check if the win condition was met
         bool checkWinCondition();
 
-        // Return how many start the player should get for completing the level
-        int getStarRating();
+        // Calculate and save the number of stars the player got for completing the level
+        void setStarRating();
 };
 
 class WallTile : public Tile
@@ -150,6 +154,8 @@ class LevelListElement
         std::string name;
         int stepsForTwoStars;
         int stepsForThreeStars;
+
+        int stars;
 };
 
 class LevelList
@@ -170,8 +176,11 @@ class LevelList
 
         LevelListElement * accessElement( int index );
 
+        // Save and load progress
+        void saveProgress();
+        void loadProgress();
+
     private:
         std::vector< LevelListElement > levels;
         int currentLevel;
-        int progress;
 };

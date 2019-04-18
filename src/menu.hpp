@@ -79,6 +79,7 @@ class PauseMenu : public Menu
 
         // Returns true if the button was clicked
         bool clickedResume();
+        bool clickedRestart();
         bool clickedMainMenu();
 };
 
@@ -92,6 +93,9 @@ class LevelFinish : public Menu
         // Returns true if the button was clicked
         bool clickedNextLevel();
         bool clickedMainMenu();
+
+        void setStars( int stars );
+        int stars;
 };
 
 

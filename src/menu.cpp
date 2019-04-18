@@ -143,10 +143,13 @@ PauseMenu::PauseMenu()
 {
     cursor = 0;
 
-    MenuItem startButton = MenuItem( Rect( SCREEN_WIDTH/2 - 100, SCREEN_HEIGHT*0.6, 200, 70 ), "Resume" );
+    MenuItem startButton = MenuItem( Rect( SCREEN_WIDTH / 2 - 100, SCREEN_HEIGHT * 0.55, 200, 70 ), "Resume" );
     addItem( startButton );
 
-    MenuItem menuButton = MenuItem( Rect( SCREEN_WIDTH/2 - 100, SCREEN_HEIGHT*0.8, 200, 70 ), "Main menu" );
+    MenuItem restartButton = MenuItem( Rect( SCREEN_WIDTH / 2 - 100, SCREEN_HEIGHT * 0.7, 200, 70 ), "Restart" );
+    addItem( restartButton );
+
+    MenuItem menuButton = MenuItem( Rect( SCREEN_WIDTH / 2 - 100, SCREEN_HEIGHT * 0.85, 200, 70 ), "Main menu" );
     addItem( menuButton );
 }
 
@@ -171,15 +174,22 @@ bool PauseMenu::clickedResume()
     return selectPressed() && cursor == 0;
 }
 
-bool PauseMenu::clickedMainMenu()
+bool PauseMenu::clickedRestart()
 {
     return selectPressed() && cursor == 1;
+}
+
+bool PauseMenu::clickedMainMenu()
+{
+    return selectPressed() && cursor == 2;
 }
 
 
 LevelFinish::LevelFinish()
 {
     cursor = 0;
+    stars = 0;
+
     int buttonWidth = 260;
 
     MenuItem nextButton = MenuItem( Rect( SCREEN_WIDTH / 2 - ( buttonWidth / 2 ), SCREEN_HEIGHT*0.6, buttonWidth, 70 ), "Next Level" );
@@ -191,8 +201,11 @@ LevelFinish::LevelFinish()
 
 void LevelFinish::draw()
 {
-    vita2d_draw_rectangle( SCREEN_WIDTH / 2 - 240, 70, 480, 80, RGBA8( 255, 255, 255, 255 ) );
+    vita2d_draw_rectangle( SCREEN_WIDTH / 2 - 240, 70, 480, 120, RGBA8( 255, 255, 255, 255 ) );
     Gui::drawText_color_position( Gui::Position::centered, SCREEN_WIDTH / 2, 100, 60, RGBA8( 0, 0, 0, 255 ), "Level complete!" );
+    std::string starsText = "";
+    for( int i = 0; i < stars; ++i ) starsText += "*";
+    Gui::drawText_color_position( Gui::Position::centered, SCREEN_WIDTH / 2, 160, 50, RGBA8( 0, 0, 0, 255 ), starsText.c_str() );
 
     for( int i = 0; i < menuItems.size(); ++i )
     {
@@ -211,6 +224,11 @@ bool LevelFinish::clickedNextLevel()
 bool LevelFinish::clickedMainMenu()
 {
     return selectPressed() && cursor == 1;
+}
+
+void LevelFinish::setStars( int stars )
+{
+    this->stars = stars;
 }
 
 
