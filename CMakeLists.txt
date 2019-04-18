@@ -79,8 +79,17 @@ vita_create_vpk(${SHORT_NAME}.vpk ${VITA_TITLEID} ${SHORT_NAME}.self
   VERSION ${VITA_VERSION}
   NAME ${VITA_APP_NAME}
   
+  # Livearea files
+  FILE sce_sys/icon0.png sce_sys/icon0.png
+  FILE sce_sys/pic0.png sce_sys/pic0.png
+  FILE sce_sys/livearea/contents/bg0.png sce_sys/livearea/contents/bg0.png
+  FILE sce_sys/livearea/contents/startup.png sce_sys/livearea/contents/startup.png
+  FILE sce_sys/livearea/contents/template.xml sce_sys/livearea/contents/template.xml
+
+  # Font
   FILE font/Ubuntu-Medium.ttf  font/Ubuntu-Medium.ttf
 
+  # Levels
   #Figure out how to load all levels from file automatically
   FILE levels/level001.txt       levels/level001.txt
   FILE levels/level002.txt       levels/level002.txt
