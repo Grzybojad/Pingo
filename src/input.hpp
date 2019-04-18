@@ -45,6 +45,9 @@ namespace Input
     extern SceTouchData touch_old[ SCE_TOUCH_PORT_MAX_NUM ];
     extern SceTouchData touch[ SCE_TOUCH_PORT_MAX_NUM ];
 
+    // Analog stick deadzone
+    const float ANALOG_DEADZONE = 0.6f;
+
     // Initialize pad settings and variables
     void initInput();
 

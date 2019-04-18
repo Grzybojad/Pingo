@@ -51,9 +51,9 @@ void Menu::update()
 
 void Menu::handleInput()
 {
-    if( Input::wasPressed( Input::Button::up ) )
+    if( Input::wasPressed( Input::Button::up ) || Input::wasPressed( Input::Button::lAnalogUp ) )
         selectUp();
-    if( Input::wasPressed( Input::Button::down ) )
+    if( Input::wasPressed( Input::Button::down ) || Input::wasPressed( Input::Button::lAnalogDown ) )
         selectDown();
 }
 
@@ -264,13 +264,13 @@ int LevelSelect::getCursor()
 
 void LevelSelect::handleInput()
 {
-    if( Input::wasPressed( Input::Button::up ) )
+    if( Input::wasPressed( Input::Button::up ) || Input::wasPressed( Input::Button::lAnalogUp ) )
         selectUp();
-    if( Input::wasPressed( Input::Button::right ) )
+    if( Input::wasPressed( Input::Button::right ) || Input::wasPressed( Input::Button::lAnalogRight ) )
         selectRight();
-    if( Input::wasPressed( Input::Button::down ) )
+    if( Input::wasPressed( Input::Button::down ) || Input::wasPressed( Input::Button::lAnalogDown ) )
         selectDown();
-    if( Input::wasPressed( Input::Button::left ) )
+    if( Input::wasPressed( Input::Button::left ) || Input::wasPressed( Input::Button::lAnalogLeft ) )
         selectLeft();
 }
 

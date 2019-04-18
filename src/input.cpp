@@ -47,11 +47,18 @@ namespace Input
         buttonIsHeld[ static_cast<int>( Button::cross ) ] = ( pad.buttons & SCE_CTRL_CROSS );
         buttonIsHeld[ static_cast<int>( Button::square ) ] = ( pad.buttons & SCE_CTRL_SQUARE );
 
-        // Add analog and touch checks
+        // Left analog stick
+        float lAnalogX = (float)( ( pad.lx - 128.0f ) / 128.0f );
+        float lAnalogY = (float)( ( pad.ly - 128.0f ) / 128.0f );
+        buttonIsHeld[ static_cast<int>( Button::lAnalogUp ) ] = ( lAnalogY < -ANALOG_DEADZONE );
+        buttonIsHeld[ static_cast<int>( Button::lAnalogRight ) ] = ( lAnalogX > ANALOG_DEADZONE );
+        buttonIsHeld[ static_cast<int>( Button::lAnalogDown ) ] = ( lAnalogY > ANALOG_DEADZONE );
+        buttonIsHeld[ static_cast<int>( Button::lAnalogLeft  ) ] = ( lAnalogX < -ANALOG_DEADZONE );
+
+        // TODO Add touch checks
+
         for( int i = 0; i < static_cast<int>( Button::count ); ++i )
-        {
             buttonWasPressed[ i ] = checkPressed( i );
-        }
     }
 
     bool checkPressed( int i )

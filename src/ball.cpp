@@ -35,13 +35,13 @@ bool Ball::handleInput()
     {
         wasPressed = true;
 
-        if( Input::wasPressed( Input::Button::up ) )
+        if( Input::wasPressed( Input::Button::up ) || Input::wasPressed( Input::Button::lAnalogUp ) )
             moveUp();
-        else if( Input::wasPressed( Input::Button::right ) )
+        else if( Input::wasPressed( Input::Button::right ) || Input::wasPressed( Input::Button::lAnalogRight ) )
             moveRight();
-        else if( Input::wasPressed( Input::Button::down ) )
+        else if( Input::wasPressed( Input::Button::down ) || Input::wasPressed( Input::Button::lAnalogDown ) )
             moveDown();
-        else if( Input::wasPressed( Input::Button::left ) )
+        else if( Input::wasPressed( Input::Button::left ) || Input::wasPressed( Input::Button::lAnalogLeft ) )
             moveLeft();
         else
             wasPressed = false;
@@ -49,6 +49,7 @@ bool Ball::handleInput()
 
     return wasPressed;
 }
+
 
 void Ball::move()
 {
