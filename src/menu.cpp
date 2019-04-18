@@ -276,7 +276,16 @@ void LevelSelect::handleInput()
 
 bool LevelSelect::selectPressed()
 {
-    return Input::wasPressed( Input::Button::cross );
+    // Only allow loading unlocked levels
+    if( levelList->accessElement( cursor - 1 )->unlocked )
+    {
+        return Input::wasPressed( Input::Button::cross );
+    }
+    else
+    {
+        // TODO maybe add a sound effect here or something
+        return false;
+    }
 }
 
 void LevelSelect::selectUp()
