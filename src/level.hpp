@@ -11,6 +11,10 @@
 #include "gui.hpp"
 //#include "menu.hpp"
 
+// Farward class declarations
+class LevelListElement;
+class LevelList;
+
 class Tile
 {
     public:
@@ -32,7 +36,7 @@ class Level
         Level();
 
         void init();
-        void loadFromFile( std::string file );
+        void loadFromFile( LevelListElement *levelListElement );
         void unload();
 
         void update();
@@ -50,18 +54,15 @@ class Level
         State state;
 
         std::vector< std::vector<Tile*> > tiles;
+        LevelListElement *levelListElement;
         Timer levelTime;
         int tileSize;
         int floorTileCount;
         int paintedTiles;
         int steps;
 
-        std::string levelName;
-
         Ball ball;
 
-        // Reads level name from level file name
-        void readLevelName( std::string fileName );
 
         // Converts the char that's loaded from the level map to the corresponding Tile type
         Tile* charToTile( char c );
@@ -92,6 +93,9 @@ class Level
 
         // Check if the win condition was met
         bool checkWinCondition();
+
+        // Return how many start the player should get for completing the level
+        int getStarRating();
 };
 
 class WallTile : public Tile

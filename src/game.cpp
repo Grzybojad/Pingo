@@ -181,7 +181,7 @@ void Game::inMenu()
 void Game::initLevel()
 {
     level.init();
-    level.loadFromFile( levelList.getLevelPath( levelList.getCurrentLevel() ) );
+    level.loadFromFile( levelList.accessElement( levelList.getCurrentLevel() ) );
 }
 
 void Game::initLevel( int levelIndex )
@@ -189,7 +189,7 @@ void Game::initLevel( int levelIndex )
     level.init();
     // TODO don't allow loading unexisting levels
     levelList.setCurrentLevel( levelIndex - 1 );
-    level.loadFromFile( levelList.getLevelPath( levelList.getCurrentLevel() ) );
+    level.loadFromFile( levelList.accessElement( levelList.getCurrentLevel() ) );
 }
 
 void Game::destroyLevel()

@@ -9,13 +9,12 @@ void Level::init()
 {
     state = State::playing;
 
-    levelName = "";
-
     tileSize = 30;
 }
 
-void Level::loadFromFile( std::string file )
+void Level::loadFromFile( LevelListElement *levelListElement )
 {
+    std::string file = levelListElement->filePath;
     std::ifstream levelFile( file );
 
     if( levelFile.fail() )
@@ -25,8 +24,8 @@ void Level::loadFromFile( std::string file )
     }
     else
     {
-        // Get level name
-        readLevelName( file );
+        // Copy the pointer
+        this->levelListElement = levelListElement;
 
         // Get all lines from level file
         std::vector<std::string> lines;
@@ -136,39 +135,19 @@ void Level::draw()
     ball.draw();
 
     // Draw level name
-    Gui::drawTextf_position( Gui::Position::centered, SCREEN_WIDTH / 2, 40, 40, "%s", levelName.c_str() );
+    Gui::drawTextf_position( Gui::Position::centered, SCREEN_WIDTH / 2, 40, 40, "%s", levelListElement->name.c_str() );
 
     // Draw step count
     Gui::drawTextf_position( Gui::Position::alignTop, 10, 10, 20, "Steps: %d", steps );
+
+    // Draw step requirements
+    Gui::drawTextf_position( Gui::Position::alignTopRight, SCREEN_WIDTH - 10, 10, 20, "Steps for 2 stars: %s", std::to_string( levelListElement->stepsForTwoStars ).c_str() );
+    Gui::drawTextf_position( Gui::Position::alignTopRight, SCREEN_WIDTH - 10, 40, 20, "Steps for 3 stars: %s", std::to_string( levelListElement->stepsForThreeStars ).c_str() );
 }
 
 bool Level::complete()
 {
     return state == State::finished;
-}
-
-void Level::readLevelName( std::string fileName )
-{
-    std::ifstream levelFile( fileName );
-
-    std::string line = "";
-    std::getline( levelFile, line );
-    int beg = 0;
-    int end = 0;
-
-    beg = line.find( "><" ) + 2;
-    end = line.find( ">", beg );
-    levelName = line.substr( beg, end - beg);
-
-    levelFile.close();
-    /*
-    std::string start = "levels/level";
-    std::string end = ".txt";
-    int startPos = fileName.find( start );
-    int endPos = fileName.find( end );
-
-    levelName = fileName.substr( startPos + start.length(), endPos - ( startPos + start.length() ) );
-    */
 }
 
 Vec2 Level::getWorldPosFromTilePos( Vec2 tilePos )
@@ -326,6 +305,12 @@ bool Level::checkWinCondition()
     return ( paintedTiles == floorTileCount );
 }
 
+int Level::getStarRating()
+{
+    // TODO implement
+    return 0;
+}
+
 
 Tile::Tile() { }
 
@@ -397,14 +382,15 @@ LevelListElement::LevelListElement( std::string filePath )
     completed = false;
     this->filePath = filePath;
     name = "test";
+
+    stepsForTwoStars = 0;
+    stepsForThreeStars = 0;
 }
 
 void LevelListElement::drawLevelMenuElement( Vec2 pos, bool selected )
 {
     int itemWidth = 70;
     int itemHeight = 90;
-
-    std::string test = "test";
 
     if( selected )
     {
@@ -450,24 +436,22 @@ void LevelList::add( std::string filePath )
     {
         std::string line = "";
         std::getline( levelFile, line );
-        int beg = 0;
-        int end = 0;
 
-        beg = line.find( "<" ) + 1;
-        end = line.find( ">" );
-        levels[ levels.size() - 1 ].index = std::stoi( line.substr( beg, end - beg ) );
-        
-        beg = line.find( "<" ) + 1;
-        end = line.find( ">" );
-        levels[ levels.size() - 1 ].name = line.substr( beg, end - beg );
-        
-        beg = line.find( "<" ) + 1;
-        end = line.find( ">" );
-        levels[ levels.size() - 1 ].stepsForTwoStars = std::stoi( line.substr( beg, end - beg ) );
+        int end = line.find_first_of( ">" );
+        levels[ levels.size() - 1 ].index = std::stoi( line.substr( 1, end - 1 ) );
+        line.erase( 0, end + 1 );
 
-        beg = line.find( "<" ) + 1;
-        end = line.find( ">" );
-        levels[ levels.size() - 1 ].stepsForThreeStars = std::stoi( line.substr( beg, end - beg ) );
+        end = line.find_first_of( ">" );
+        levels[ levels.size() - 1 ].name = line.substr( 1, end - 1 );
+        line.erase( 0, end + 1 );
+
+        end = line.find_first_of( ">" );
+        levels[ levels.size() - 1 ].stepsForTwoStars = std::stoi( line.substr( 1, end - 1 ) );
+        line.erase( 0, end + 1 );
+
+        end = line.find_first_of( ">" );
+        levels[ levels.size() - 1 ].stepsForThreeStars = std::stoi( line.substr( 1, end - 1 ) );
+        line.erase( 0, end + 1 );
     }
     levelFile.close();
 }
