@@ -46,6 +46,8 @@ add_executable(${VITA_APP_NAME}
   src/menu.cpp
   src/timer.hpp
   src/timer.cpp
+  src/texture.hpp
+  src/texture.cpp
   src/common.hpp
   src/common.cpp
 )
@@ -88,6 +90,12 @@ vita_create_vpk(${SHORT_NAME}.vpk ${VITA_TITLEID} ${SHORT_NAME}.self
 
   # Font
   FILE font/Ubuntu-Medium.ttf  font/Ubuntu-Medium.ttf
+
+  # Textures
+  FILE img/level/wall.png          img/level/wall.png
+  FILE img/level/floorBlank.png    img/level/floorBlank.png
+  FILE img/level/floorPainted.png  img/level/floorPainted.png
+  FILE img/common/background1.png  img/common/background1.png
 
   # Levels
   #Figure out how to load all levels from file automatically

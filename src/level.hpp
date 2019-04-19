@@ -9,6 +9,7 @@
 #include "ball.hpp"
 #include "timer.hpp"
 #include "gui.hpp"
+#include "texture.hpp"
 #include "common.hpp"
 
 

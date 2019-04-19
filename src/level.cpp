@@ -362,11 +362,16 @@ Tile* Level::charToTile( char c )
 void FloorTile::draw( Rect rect )
 {
     if( state == State::blank )
-        vita2d_draw_rectangle( rect.x, rect.y, rect.w, rect.h, RGBA8( 0, 0, 0, 255 ) );
+    {
+        //vita2d_draw_rectangle( rect.x, rect.y, rect.w, rect.h, RGBA8( 0, 0, 0, 255 ) );
+        Texture::drawTexture( Texture::Sprite::floorBlank, Vec2( rect.x, rect.y ) );
+    }
+        
     else if( state == State::painted )
     {
-        vita2d_draw_rectangle( rect.x, rect.y, rect.w, rect.h, RGBA8( 0, 0, 0, 255 ) );
-        vita2d_draw_rectangle( rect.x + 10, rect.y + 10, rect.w - 20, rect.h - 20, RGBA8( 0, 255, 0, 255 ) );
+        //vita2d_draw_rectangle( rect.x, rect.y, rect.w, rect.h, RGBA8( 0, 0, 0, 255 ) );
+        //vita2d_draw_rectangle( rect.x + 10, rect.y + 10, rect.w - 20, rect.h - 20, RGBA8( 0, 255, 0, 255 ) );
+        Texture::drawTexture( Texture::Sprite::floorPainted, Vec2( rect.x, rect.y ) );
     }
 }
 
@@ -385,7 +390,8 @@ bool FloorTile::paintable()
 
 void WallTile::draw( Rect rect )
 {
-    vita2d_draw_rectangle( rect.x, rect.y, rect.w, rect.h, RGBA8( 255, 255, 255, 255) );
+    //vita2d_draw_rectangle( rect.x, rect.y, rect.w, rect.h, RGBA8( 255, 255, 255, 255) );
+    Texture::drawTexture( Texture::Sprite::wall, Vec2( rect.x, rect.y ) );
 }
 
 
