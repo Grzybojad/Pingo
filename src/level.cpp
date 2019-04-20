@@ -440,7 +440,7 @@ void LevelListElement::drawLevelMenuElement( Vec2 pos, bool selected )
 
 LevelList::LevelList()
 {
-    currentLevel = 0;
+    currentLevel = 1;
 }
 
 void LevelList::add( std::string filePath )
@@ -500,11 +500,12 @@ void LevelList::setCurrentLevel( int index )
 
 void LevelList::compleateCurrentLevel()
 {
-    levels[ currentLevel ].completed = true;
+    // The level 1 is levels[ 0 ], so we have to access the vector with a -1
+    levels[ currentLevel - 1 ].completed = true;
 
     // Unlock the next level
     if( currentLevel < levels.size() )
-        levels[ currentLevel + 1 ].unlocked = true;
+        levels[ currentLevel ].unlocked = true;
 }
 
 int LevelList::getNrOfLevels()
@@ -514,7 +515,7 @@ int LevelList::getNrOfLevels()
 
 void LevelList::nextLevel()
 {
-    if( currentLevel < levels.size() - 1 )
+    if( currentLevel < levels.size() )
         currentLevel++;
 }
 
@@ -551,9 +552,9 @@ void LevelList::loadProgress()
     for( int i = 0; i < levels.size(); ++i )
     {
         saveData >> loadIndex;
-        saveData >> accessElement( loadIndex - 1 )->unlocked;
-        saveData >> accessElement( loadIndex - 1 )->completed;
-        saveData >> accessElement( loadIndex - 1 )->stars;
+        saveData >> accessElement( i )->unlocked;
+        saveData >> accessElement( i )->completed;
+        saveData >> accessElement( i )->stars;
     }
 
     saveData.close();

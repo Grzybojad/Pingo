@@ -3,9 +3,6 @@
 #include "input.hpp"
 #include "common.hpp"
 
-//DEBUG
-#include "gui.hpp"
-
 #include <vita2d.h>
 
 class Ball
