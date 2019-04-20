@@ -235,7 +235,9 @@ void Game::draw()
     vita2d_start_drawing();
     vita2d_clear_screen();
 
-    Texture::drawTexture_fillScreen( Texture::Sprite::background1 );
+    //Texture::drawTexture_fillScreen( Texture::Sprite::background1 );
+    background.update();
+    background.draw();
 
     switch( gameState )
     {

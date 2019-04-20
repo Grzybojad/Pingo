@@ -83,3 +83,38 @@ namespace Texture {
         }
     }
 }
+
+
+AnimatedBackground::AnimatedBackground()
+{
+    animationStep = 0;
+    animationLength = -1;
+    animationSpeed = 0.5f;
+}
+
+void AnimatedBackground::update()
+{
+    if( animationLength == -1 )
+        animationLength = vita2d_texture_get_width( Texture::getTexture( Texture::Sprite::background1 ) );
+
+    animationStep += animationSpeed * timestep;
+
+    if( animationStep > animationLength )
+        animationStep -= animationLength;
+}
+
+void AnimatedBackground::draw()
+{
+    int textureHeight = vita2d_texture_get_height( Texture::getTexture( Texture::Sprite::background1 ) );
+    int textureWidth = vita2d_texture_get_height( Texture::getTexture( Texture::Sprite::background1 ) );
+    int rows = ceil( SCREEN_HEIGHT / textureHeight );
+    int columns = ceil( SCREEN_WIDTH / textureWidth );
+
+    for( int i = -1; i <= columns; ++i )
+    {
+        for( int j = -1; j <= rows; ++j )
+        {
+            Texture::drawTexture( Texture::Sprite::background1, Vec2( i * textureWidth + animationStep, j * textureHeight + animationStep ) );
+        }
+    }
+}

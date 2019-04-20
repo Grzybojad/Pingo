@@ -32,3 +32,18 @@ namespace Texture
 
     extern vita2d_texture *background1Texture;
 };
+
+
+class AnimatedBackground
+{
+    public:
+        AnimatedBackground();
+
+        void update();
+        void draw();
+
+    protected:
+        float animationStep;
+        float animationLength;
+        float animationSpeed;
+};

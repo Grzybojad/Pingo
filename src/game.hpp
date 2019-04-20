@@ -57,5 +57,7 @@ class Game
 
         LevelList levelList;
 
+        AnimatedBackground background;
+
         bool progressSaved;
 };
