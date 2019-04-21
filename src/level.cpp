@@ -415,6 +415,21 @@ void LevelListElement::drawLevelMenuElement( Vec2 pos, bool selected )
     int itemWidth = 70;
     int itemHeight = 90;
 
+
+    if( selected && unlocked )
+    {
+        Texture::drawTexture( Texture::Sprite::doorOpened, Vec2( pos.x, pos.y ) );
+    }
+    else if( unlocked )
+    {
+        Texture::drawTexture( Texture::Sprite::doorClosed, Vec2( pos.x, pos.y ) );
+    }
+    else
+    {
+        Texture::drawTexture( Texture::Sprite::doorLocked, Vec2( pos.x, pos.y ) );
+    }
+    
+/*
     if( selected )
     {
         vita2d_draw_rectangle( pos.x, pos.y, itemWidth, itemHeight, RGBA8( 128, 0, 0, 255 ) );
@@ -430,7 +445,7 @@ void LevelListElement::drawLevelMenuElement( Vec2 pos, bool selected )
     else
     {
         vita2d_draw_rectangle( pos.x, pos.y, itemWidth, itemHeight, RGBA8( 128, 128, 128, 255 ) );
-    }
+    }*/
 
     Gui::drawTextf_color_position( Gui::Position::centeredX, pos.x + ( itemWidth / 2 ), pos.y + 45, 30, RGBA8( 255, 255, 255, 255 ), "%i", index );
 

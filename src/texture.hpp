@@ -28,7 +28,11 @@ namespace Texture
         levelSelectButton = 24,
         levelSelectSelected = 25,
         optionsButton = 26,
-        optionsSelected = 27
+        optionsSelected = 27,
+
+        doorClosed = 28,
+        doorOpened = 29,
+        doorLocked = 30
     };
 
     vita2d_texture * getTexture( Sprite sprite );
@@ -54,6 +58,10 @@ namespace Texture
     extern vita2d_texture *levelSelectSelectedTexture;
     extern vita2d_texture *optionsButtonTexture;
     extern vita2d_texture *optionsSelectedTexture;
+
+    extern vita2d_texture *doorClosedTexture;
+    extern vita2d_texture *doorOpenedTexture;
+    extern vita2d_texture *doorLockedTexture;
 };
 
 

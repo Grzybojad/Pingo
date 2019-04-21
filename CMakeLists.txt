@@ -109,8 +109,12 @@ vita_create_vpk(${SHORT_NAME}.vpk ${VITA_TITLEID} ${SHORT_NAME}.self
   FILE img/menu/optionsButton.png         img/menu/optionsButton.png
   FILE img/menu/optionsSelected.png       img/menu/optionsSelected.png
 
+  FILE img/menu/doorOpened.png        img/menu/doorOpened.png
+  FILE img/menu/doorClosed.png      img/menu/doorClosed.png
+  FILE img/menu/doorLocked.png      img/menu/doorLocked.png
+
   # Levels
-  #Figure out how to load all levels from file automatically
+  # Figure out how to load all levels from file automatically
   FILE levels/level001.txt       levels/level001.txt
   FILE levels/level002.txt       levels/level002.txt
   FILE levels/level003.txt       levels/level003.txt

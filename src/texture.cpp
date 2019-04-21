@@ -15,6 +15,9 @@ namespace Texture {
     vita2d_texture *levelSelectSelectedTexture;
     vita2d_texture *optionsButtonTexture;
     vita2d_texture *optionsSelectedTexture;
+    vita2d_texture *doorClosedTexture;
+    vita2d_texture *doorOpenedTexture;
+    vita2d_texture *doorLockedTexture;
 
     void loadTextures()
     {
@@ -34,6 +37,10 @@ namespace Texture {
         levelSelectSelectedTexture  = vita2d_load_PNG_file( "app0:/img/menu/levelSelectSelected.png" );
         optionsButtonTexture        = vita2d_load_PNG_file( "app0:/img/menu/optionsButton.png" );
         optionsSelectedTexture      = vita2d_load_PNG_file( "app0:/img/menu/optionsSelected.png" );
+
+        doorClosedTexture           = vita2d_load_PNG_file( "app0:/img/menu/doorClosed.png" );
+        doorOpenedTexture           = vita2d_load_PNG_file( "app0:/img/menu/doorOpened.png" );
+        doorLockedTexture           = vita2d_load_PNG_file( "app0:/img/menu/doorLocked.png" );
     }
 
     vita2d_texture * getTexture( Sprite sprite )
@@ -82,6 +89,15 @@ namespace Texture {
             case Sprite::optionsSelected:
                 return optionsSelectedTexture;
 
+            case Sprite::doorClosed:
+                return doorClosedTexture;
+
+            case Sprite::doorOpened:
+                return doorOpenedTexture;
+
+            case Sprite::doorLocked:
+                return doorLockedTexture;
+
             default:
                 break;
         }
@@ -96,11 +112,11 @@ namespace Texture {
         switch( sprite )
         {
             case Sprite::wall:
-                vita2d_draw_texture_scale( wallTexture, pos.x, pos.y, 0.25, 0.25 );
+                vita2d_draw_texture_scale( wallTexture, pos.x, pos.y, 0.5, 0.5 );
                 break;
         
             case Sprite::floorBlank:
-                vita2d_draw_texture_scale( floorBlankTexture, pos.x, pos.y, 0.25, 0.25 );
+                vita2d_draw_texture_scale( floorBlankTexture, pos.x, pos.y, 0.5, 0.5 );
                 break;
 
             case Sprite::floorPainted:
@@ -149,6 +165,18 @@ namespace Texture {
 
             case Sprite::optionsSelected:
                 vita2d_draw_texture_scale( optionsSelectedTexture, pos.x, pos.y, 1, 1 );
+                break;
+
+            case Sprite::doorClosed:
+                vita2d_draw_texture_scale( doorClosedTexture, pos.x, pos.y, 0.5, 0.5 );
+                break;
+
+            case Sprite::doorOpened:
+                vita2d_draw_texture_scale( doorOpenedTexture, pos.x, pos.y, 0.5, 0.5 );
+                break;
+
+            case Sprite::doorLocked:
+                vita2d_draw_texture_scale( doorLockedTexture, pos.x, pos.y, 0.5, 0.5 );
                 break;
 
             default:
