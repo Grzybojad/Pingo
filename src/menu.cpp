@@ -112,15 +112,22 @@ MainMenu::MainMenu()
 
 void MainMenu::draw()
 {
-    Gui::drawText_color_position( Gui::Position::centered, SCREEN_WIDTH / 2, 100, 60, RGBA8( 0, 0, 0, 255 ), gameTitle );
+    Texture::drawTexture( Texture::Sprite::logo, Vec2( 0, 0 ) );
 
-    for( int i = 0; i < menuItems.size(); ++i )
-    {
-        if( cursor == i )
-            menuItems[ i ].drawSelected();
-        else
-            menuItems[ i ].draw();
-    }
+    if( cursor == 0 )
+        Texture::drawTexture( Texture::Sprite::startSelected, Vec2( 0, 0 ) );
+    else
+        Texture::drawTexture( Texture::Sprite::startButton, Vec2( 0, 0 ) );
+
+    if( cursor == 1 )
+        Texture::drawTexture( Texture::Sprite::levelSelectSelected, Vec2( 0, 0 ) );
+    else
+        Texture::drawTexture( Texture::Sprite::levelSelectButton, Vec2( 0, 0 ) );
+
+    if( cursor == 2 )
+        Texture::drawTexture( Texture::Sprite::optionsSelected, Vec2( 0, 0 ) );
+    else
+        Texture::drawTexture( Texture::Sprite::optionsButton, Vec2( 0, 0 ) );
 }
 
 bool MainMenu::clickedStart()

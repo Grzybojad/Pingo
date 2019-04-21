@@ -8,6 +8,13 @@ namespace Texture {
     vita2d_texture *background1Texture;
     vita2d_texture *background2Texture;
     vita2d_texture *background3Texture;
+    vita2d_texture *logoTexture;
+    vita2d_texture *startButtonTexture;
+    vita2d_texture *startSelectedTexture;
+    vita2d_texture *levelSelectButtonTexture;
+    vita2d_texture *levelSelectSelectedTexture;
+    vita2d_texture *optionsButtonTexture;
+    vita2d_texture *optionsSelectedTexture;
 
     void loadTextures()
     {
@@ -19,6 +26,14 @@ namespace Texture {
         background1Texture  = vita2d_load_PNG_file( "app0:/img/common/background1.png" );
         background2Texture  = vita2d_load_PNG_file( "app0:/img/common/background2.png" );
         background3Texture  = vita2d_load_PNG_file( "app0:/img/common/background3.png" );
+
+        logoTexture                 = vita2d_load_PNG_file( "app0:/img/menu/logo.png" );
+        startButtonTexture          = vita2d_load_PNG_file( "app0:/img/menu/startButton.png" );
+        startSelectedTexture        = vita2d_load_PNG_file( "app0:/img/menu/startSelected.png" );
+        levelSelectButtonTexture    = vita2d_load_PNG_file( "app0:/img/menu/levelSelectButton.png" );
+        levelSelectSelectedTexture  = vita2d_load_PNG_file( "app0:/img/menu/levelSelectSelected.png" );
+        optionsButtonTexture        = vita2d_load_PNG_file( "app0:/img/menu/optionsButton.png" );
+        optionsSelectedTexture      = vita2d_load_PNG_file( "app0:/img/menu/optionsSelected.png" );
     }
 
     vita2d_texture * getTexture( Sprite sprite )
@@ -45,6 +60,27 @@ namespace Texture {
 
             case Sprite::background3:
                 return background3Texture;
+
+            case Sprite::logo:
+                return logoTexture;
+
+            case Sprite::startButton:
+                return startButtonTexture;
+
+            case Sprite::startSelected:
+                return startSelectedTexture;
+
+            case Sprite::levelSelectButton:
+                return levelSelectButtonTexture;
+
+            case Sprite::levelSelectSelected:
+                return levelSelectSelectedTexture;
+
+            case Sprite::optionsButton:
+                return optionsButtonTexture;
+
+            case Sprite::optionsSelected:
+                return optionsSelectedTexture;
 
             default:
                 break;
@@ -87,6 +123,34 @@ namespace Texture {
                 vita2d_draw_texture_scale( background3Texture, pos.x, pos.y, 1, 1 );
                 break;
 
+            case Sprite::logo:
+                vita2d_draw_texture_scale( logoTexture, pos.x, pos.y, 1, 1 );
+                break;
+
+            case Sprite::startButton:
+                vita2d_draw_texture_scale( startButtonTexture, pos.x, pos.y, 1, 1 );
+                break;
+
+            case Sprite::startSelected:
+                vita2d_draw_texture_scale( startSelectedTexture, pos.x, pos.y, 1, 1 );
+                break;
+
+            case Sprite::levelSelectButton:
+                vita2d_draw_texture_scale( levelSelectButtonTexture, pos.x, pos.y, 1, 1 );
+                break;
+
+            case Sprite::levelSelectSelected:
+                vita2d_draw_texture_scale( levelSelectSelectedTexture, pos.x, pos.y, 1, 1 );
+                break;
+
+            case Sprite::optionsButton:
+                vita2d_draw_texture_scale( optionsButtonTexture, pos.x, pos.y, 1, 1 );
+                break;
+
+            case Sprite::optionsSelected:
+                vita2d_draw_texture_scale( optionsSelectedTexture, pos.x, pos.y, 1, 1 );
+                break;
+
             default:
                 break;
         }
@@ -94,8 +158,8 @@ namespace Texture {
 
     void drawTexture_fillScreen( Sprite sprite )
     {
-        int textureHeight = vita2d_texture_get_height(  getTexture( sprite ) );
-        int textureWidth = vita2d_texture_get_height(  getTexture( sprite ) );
+        int textureHeight = vita2d_texture_get_height( getTexture( sprite ) );
+        int textureWidth = vita2d_texture_get_height( getTexture( sprite ) );
         int rows = ceil( SCREEN_HEIGHT / textureHeight );
         int columns = ceil( SCREEN_WIDTH / textureWidth );
 

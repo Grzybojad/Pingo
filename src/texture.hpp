@@ -18,9 +18,17 @@ namespace Texture
         floorPainted = 2,
         ball = 3,
 
-        background1 = 4,
-        background2 = 5,
-        background3 = 6
+        background1 = 11,
+        background2 = 12,
+        background3 = 13,
+
+        logo = 21,
+        startButton = 22,
+        startSelected = 23,
+        levelSelectButton = 24,
+        levelSelectSelected = 25,
+        optionsButton = 26,
+        optionsSelected = 27
     };
 
     vita2d_texture * getTexture( Sprite sprite );
@@ -38,6 +46,14 @@ namespace Texture
     extern vita2d_texture *background1Texture;
     extern vita2d_texture *background2Texture;
     extern vita2d_texture *background3Texture;
+
+    extern vita2d_texture *logoTexture;
+    extern vita2d_texture *startButtonTexture;
+    extern vita2d_texture *startSelectedTexture;
+    extern vita2d_texture *levelSelectButtonTexture;
+    extern vita2d_texture *levelSelectSelectedTexture;
+    extern vita2d_texture *optionsButtonTexture;
+    extern vita2d_texture *optionsSelectedTexture;
 };
 
 
