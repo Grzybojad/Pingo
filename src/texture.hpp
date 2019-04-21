@@ -1,7 +1,10 @@
 #pragma once
 
+#include <math.h>
+
 #include <vita2d.h>
 
+#include "gui.hpp" // DEBUG
 #include "common.hpp"
 
 namespace Texture
@@ -16,6 +19,8 @@ namespace Texture
         ball = 3,
 
         background1 = 4,
+        background2 = 5,
+        background3 = 6
     };
 
     vita2d_texture * getTexture( Sprite sprite );
@@ -31,6 +36,8 @@ namespace Texture
     extern vita2d_texture *ballTexture;
 
     extern vita2d_texture *background1Texture;
+    extern vita2d_texture *background2Texture;
+    extern vita2d_texture *background3Texture;
 };
 
 
@@ -46,4 +53,6 @@ class AnimatedBackground
         float animationStep;
         float animationLength;
         float animationSpeed;
+
+        int variant;
 };

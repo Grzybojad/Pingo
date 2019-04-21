@@ -1,6 +1,7 @@
 #pragma once
 
 #include "input.hpp"
+#include "texture.hpp"
 #include "common.hpp"
 
 #include <vita2d.h>

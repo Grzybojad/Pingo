@@ -1,9 +1,14 @@
+#include <time.h>
+
+#include <psp2/kernel/processmgr.h>
+
 #include "game.hpp"
 
-#include <psp2/kernel/processmgr.h> 
 
 int main()
 {
+	srand(time(NULL));
+
     Game game;
 
 	game.mainLoop();
