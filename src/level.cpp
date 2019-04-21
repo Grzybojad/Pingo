@@ -141,11 +141,13 @@ void Level::draw()
     Gui::drawTextf_position( Gui::Position::centered, SCREEN_WIDTH / 2, 40, 40, "%s", levelListElement->name.c_str() );
 
     // Draw step count
-    Gui::drawTextf_position( Gui::Position::alignTop, 10, 10, 20, "Steps: %d", steps );
-
-    // Draw step requirements
-    Gui::drawTextf_position( Gui::Position::alignTopRight, SCREEN_WIDTH - 10, 10, 20, "Steps for 2 stars: %i", levelListElement->stepsForTwoStars );
-    Gui::drawTextf_position( Gui::Position::alignTopRight, SCREEN_WIDTH - 10, 40, 20, "Steps for 3 stars: %i", levelListElement->stepsForThreeStars );
+    if( steps <= levelListElement->stepsForThreeStars )
+        Gui::drawTextf_color_position( Gui::Position::alignTop, 10, 10, 30, RGBA8( 220, 119, 47, 255 ), "Steps: %d/%d", steps, levelListElement->stepsForThreeStars );
+    else if( steps <= levelListElement->stepsForTwoStars )
+        Gui::drawTextf_color_position( Gui::Position::alignTop, 10, 10, 30, RGBA8( 220, 119, 47, 255 ), "Steps: %d/%d", steps, levelListElement->stepsForTwoStars );
+    else
+        Gui::drawTextf_color_position( Gui::Position::alignTop, 10, 10, 30, RGBA8( 220, 119, 47, 255 ), "Steps: %d", steps );
+    // TODO draw the stars next to the counter!
 }
 
 bool Level::complete()
