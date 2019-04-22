@@ -234,7 +234,7 @@ void Game::exit()
 {
     vita2d_fini();
 
-    // Free textures
+    Texture::freeTextures();
 
     Gui::freeFont();
 }

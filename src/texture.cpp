@@ -145,6 +145,31 @@ namespace Texture {
             }
         }
     }
+
+    void freeTextures()
+    {
+        vita2d_free_texture( wallTexture );
+        vita2d_free_texture( floorBlankTexture );
+        vita2d_free_texture( floorPaintedTexture );
+        vita2d_free_texture( ballTexture );
+        vita2d_free_texture( background1Texture );
+        vita2d_free_texture( background2Texture );
+        vita2d_free_texture( background3Texture );
+        vita2d_free_texture( logoTexture );
+        vita2d_free_texture( startButtonTexture );
+        vita2d_free_texture( startSelectedTexture );
+        vita2d_free_texture( levelSelectButtonTexture );
+        vita2d_free_texture( levelSelectSelectedTexture );
+        vita2d_free_texture( optionsButtonTexture );
+        vita2d_free_texture( optionsSelectedTexture );
+        vita2d_free_texture( doorClosedTexture );
+        vita2d_free_texture( doorOpenedTexture );
+        vita2d_free_texture( doorLockedTexture );
+        vita2d_free_texture( doorLockedOutlineTexture );
+        vita2d_free_texture( doorStar1Texture );
+        vita2d_free_texture( doorStar2Texture );
+        vita2d_free_texture( doorStar3Texture );
+    }
 }
 
 
