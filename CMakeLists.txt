@@ -8,13 +8,13 @@ if(NOT DEFINED CMAKE_TOOLCHAIN_FILE)
   endif()
 endif()
 
-project(gameJam)
+project(Pingo)
 include("${VITASDK}/share/vita.cmake" REQUIRED)
 
-set(VITA_APP_NAME "gameJam")
-set(SHORT_NAME gameJam)
+set(VITA_APP_NAME "Pingo")
+set(SHORT_NAME Pingo)
 set(VITA_TITLEID  "GRZB00003")
-set(VITA_VERSION  "00.01")
+set(VITA_VERSION  "01.00")
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
