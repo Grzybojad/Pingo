@@ -10,6 +10,7 @@
 #include "timer.hpp"
 #include "gui.hpp"
 #include "texture.hpp"
+#include "sound.hpp"
 #include "common.hpp"
 
 

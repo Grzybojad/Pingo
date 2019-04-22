@@ -21,6 +21,10 @@ Game::Game()
     // Initialize the level select menu
     levelMenu.initLevels( &levelList );
 
+    // Initialize the sound effects
+    Sound::initSoloud();
+    Sound::loadSounds();
+
     progressSaved = false;
 
     gameState = GameState::initialized;
@@ -105,9 +109,10 @@ void Game::inGame()
         if( !levelList.getCompletion( levelList.getCurrentLevel() ) )
             levelList.compleateCurrentLevel();
 
-        // Check to only save the data once
+        // Check to only save the data and play sound once
         if( !progressSaved )
         {
+            Sound::soloud.play( Sound::levelFinish );
             levelList.saveProgress();
             progressSaved = true;
         }
@@ -244,7 +249,6 @@ void Game::draw()
     vita2d_start_drawing();
     vita2d_clear_screen();
 
-    //Texture::drawTexture_fillScreen( Texture::Sprite::background1 );
     background.update();
     background.draw();
 

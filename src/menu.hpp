@@ -8,6 +8,7 @@
 #include "level.hpp"
 #include "gui.hpp"
 #include "input.hpp"
+#include "sound.hpp"
 #include "common.hpp"
 
 class MenuItem

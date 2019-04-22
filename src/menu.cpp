@@ -84,6 +84,8 @@ void Menu::selectUp()
         cursor--;
     else
         cursor = menuItems.size() - 1;
+
+    Sound::soloud.play( Sound::menuMove );
 }
 
 void Menu::selectDown()
@@ -92,6 +94,8 @@ void Menu::selectDown()
         cursor++;
     else
         cursor = 0;
+
+    Sound::soloud.play( Sound::menuMove );
 }
 
 
@@ -354,6 +358,8 @@ void LevelSelect::selectUp()
                 cursor += ( ( levelList->getNrOfLevels() ) / columns - 1 ) * columns;
         }
     }
+
+    Sound::soloud.play( Sound::menuMove );
 }
 
 void LevelSelect::selectRight()
@@ -362,6 +368,8 @@ void LevelSelect::selectRight()
         cursor++;
     else
         cursor = 1;
+
+    Sound::soloud.play( Sound::menuMove );
 }
 
 void LevelSelect::selectDown()
@@ -370,6 +378,8 @@ void LevelSelect::selectDown()
         cursor += columns;
     else
         cursor %= columns;
+
+    Sound::soloud.play( Sound::menuMove );
 }
 
 void LevelSelect::selectLeft()
@@ -378,4 +388,6 @@ void LevelSelect::selectLeft()
         cursor--;
     else
         cursor = levelList->getNrOfLevels();
+
+    Sound::soloud.play( Sound::menuMove );
 }

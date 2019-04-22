@@ -48,6 +48,8 @@ add_executable(${VITA_APP_NAME}
   src/timer.cpp
   src/texture.hpp
   src/texture.cpp
+  src/sound.hpp
+  src/sound.cpp
   src/common.hpp
   src/common.cpp
 )
@@ -125,6 +127,13 @@ vita_create_vpk(${SHORT_NAME}.vpk ${VITA_TITLEID} ${SHORT_NAME}.self
   FILE img/menu/lf-restartSelected.png    img/menu/lf-restartSelected.png
   FILE img/menu/lf-menu.png               img/menu/lf-menu.png
   FILE img/menu/lf-menuSelected.png       img/menu/lf-menuSelected.png
+
+
+  # Sound effects
+  FILE sounds/ballHit.ogg        sounds/ballHit.ogg
+  FILE sounds/menuMove.wav       sounds/menuMove.wav
+  FILE sounds/levelFinish.wav    sounds/levelFinish.wav
+
 
   # Levels
   # Figure out how to load all levels from file automatically

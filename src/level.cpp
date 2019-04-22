@@ -89,6 +89,7 @@ void Level::update()
 
         if( ballHittingWall() )
         {
+            Sound::soloud.play( Sound::ballHit );
             newStep = false;
             ball.moveBack();
             ball.setWorldPos( getBallTilePosition() );
