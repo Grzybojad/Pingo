@@ -35,6 +35,7 @@ namespace Texture {
     vita2d_texture *p_restartSelectedTexture;
     vita2d_texture *p_menuTexture;
     vita2d_texture *p_menuSelectedTexture;
+    vita2d_texture *curtainTexture;
 
     void loadTextures()
     {
@@ -78,6 +79,8 @@ namespace Texture {
         p_restartSelectedTexture    = vita2d_load_PNG_file( "app0:/img/menu/pause/restartSelected.png" );
         p_menuTexture               = vita2d_load_PNG_file( "app0:/img/menu/pause/menu.png" );
         p_menuSelectedTexture       = vita2d_load_PNG_file( "app0:/img/menu/pause/menuSelected.png" );
+
+        curtainTexture              = vita2d_load_PNG_file( "app0:/sce_sys/pic0.png" );
     }
 
     vita2d_texture * getTexture( Sprite sprite )
@@ -186,6 +189,9 @@ namespace Texture {
             case Sprite::p_menuSelected:
                 return p_menuSelectedTexture;
 
+            case Sprite::curtain:
+                return curtainTexture;
+
             default:
                 break;
         }
@@ -255,6 +261,7 @@ namespace Texture {
         vita2d_free_texture( p_restartTexture );
         vita2d_free_texture( p_returnSelectedTexture );
         vita2d_free_texture( p_returnTexture );
+        vita2d_free_texture( curtainTexture );
     }
 }
 
@@ -308,4 +315,25 @@ void AnimatedBackground::draw()
             Texture::drawTexture( sprite, Vec2( i * textureWidth + animationStep, j * textureHeight + animationStep ) );
         }
     }
+}
+
+Curtain::Curtain()
+{
+    animationStep = 0;
+    animationSpeed = 10.0f;
+    waitTimer = 50;
+}
+
+void Curtain::update()
+{
+    if( waitTimer > 0)
+        waitTimer -= timestep;
+    else
+        if( animationStep < vita2d_texture_get_height( Texture::getTexture( Texture::Sprite::curtain ) ) )
+            animationStep += animationSpeed * timestep;
+}
+
+void Curtain::draw()
+{
+    Texture::drawTexture( Texture::Sprite::curtain, Vec2( 0, (int)-animationStep ) );
 }

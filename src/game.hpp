@@ -60,5 +60,7 @@ class Game
 
         AnimatedBackground background;
 
+        Curtain curtain;
+
         bool progressSaved;
 };

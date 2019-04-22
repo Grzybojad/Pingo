@@ -153,6 +153,7 @@ void Game::inMenu()
     if( gameState == GameState::mainMenu )
     {
         mainMenu.update();
+        curtain.update();
 
         // TODO make this more elegant
         if( mainMenu.clickedStart() )
@@ -255,7 +256,9 @@ void Game::draw()
     switch( gameState )
     {
         case GameState::mainMenu:
+            
             mainMenu.draw();
+            curtain.draw();
             break;
 
         case GameState::playing:

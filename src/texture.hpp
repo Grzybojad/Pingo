@@ -52,7 +52,9 @@ namespace Texture
         p_restart = 54,
         p_restartSelected = 55,
         p_menu = 56,
-        p_menuSelected = 57
+        p_menuSelected = 57,
+
+        curtain = 100
     };
 
     vita2d_texture * getTexture( Sprite sprite );
@@ -102,6 +104,8 @@ namespace Texture
     extern vita2d_texture *p_restartSelectedTexture;
     extern vita2d_texture *p_menuTexture;
     extern vita2d_texture *p_menuSelectedTexture;
+
+    extern vita2d_texture *curtainTexture;
 };
 
 
@@ -119,4 +123,18 @@ class AnimatedBackground
         float animationSpeed;
 
         int variant;
+};
+
+class Curtain
+{
+    public:
+        Curtain();
+
+        void update();
+        void draw();
+
+    protected:
+        float animationStep;
+        float animationSpeed;
+        float waitTimer;
 };
