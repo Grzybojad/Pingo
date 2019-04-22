@@ -11,7 +11,7 @@ namespace Gui
     void loadFont()
     {
         for( int i = 0; i <= 99; ++i )
-            mainFont[ i ] = vita2d_load_font_file( "app0:/font/Ubuntu-Medium.ttf" );
+            mainFont[ i ] = vita2d_load_font_file( "app0:/font/ConcertOne-Regular.ttf" );
     }
 
     void freeFont()

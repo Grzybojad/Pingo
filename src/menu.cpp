@@ -207,8 +207,11 @@ LevelFinish::LevelFinish()
 
     int buttonWidth = 260;
 
-    MenuItem nextButton = MenuItem( Rect( SCREEN_WIDTH / 2 - ( buttonWidth / 2 ), SCREEN_HEIGHT*0.6, buttonWidth, 70 ), "Next Level" );
+    MenuItem nextButton = MenuItem( Rect( SCREEN_WIDTH / 2 - ( buttonWidth / 2 ), SCREEN_HEIGHT*0.5, buttonWidth, 70 ), "Next Level" );
     addItem( nextButton );
+
+    MenuItem restartButton = MenuItem( Rect( SCREEN_WIDTH / 2 - ( buttonWidth / 2 ), SCREEN_HEIGHT*0.65, buttonWidth, 70 ), "Try again" );
+    addItem( restartButton );
 
     MenuItem levelSelect = MenuItem( Rect( SCREEN_WIDTH / 2 - ( buttonWidth / 2 ), SCREEN_HEIGHT*0.8, buttonWidth, 70 ), "Main menu" );
     addItem( levelSelect );
@@ -236,9 +239,14 @@ bool LevelFinish::clickedNextLevel()
     return selectPressed() && cursor == 0;
 }
 
-bool LevelFinish::clickedMainMenu()
+bool LevelFinish::clickedRestart()
 {
     return selectPressed() && cursor == 1;
+}
+
+bool LevelFinish::clickedMainMenu()
+{
+    return selectPressed() && cursor == 2;
 }
 
 void LevelFinish::setStars( int stars )

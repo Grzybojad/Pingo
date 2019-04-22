@@ -173,6 +173,7 @@ class LevelList
 
         void nextLevel();
         void setCurrentLevel( int index );
+        int lastUnlockedLevel();
         void compleateCurrentLevel();
 
         LevelListElement * accessElement( int index );

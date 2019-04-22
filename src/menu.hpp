@@ -95,6 +95,7 @@ class LevelFinish : public Menu
 
         // Returns true if the button was clicked
         bool clickedNextLevel();
+        bool clickedRestart();
         bool clickedMainMenu();
 
         void setStars( int stars );

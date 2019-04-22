@@ -32,7 +32,10 @@ namespace Texture
 
         doorClosed = 28,
         doorOpened = 29,
-        doorLocked = 30
+        doorLocked = 30,
+        doorStar1 = 31,
+        doorStar2 = 32,
+        doorStar3 = 33
     };
 
     vita2d_texture * getTexture( Sprite sprite );
@@ -62,6 +65,9 @@ namespace Texture
     extern vita2d_texture *doorClosedTexture;
     extern vita2d_texture *doorOpenedTexture;
     extern vita2d_texture *doorLockedTexture;
+    extern vita2d_texture *doorStar1Texture;
+    extern vita2d_texture *doorStar2Texture;
+    extern vita2d_texture *doorStar3Texture;
 };
 
 

@@ -142,11 +142,25 @@ void Level::draw()
 
     // Draw step count
     if( steps <= levelListElement->stepsForThreeStars )
-        Gui::drawTextf_color_position( Gui::Position::alignTop, 10, 10, 30, RGBA8( 220, 119, 47, 255 ), "Steps: %d/%d", steps, levelListElement->stepsForThreeStars );
+    {
+        Gui::drawTextf_color_position( Gui::Position::alignTop, 10, 10, 20, RGBA8( 220, 119, 47, 255 ), "Steps: %d/%d", steps, levelListElement->stepsForThreeStars );
+        Texture::drawTexture( Texture::Sprite::doorStar1, Vec2( 100, 0 ) );
+        Texture::drawTexture( Texture::Sprite::doorStar2, Vec2( 100, 0 ) );
+        Texture::drawTexture( Texture::Sprite::doorStar3, Vec2( 100, 0 ) );
+    }  
     else if( steps <= levelListElement->stepsForTwoStars )
-        Gui::drawTextf_color_position( Gui::Position::alignTop, 10, 10, 30, RGBA8( 220, 119, 47, 255 ), "Steps: %d/%d", steps, levelListElement->stepsForTwoStars );
+    {
+        Gui::drawTextf_color_position( Gui::Position::alignTop, 10, 10, 20, RGBA8( 220, 119, 47, 255 ), "Steps: %d/%d", steps, levelListElement->stepsForTwoStars );
+        Texture::drawTexture( Texture::Sprite::doorStar1, Vec2( 100, 0 ) );
+        Texture::drawTexture( Texture::Sprite::doorStar2, Vec2( 100, 0 ) );
+    }    
     else
-        Gui::drawTextf_color_position( Gui::Position::alignTop, 10, 10, 30, RGBA8( 220, 119, 47, 255 ), "Steps: %d", steps );
+    {
+        Gui::drawTextf_color_position( Gui::Position::alignTop, 10, 10, 20, RGBA8( 220, 119, 47, 255 ), "Steps: %d", steps );
+        Texture::drawTexture( Texture::Sprite::doorStar1, Vec2( 100, 0 ) );
+        
+    }
+        
     // TODO draw the stars next to the counter!
 }
 
@@ -365,14 +379,11 @@ void FloorTile::draw( Rect rect )
 {
     if( state == State::blank )
     {
-        //vita2d_draw_rectangle( rect.x, rect.y, rect.w, rect.h, RGBA8( 0, 0, 0, 255 ) );
         Texture::drawTexture( Texture::Sprite::floorBlank, Vec2( rect.x, rect.y ) );
     }
         
     else if( state == State::painted )
     {
-        //vita2d_draw_rectangle( rect.x, rect.y, rect.w, rect.h, RGBA8( 0, 0, 0, 255 ) );
-        //vita2d_draw_rectangle( rect.x + 10, rect.y + 10, rect.w - 20, rect.h - 20, RGBA8( 0, 255, 0, 255 ) );
         Texture::drawTexture( Texture::Sprite::floorPainted, Vec2( rect.x, rect.y ) );
     }
 }
@@ -392,7 +403,6 @@ bool FloorTile::paintable()
 
 void WallTile::draw( Rect rect )
 {
-    //vita2d_draw_rectangle( rect.x, rect.y, rect.w, rect.h, RGBA8( 255, 255, 255, 255) );
     Texture::drawTexture( Texture::Sprite::wall, Vec2( rect.x, rect.y ) );
 }
 
@@ -428,30 +438,15 @@ void LevelListElement::drawLevelMenuElement( Vec2 pos, bool selected )
     {
         Texture::drawTexture( Texture::Sprite::doorLocked, Vec2( pos.x, pos.y ) );
     }
-    
-/*
-    if( selected )
-    {
-        vita2d_draw_rectangle( pos.x, pos.y, itemWidth, itemHeight, RGBA8( 128, 0, 0, 255 ) );
-    }
-    else if( completed )
-    {
-        vita2d_draw_rectangle( pos.x, pos.y, itemWidth, itemHeight, RGBA8( 0, 0, 0, 255 ) );
-    }
-    else if( unlocked )
-    {
-        vita2d_draw_rectangle( pos.x, pos.y, itemWidth, itemHeight, RGBA8( 0, 0, 0, 255 ) );
-    }
-    else
-    {
-        vita2d_draw_rectangle( pos.x, pos.y, itemWidth, itemHeight, RGBA8( 128, 128, 128, 255 ) );
-    }*/
+
+    if( stars > 0 )
+        Texture::drawTexture( Texture::Sprite::doorStar1, Vec2( pos.x, pos.y ) );
+    if( stars > 1 )
+        Texture::drawTexture( Texture::Sprite::doorStar2, Vec2( pos.x, pos.y ) );
+    if( stars > 2 )
+        Texture::drawTexture( Texture::Sprite::doorStar3, Vec2( pos.x, pos.y ) );
 
     Gui::drawTextf_color_position( Gui::Position::centeredX, pos.x + ( itemWidth / 2 ), pos.y + 45, 30, RGBA8( 255, 255, 255, 255 ), "%i", index );
-
-    std::string starsText = "";
-    for( int i = 0; i < stars; ++i ) starsText += "*";
-    Gui::drawTextf_color_position( Gui::Position::centeredX, pos.x + ( itemWidth / 2 ), pos.y + 90, 26, RGBA8( 255, 255, 255, 255 ), "%s", starsText.c_str() );
 }
 
 
@@ -513,6 +508,16 @@ int LevelList::getCurrentLevel()
 void LevelList::setCurrentLevel( int index )
 {
     currentLevel = index;
+}
+
+int LevelList::lastUnlockedLevel()
+{
+    int lastUnlocked = 0;
+    for( int i = 0; i < levels.size(); ++i )
+        if( accessElement( i )->unlocked )
+            lastUnlocked = i;
+
+    return lastUnlocked + 1;
 }
 
 void LevelList::compleateCurrentLevel()

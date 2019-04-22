@@ -18,6 +18,9 @@ namespace Texture {
     vita2d_texture *doorClosedTexture;
     vita2d_texture *doorOpenedTexture;
     vita2d_texture *doorLockedTexture;
+    vita2d_texture *doorStar1Texture;
+    vita2d_texture *doorStar2Texture;
+    vita2d_texture *doorStar3Texture;
 
     void loadTextures()
     {
@@ -38,9 +41,12 @@ namespace Texture {
         optionsButtonTexture        = vita2d_load_PNG_file( "app0:/img/menu/optionsButton.png" );
         optionsSelectedTexture      = vita2d_load_PNG_file( "app0:/img/menu/optionsSelected.png" );
 
-        doorClosedTexture           = vita2d_load_PNG_file( "app0:/img/menu/doorClosed.png" );
-        doorOpenedTexture           = vita2d_load_PNG_file( "app0:/img/menu/doorOpened.png" );
-        doorLockedTexture           = vita2d_load_PNG_file( "app0:/img/menu/doorLocked.png" );
+        doorClosedTexture   = vita2d_load_PNG_file( "app0:/img/menu/doorClosed.png" );
+        doorOpenedTexture   = vita2d_load_PNG_file( "app0:/img/menu/doorOpened.png" );
+        doorLockedTexture   = vita2d_load_PNG_file( "app0:/img/menu/doorLocked.png" );
+        doorStar1Texture    = vita2d_load_PNG_file( "app0:/img/menu/doorStar1.png" );
+        doorStar2Texture    = vita2d_load_PNG_file( "app0:/img/menu/doorStar2.png" );
+        doorStar3Texture    = vita2d_load_PNG_file( "app0:/img/menu/doorStar3.png" );
     }
 
     vita2d_texture * getTexture( Sprite sprite )
@@ -97,6 +103,15 @@ namespace Texture {
 
             case Sprite::doorLocked:
                 return doorLockedTexture;
+
+            case Sprite::doorStar1:
+                return doorStar1Texture;
+
+            case Sprite::doorStar2:
+                return doorStar2Texture;
+
+            case Sprite::doorStar3:
+                return doorStar3Texture;
 
             default:
                 break;

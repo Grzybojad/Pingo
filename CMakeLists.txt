@@ -89,7 +89,8 @@ vita_create_vpk(${SHORT_NAME}.vpk ${VITA_TITLEID} ${SHORT_NAME}.self
   FILE sce_sys/livearea/contents/template.xml sce_sys/livearea/contents/template.xml
 
   # Font
-  FILE font/Ubuntu-Medium.ttf  font/Ubuntu-Medium.ttf
+  #FILE font/Ubuntu-Medium.ttf  font/Ubuntu-Medium.ttf
+  FILE font/ConcertOne-Regular.ttf  font/ConcertOne-Regular.ttf
 
   # Textures
   FILE img/level/wall.png          img/level/wall.png
@@ -109,9 +110,12 @@ vita_create_vpk(${SHORT_NAME}.vpk ${VITA_TITLEID} ${SHORT_NAME}.self
   FILE img/menu/optionsButton.png         img/menu/optionsButton.png
   FILE img/menu/optionsSelected.png       img/menu/optionsSelected.png
 
-  FILE img/menu/doorOpened.png        img/menu/doorOpened.png
+  FILE img/menu/doorOpened.png      img/menu/doorOpened.png
   FILE img/menu/doorClosed.png      img/menu/doorClosed.png
   FILE img/menu/doorLocked.png      img/menu/doorLocked.png
+  FILE img/menu/doorStar1.png       img/menu/doorStar1.png
+  FILE img/menu/doorStar2.png       img/menu/doorStar2.png
+  FILE img/menu/doorStar3.png       img/menu/doorStar3.png
 
   # Levels
   # Figure out how to load all levels from file automatically

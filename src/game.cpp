@@ -101,6 +101,10 @@ void Game::inGame()
     }
     else
     {
+        // Set the completion state of the level and unlock the next level
+        if( !levelList.getCompletion( levelList.getCurrentLevel() ) )
+            levelList.compleateCurrentLevel();
+
         // Check to only save the data once
         if( !progressSaved )
         {
@@ -112,13 +116,16 @@ void Game::inGame()
 
         finishMenu.update();
 
-        if( !levelList.getCompletion( levelList.getCurrentLevel() ) )
-            levelList.compleateCurrentLevel();
-
         if( finishMenu.clickedNextLevel() )
         {
             progressSaved = false;
             levelList.nextLevel();
+            destroyLevel();
+            initLevel();
+        }
+        else if( finishMenu.clickedRestart() )
+        {
+            progressSaved = false;
             destroyLevel();
             initLevel();
         }
@@ -146,7 +153,7 @@ void Game::inMenu()
         if( mainMenu.clickedStart() )
         {
             gameState = GameState::playing;
-            initLevel();
+            initLevel( levelList.lastUnlockedLevel() );
         }
         else if( mainMenu.clickedLevelSelect() )
         {
@@ -159,6 +166,7 @@ void Game::inMenu()
 
         draw();
     }
+    // Pause menu
     else if( gameState == GameState::paused )
     {
         pauseMenu.update();
@@ -181,6 +189,7 @@ void Game::inMenu()
 
         draw();
     }
+    // Level select menu
     else if( gameState == GameState::levelMenu )
     {
         // TODO make this a little more elegant maybe
