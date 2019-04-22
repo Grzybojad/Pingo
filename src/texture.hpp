@@ -44,7 +44,15 @@ namespace Texture
         lf_restart = 44,
         lf_restartSelected = 45,
         lf_menu = 46,
-        lf_menuSelected = 47
+        lf_menuSelected = 47,
+
+        p_pausedText = 51,
+        p_return = 52,
+        p_returnSelected = 53,
+        p_restart = 54,
+        p_restartSelected = 55,
+        p_menu = 56,
+        p_menuSelected = 57
     };
 
     vita2d_texture * getTexture( Sprite sprite );
@@ -86,6 +94,14 @@ namespace Texture
     extern vita2d_texture *lf_restartSelectedTexture;
     extern vita2d_texture *lf_menuTexture;
     extern vita2d_texture *lf_menuSelectedTexture;
+
+    extern vita2d_texture *p_pausedTextTexture;
+    extern vita2d_texture *p_returnTexture;
+    extern vita2d_texture *p_returnSelectedTexture;
+    extern vita2d_texture *p_restartTexture;
+    extern vita2d_texture *p_restartSelectedTexture;
+    extern vita2d_texture *p_menuTexture;
+    extern vita2d_texture *p_menuSelectedTexture;
 };
 
 

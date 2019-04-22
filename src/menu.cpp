@@ -179,6 +179,21 @@ void PauseMenu::draw()
 
     Gui::drawText_color_position( Gui::Position::centered, SCREEN_WIDTH / 2, 100, 60, RGBA8( 0, 0, 0, 255 ), "Paused" );
 
+    Texture::drawTexture( Texture::Sprite::p_pausedText, Vec2( 0, 0 ) );
+
+    if( cursor == 0 )
+        Texture::drawTexture( Texture::Sprite::p_returnSelected, Vec2( 0, 0 ) );
+    else
+        Texture::drawTexture( Texture::Sprite::p_return, Vec2( 0, 0 ) );
+    if( cursor == 1 )
+        Texture::drawTexture( Texture::Sprite::p_restartSelected, Vec2( 0, 0 ) );
+    else
+        Texture::drawTexture( Texture::Sprite::p_restart, Vec2( 0, 0 ) );   
+    if( cursor == 2 )
+        Texture::drawTexture( Texture::Sprite::p_menuSelected, Vec2( 0, 0 ) );
+    else
+        Texture::drawTexture( Texture::Sprite::p_menu, Vec2( 0, 0 ) );
+/*
     for( int i = 0; i < menuItems.size(); ++i )
     {
         if( cursor == i )
@@ -186,6 +201,7 @@ void PauseMenu::draw()
         else
             menuItems[ i ].draw();
     }
+    */
 }
 
 bool PauseMenu::clickedResume()

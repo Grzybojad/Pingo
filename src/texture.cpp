@@ -29,6 +29,13 @@ namespace Texture {
     vita2d_texture *lf_restartSelectedTexture;
     vita2d_texture *lf_menuTexture;
     vita2d_texture *lf_menuSelectedTexture;
+    vita2d_texture *p_pausedTextTexture;
+    vita2d_texture *p_returnTexture;
+    vita2d_texture *p_returnSelectedTexture;
+    vita2d_texture *p_restartTexture;
+    vita2d_texture *p_restartSelectedTexture;
+    vita2d_texture *p_menuTexture;
+    vita2d_texture *p_menuSelectedTexture;
 
     void loadTextures()
     {
@@ -64,6 +71,14 @@ namespace Texture {
         lf_restartSelectedTexture   = vita2d_load_PNG_file( "app0:/img/menu/lf-restartSelected.png" );
         lf_menuTexture              = vita2d_load_PNG_file( "app0:/img/menu/lf-menu.png" );
         lf_menuSelectedTexture      = vita2d_load_PNG_file( "app0:/img/menu/lf-menuSelected.png" );
+
+        p_pausedTextTexture         = vita2d_load_PNG_file( "app0:/img/menu/pause/pausedText.png" );
+        p_returnTexture             = vita2d_load_PNG_file( "app0:/img/menu/pause/return.png" );
+        p_returnSelectedTexture     = vita2d_load_PNG_file( "app0:/img/menu/pause/returnSelected.png" );
+        p_restartTexture            = vita2d_load_PNG_file( "app0:/img/menu/pause/restart.png" );
+        p_restartSelectedTexture    = vita2d_load_PNG_file( "app0:/img/menu/pause/restartSelected.png" );
+        p_menuTexture               = vita2d_load_PNG_file( "app0:/img/menu/pause/menu.png" );
+        p_menuSelectedTexture       = vita2d_load_PNG_file( "app0:/img/menu/pause/menuSelected.png" );
     }
 
     vita2d_texture * getTexture( Sprite sprite )
@@ -153,6 +168,27 @@ namespace Texture {
             
             case Sprite::lf_menuSelected:
                 return lf_menuSelectedTexture;
+
+            case Sprite::p_pausedText:
+                return p_pausedTextTexture;
+
+            case Sprite::p_return:
+                return p_returnTexture;
+
+            case Sprite::p_returnSelected:
+                return p_returnSelectedTexture;
+
+            case Sprite::p_restart:
+                return p_restartTexture;
+
+            case Sprite::p_restartSelected:
+                return p_restartSelectedTexture;
+
+            case Sprite::p_menu:
+                return p_menuTexture;
+
+            case Sprite::p_menuSelected:
+                return p_menuSelectedTexture;
 
             default:
                 break;

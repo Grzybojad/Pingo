@@ -128,6 +128,14 @@ vita_create_vpk(${SHORT_NAME}.vpk ${VITA_TITLEID} ${SHORT_NAME}.self
   FILE img/menu/lf-menu.png               img/menu/lf-menu.png
   FILE img/menu/lf-menuSelected.png       img/menu/lf-menuSelected.png
 
+  FILE img/menu/pause/pausedText.png      img/menu/pause/pausedText.png
+  FILE img/menu/pause/return.png          img/menu/pause/return.png
+  FILE img/menu/pause/returnSelected.png  img/menu/pause/returnSelected.png
+  FILE img/menu/pause/restart.png         img/menu/pause/restart.png
+  FILE img/menu/pause/restartSelected.png img/menu/pause/restartSelected.png
+  FILE img/menu/pause/menu.png            img/menu/pause/menu.png
+  FILE img/menu/pause/menuSelected.png    img/menu/pause/menuSelected.png
+
 
   # Sound effects
   FILE sounds/ballHit.ogg        sounds/ballHit.ogg
