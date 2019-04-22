@@ -110,12 +110,13 @@ vita_create_vpk(${SHORT_NAME}.vpk ${VITA_TITLEID} ${SHORT_NAME}.self
   FILE img/menu/optionsButton.png         img/menu/optionsButton.png
   FILE img/menu/optionsSelected.png       img/menu/optionsSelected.png
 
-  FILE img/menu/doorOpened.png      img/menu/doorOpened.png
-  FILE img/menu/doorClosed.png      img/menu/doorClosed.png
-  FILE img/menu/doorLocked.png      img/menu/doorLocked.png
-  FILE img/menu/doorStar1.png       img/menu/doorStar1.png
-  FILE img/menu/doorStar2.png       img/menu/doorStar2.png
-  FILE img/menu/doorStar3.png       img/menu/doorStar3.png
+  FILE img/menu/doorOpened.png        img/menu/doorOpened.png
+  FILE img/menu/doorClosed.png        img/menu/doorClosed.png
+  FILE img/menu/doorLocked.png        img/menu/doorLocked.png
+  FILE img/menu/doorLockedOutline.png img/menu/doorLockedOutline.png
+  FILE img/menu/doorStar1.png         img/menu/doorStar1.png
+  FILE img/menu/doorStar2.png         img/menu/doorStar2.png
+  FILE img/menu/doorStar3.png         img/menu/doorStar3.png
 
   # Levels
   # Figure out how to load all levels from file automatically
@@ -135,5 +136,11 @@ vita_create_vpk(${SHORT_NAME}.vpk ${VITA_TITLEID} ${SHORT_NAME}.self
   FILE levels/level014.txt       levels/level014.txt
   FILE levels/level015.txt       levels/level015.txt
   FILE levels/level016.txt       levels/level016.txt
+  FILE levels/level017.txt       levels/level017.txt
+  FILE levels/level018.txt       levels/level018.txt
+  FILE levels/level019.txt       levels/level019.txt
+  FILE levels/level020.txt       levels/level020.txt
+  FILE levels/level021.txt       levels/level021.txt
+  FILE levels/level022.txt       levels/level022.txt
 )
 

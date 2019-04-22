@@ -18,6 +18,7 @@ namespace Texture {
     vita2d_texture *doorClosedTexture;
     vita2d_texture *doorOpenedTexture;
     vita2d_texture *doorLockedTexture;
+    vita2d_texture *doorLockedOutlineTexture;
     vita2d_texture *doorStar1Texture;
     vita2d_texture *doorStar2Texture;
     vita2d_texture *doorStar3Texture;
@@ -41,12 +42,13 @@ namespace Texture {
         optionsButtonTexture        = vita2d_load_PNG_file( "app0:/img/menu/optionsButton.png" );
         optionsSelectedTexture      = vita2d_load_PNG_file( "app0:/img/menu/optionsSelected.png" );
 
-        doorClosedTexture   = vita2d_load_PNG_file( "app0:/img/menu/doorClosed.png" );
-        doorOpenedTexture   = vita2d_load_PNG_file( "app0:/img/menu/doorOpened.png" );
-        doorLockedTexture   = vita2d_load_PNG_file( "app0:/img/menu/doorLocked.png" );
-        doorStar1Texture    = vita2d_load_PNG_file( "app0:/img/menu/doorStar1.png" );
-        doorStar2Texture    = vita2d_load_PNG_file( "app0:/img/menu/doorStar2.png" );
-        doorStar3Texture    = vita2d_load_PNG_file( "app0:/img/menu/doorStar3.png" );
+        doorClosedTexture           = vita2d_load_PNG_file( "app0:/img/menu/doorClosed.png" );
+        doorOpenedTexture           = vita2d_load_PNG_file( "app0:/img/menu/doorOpened.png" );
+        doorLockedTexture           = vita2d_load_PNG_file( "app0:/img/menu/doorLocked.png" );
+        doorLockedOutlineTexture    = vita2d_load_PNG_file( "app0:/img/menu/doorLockedOutline.png" );
+        doorStar1Texture            = vita2d_load_PNG_file( "app0:/img/menu/doorStar1.png" );
+        doorStar2Texture            = vita2d_load_PNG_file( "app0:/img/menu/doorStar2.png" );
+        doorStar3Texture            = vita2d_load_PNG_file( "app0:/img/menu/doorStar3.png" );
     }
 
     vita2d_texture * getTexture( Sprite sprite )
@@ -104,6 +106,9 @@ namespace Texture {
             case Sprite::doorLocked:
                 return doorLockedTexture;
 
+            case Sprite::doorLockedOutline:
+                return doorLockedOutlineTexture;
+
             case Sprite::doorStar1:
                 return doorStar1Texture;
 
@@ -122,7 +127,6 @@ namespace Texture {
 
     void drawTexture( Sprite sprite, Vec2 pos )
     {
-        // TODO change this to just use getTexture()
         vita2d_draw_texture_scale( getTexture( sprite ), pos.x, pos.y, 1, 1 );
     }
 

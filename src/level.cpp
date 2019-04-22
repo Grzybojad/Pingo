@@ -422,9 +422,10 @@ LevelListElement::LevelListElement( std::string filePath )
 
 void LevelListElement::drawLevelMenuElement( Vec2 pos, bool selected )
 {
-    int itemWidth = 70;
-    int itemHeight = 90;
+    int itemWidth = vita2d_texture_get_width( Texture::getTexture( Texture::Sprite::doorOpened ) );
+    int itemHeight = vita2d_texture_get_height( Texture::getTexture( Texture::Sprite::doorOpened ) );
 
+    int indexSize = 35;
 
     if( selected && unlocked )
     {
@@ -433,20 +434,31 @@ void LevelListElement::drawLevelMenuElement( Vec2 pos, bool selected )
     else if( unlocked )
     {
         Texture::drawTexture( Texture::Sprite::doorClosed, Vec2( pos.x, pos.y ) );
+        Gui::drawTextf_color_position( Gui::Position::centered, pos.x + ( itemWidth / 2 ), pos.y + ( itemHeight / 2 ) - 20, indexSize, RGBA8( 65, 11, 25, 255 ), "%i", index );
+    }
+    else if( selected )
+    {
+        Texture::drawTexture( Texture::Sprite::doorLockedOutline, Vec2( pos.x, pos.y ) );
+        Texture::drawTexture( Texture::Sprite::doorClosed, Vec2( pos.x, pos.y ) );
+        Gui::drawTextf_color_position( Gui::Position::centered, pos.x + ( itemWidth / 2 ), pos.y + ( itemHeight / 2 ) - 20, indexSize, RGBA8( 65, 11, 25, 255 ), "%i", index );
+        Texture::drawTexture( Texture::Sprite::doorLocked, Vec2( pos.x, pos.y ) );
     }
     else
     {
+        Texture::drawTexture( Texture::Sprite::doorClosed, Vec2( pos.x, pos.y ) ); 
+        Gui::drawTextf_color_position( Gui::Position::centered, pos.x + ( itemWidth / 2 ), pos.y + ( itemHeight / 2 ) - 20, indexSize, RGBA8( 65, 11, 25, 255 ), "%i", index );
         Texture::drawTexture( Texture::Sprite::doorLocked, Vec2( pos.x, pos.y ) );
     }
-
+    
+    /* DEBUG turned off for now
     if( stars > 0 )
         Texture::drawTexture( Texture::Sprite::doorStar1, Vec2( pos.x, pos.y ) );
     if( stars > 1 )
         Texture::drawTexture( Texture::Sprite::doorStar2, Vec2( pos.x, pos.y ) );
     if( stars > 2 )
         Texture::drawTexture( Texture::Sprite::doorStar3, Vec2( pos.x, pos.y ) );
-
-    Gui::drawTextf_color_position( Gui::Position::centeredX, pos.x + ( itemWidth / 2 ), pos.y + 45, 30, RGBA8( 255, 255, 255, 255 ), "%i", index );
+    */
+    
 }
 
 
