@@ -8,6 +8,7 @@ namespace Texture {
     vita2d_texture *background1Texture;
     vita2d_texture *background2Texture;
     vita2d_texture *background3Texture;
+    vita2d_texture *starTexture;
     vita2d_texture *logoTexture;
     vita2d_texture *startButtonTexture;
     vita2d_texture *startSelectedTexture;
@@ -47,6 +48,8 @@ namespace Texture {
         background1Texture  = vita2d_load_PNG_file( "app0:/img/common/background1.png" );
         background2Texture  = vita2d_load_PNG_file( "app0:/img/common/background2.png" );
         background3Texture  = vita2d_load_PNG_file( "app0:/img/common/background3.png" );
+
+        starTexture         = vita2d_load_PNG_file( "app0:/img/common/star.png" );
 
         logoTexture                 = vita2d_load_PNG_file( "app0:/img/menu/logo.png" );
         startButtonTexture          = vita2d_load_PNG_file( "app0:/img/menu/startButton.png" );
@@ -105,6 +108,9 @@ namespace Texture {
 
             case Sprite::background3:
                 return background3Texture;
+
+            case Sprite::star:
+                return starTexture;
 
             case Sprite::logo:
                 return logoTexture;
@@ -199,7 +205,12 @@ namespace Texture {
 
     void drawTexture( Sprite sprite, Vec2 pos )
     {
-        vita2d_draw_texture_scale( getTexture( sprite ), pos.x, pos.y, 1, 1 );
+        vita2d_draw_texture( getTexture( sprite ), pos.x, pos.y );
+    }
+
+    void drawTexture_scale( Sprite sprite, Vec2 pos, float scale )
+    {
+        vita2d_draw_texture_scale( getTexture( sprite ), pos.x, pos.y, scale, scale );
     }
 
     void drawTexture_fillScreen( Sprite sprite )

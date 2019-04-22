@@ -142,27 +142,27 @@ void Level::draw()
     Gui::drawTextf_position( Gui::Position::centered, SCREEN_WIDTH / 2, 40, 40, "%s", levelListElement->name.c_str() );
 
     // Draw step count
+    int starPosX = 120;
+    int starPosY = 10;
+    
     if( steps <= levelListElement->stepsForThreeStars )
     {
         Gui::drawTextf_color_position( Gui::Position::alignTop, 10, 10, 20, RGBA8( 220, 119, 47, 255 ), "Steps: %d/%d", steps, levelListElement->stepsForThreeStars );
-        Texture::drawTexture( Texture::Sprite::doorStar1, Vec2( 100, 0 ) );
-        Texture::drawTexture( Texture::Sprite::doorStar2, Vec2( 100, 0 ) );
-        Texture::drawTexture( Texture::Sprite::doorStar3, Vec2( 100, 0 ) );
+        Texture::drawTexture_scale( Texture::Sprite::star, Vec2( starPosX, starPosY ), 0.25 );
+        Texture::drawTexture_scale( Texture::Sprite::star, Vec2( starPosX + 20, starPosY ), 0.25 );
+        Texture::drawTexture_scale( Texture::Sprite::star, Vec2( starPosX + 40, starPosY ), 0.25 );
     }  
     else if( steps <= levelListElement->stepsForTwoStars )
     {
         Gui::drawTextf_color_position( Gui::Position::alignTop, 10, 10, 20, RGBA8( 220, 119, 47, 255 ), "Steps: %d/%d", steps, levelListElement->stepsForTwoStars );
-        Texture::drawTexture( Texture::Sprite::doorStar1, Vec2( 100, 0 ) );
-        Texture::drawTexture( Texture::Sprite::doorStar2, Vec2( 100, 0 ) );
+        Texture::drawTexture_scale( Texture::Sprite::star, Vec2( starPosX, starPosY ), 0.25 );
+        Texture::drawTexture_scale( Texture::Sprite::star, Vec2( starPosX + 20, starPosY ), 0.25 );
     }    
     else
     {
         Gui::drawTextf_color_position( Gui::Position::alignTop, 10, 10, 20, RGBA8( 220, 119, 47, 255 ), "Steps: %d", steps );
-        Texture::drawTexture( Texture::Sprite::doorStar1, Vec2( 100, 0 ) );
-        
+        Texture::drawTexture_scale( Texture::Sprite::star, Vec2( starPosX, starPosY ), 0.25 );
     }
-        
-    // TODO draw the stars next to the counter!
 }
 
 bool Level::complete()

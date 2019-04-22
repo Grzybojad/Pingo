@@ -193,15 +193,6 @@ void PauseMenu::draw()
         Texture::drawTexture( Texture::Sprite::p_menuSelected, Vec2( 0, 0 ) );
     else
         Texture::drawTexture( Texture::Sprite::p_menu, Vec2( 0, 0 ) );
-/*
-    for( int i = 0; i < menuItems.size(); ++i )
-    {
-        if( cursor == i )
-            menuItems[ i ].drawSelected();
-        else
-            menuItems[ i ].draw();
-    }
-    */
 }
 
 bool PauseMenu::clickedResume()
@@ -239,14 +230,6 @@ LevelFinish::LevelFinish()
 
 void LevelFinish::draw()
 {
-    /*
-    vita2d_draw_rectangle( SCREEN_WIDTH / 2 - 240, 70, 480, 120, RGBA8( 255, 255, 255, 255 ) );
-    Gui::drawText_color_position( Gui::Position::centered, SCREEN_WIDTH / 2, 100, 60, RGBA8( 0, 0, 0, 255 ), "Level complete!" );
-    std::string starsText = "";
-    for( int i = 0; i < stars; ++i ) starsText += "*";
-    Gui::drawText_color_position( Gui::Position::centered, SCREEN_WIDTH / 2, 160, 50, RGBA8( 0, 0, 0, 255 ), starsText.c_str() );
-    */
-
     Texture::drawTexture( Texture::Sprite::lf_levelComplete, Vec2( 0, 0 ) );
 
     if( cursor == 0 )
@@ -262,7 +245,12 @@ void LevelFinish::draw()
     else
         Texture::drawTexture( Texture::Sprite::lf_menu, Vec2( 0, 0 ) );
 
-    // TODO draw stars here 
+    int starHeight = 140;
+    Texture::drawTexture( Texture::Sprite::star, Vec2( SCREEN_WIDTH / 2 - 125, starHeight ) );
+    if( stars > 1 )
+        Texture::drawTexture( Texture::Sprite::star, Vec2( SCREEN_WIDTH / 2 - 50, starHeight ) );
+    if( stars > 2 )
+        Texture::drawTexture( Texture::Sprite::star, Vec2( SCREEN_WIDTH / 2 + 25, starHeight ) );
 }
 
 bool LevelFinish::clickedNextLevel()

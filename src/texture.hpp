@@ -21,6 +21,8 @@ namespace Texture
         background1 = 11,
         background2 = 12,
         background3 = 13,
+        
+        star = 14,
 
         logo = 21,
         startButton = 22,
@@ -58,6 +60,7 @@ namespace Texture
     vita2d_texture * getTexture( Sprite sprite );
 
     void drawTexture( Sprite sprite, Vec2 pos );
+    void drawTexture_scale( Sprite sprite, Vec2 pos, float scale );
     void drawTexture_fillScreen( Sprite sprite );
 
     void freeTextures();
@@ -70,6 +73,7 @@ namespace Texture
     extern vita2d_texture *background1Texture;
     extern vita2d_texture *background2Texture;
     extern vita2d_texture *background3Texture;
+    extern vita2d_texture *starTexture;
 
     extern vita2d_texture *logoTexture;
     extern vita2d_texture *startButtonTexture;
