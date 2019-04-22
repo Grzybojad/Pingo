@@ -36,7 +36,15 @@ namespace Texture
         doorLockedOutline = 31,
         doorStar1 = 32,
         doorStar2 = 33,
-        doorStar3 = 34
+        doorStar3 = 34,
+
+        lf_levelComplete = 41,
+        lf_nextLevel = 42,
+        lf_nextLevelSelected = 43,
+        lf_restart = 44,
+        lf_restartSelected = 45,
+        lf_menu = 46,
+        lf_menuSelected = 47
     };
 
     vita2d_texture * getTexture( Sprite sprite );
@@ -70,6 +78,14 @@ namespace Texture
     extern vita2d_texture *doorStar1Texture;
     extern vita2d_texture *doorStar2Texture;
     extern vita2d_texture *doorStar3Texture;
+
+    extern vita2d_texture *lf_levelCompleteTexture;
+    extern vita2d_texture *lf_nextLevelTexture;
+    extern vita2d_texture *lf_nextLevelSelectedTexture;
+    extern vita2d_texture *lf_restartTexture;
+    extern vita2d_texture *lf_restartSelectedTexture;
+    extern vita2d_texture *lf_menuTexture;
+    extern vita2d_texture *lf_menuSelectedTexture;
 };
 
 

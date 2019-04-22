@@ -22,6 +22,13 @@ namespace Texture {
     vita2d_texture *doorStar1Texture;
     vita2d_texture *doorStar2Texture;
     vita2d_texture *doorStar3Texture;
+    vita2d_texture *lf_levelCompleteTexture;
+    vita2d_texture *lf_nextLevelTexture;
+    vita2d_texture *lf_nextLevelSelectedTexture;
+    vita2d_texture *lf_restartTexture;
+    vita2d_texture *lf_restartSelectedTexture;
+    vita2d_texture *lf_menuTexture;
+    vita2d_texture *lf_menuSelectedTexture;
 
     void loadTextures()
     {
@@ -49,6 +56,14 @@ namespace Texture {
         doorStar1Texture            = vita2d_load_PNG_file( "app0:/img/menu/doorStar1.png" );
         doorStar2Texture            = vita2d_load_PNG_file( "app0:/img/menu/doorStar2.png" );
         doorStar3Texture            = vita2d_load_PNG_file( "app0:/img/menu/doorStar3.png" );
+
+        lf_levelCompleteTexture     = vita2d_load_PNG_file( "app0:/img/menu/lf-levelComplete.png" );
+        lf_nextLevelTexture         = vita2d_load_PNG_file( "app0:/img/menu/lf-nextLevel.png" );
+        lf_nextLevelSelectedTexture = vita2d_load_PNG_file( "app0:/img/menu/lf-nextLevelSelected.png" );
+        lf_restartTexture           = vita2d_load_PNG_file( "app0:/img/menu/lf-restart.png" );
+        lf_restartSelectedTexture   = vita2d_load_PNG_file( "app0:/img/menu/lf-restartSelected.png" );
+        lf_menuTexture              = vita2d_load_PNG_file( "app0:/img/menu/lf-menu.png" );
+        lf_menuSelectedTexture      = vita2d_load_PNG_file( "app0:/img/menu/lf-menuSelected.png" );
     }
 
     vita2d_texture * getTexture( Sprite sprite )
@@ -118,6 +133,27 @@ namespace Texture {
             case Sprite::doorStar3:
                 return doorStar3Texture;
 
+            case Sprite::lf_levelComplete:
+                return lf_levelCompleteTexture;
+                
+            case Sprite::lf_nextLevel:
+                return lf_nextLevelTexture;
+            
+            case Sprite::lf_nextLevelSelected:
+                return lf_nextLevelSelectedTexture;
+            
+            case Sprite::lf_restart:
+                return lf_restartTexture;
+            
+            case Sprite::lf_restartSelected:
+                return lf_restartSelectedTexture;
+
+            case Sprite::lf_menu:
+                return lf_menuTexture;
+            
+            case Sprite::lf_menuSelected:
+                return lf_menuSelectedTexture;
+
             default:
                 break;
         }
@@ -169,6 +205,13 @@ namespace Texture {
         vita2d_free_texture( doorStar1Texture );
         vita2d_free_texture( doorStar2Texture );
         vita2d_free_texture( doorStar3Texture );
+        vita2d_free_texture( lf_levelCompleteTexture );
+        vita2d_free_texture( lf_nextLevelTexture );
+        vita2d_free_texture( lf_nextLevelSelectedTexture );
+        vita2d_free_texture( lf_restartTexture );
+        vita2d_free_texture( lf_restartSelectedTexture );
+        vita2d_free_texture( lf_menuTexture );
+        vita2d_free_texture( lf_menuSelectedTexture );
     }
 }
 
