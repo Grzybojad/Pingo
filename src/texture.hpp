@@ -39,6 +39,7 @@ namespace Texture
         doorStar1 = 32,
         doorStar2 = 33,
         doorStar3 = 34,
+        doorPlatform = 35,
 
         lf_levelComplete = 41,
         lf_nextLevel = 42,
@@ -90,6 +91,7 @@ namespace Texture
     extern vita2d_texture *doorStar1Texture;
     extern vita2d_texture *doorStar2Texture;
     extern vita2d_texture *doorStar3Texture;
+    extern vita2d_texture *doorPlatformTexture;
 
     extern vita2d_texture *lf_levelCompleteTexture;
     extern vita2d_texture *lf_nextLevelTexture;

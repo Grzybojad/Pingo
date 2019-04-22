@@ -428,6 +428,7 @@ void LevelListElement::drawLevelMenuElement( Vec2 pos, bool selected )
 
     int indexSize = 35;
 
+    Texture::drawTexture( Texture::Sprite::doorPlatform, Vec2( pos.x - 5, pos.y + 10 ) );
     if( selected && unlocked )
     {
         Texture::drawTexture( Texture::Sprite::doorOpened, Vec2( pos.x, pos.y ) );

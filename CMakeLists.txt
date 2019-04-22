@@ -120,6 +120,7 @@ vita_create_vpk(${SHORT_NAME}.vpk ${VITA_TITLEID} ${SHORT_NAME}.self
   FILE img/menu/doorStar1.png         img/menu/doorStar1.png
   FILE img/menu/doorStar2.png         img/menu/doorStar2.png
   FILE img/menu/doorStar3.png         img/menu/doorStar3.png
+  FILE img/menu/doorPlatform.png      img/menu/doorPlatform.png
 
   FILE img/menu/lf-levelComplete.png      img/menu/lf-levelComplete.png
   FILE img/menu/lf-nextLevel.png          img/menu/lf-nextLevel.png

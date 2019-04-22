@@ -23,6 +23,7 @@ namespace Texture {
     vita2d_texture *doorStar1Texture;
     vita2d_texture *doorStar2Texture;
     vita2d_texture *doorStar3Texture;
+    vita2d_texture *doorPlatformTexture;
     vita2d_texture *lf_levelCompleteTexture;
     vita2d_texture *lf_nextLevelTexture;
     vita2d_texture *lf_nextLevelSelectedTexture;
@@ -66,6 +67,7 @@ namespace Texture {
         doorStar1Texture            = vita2d_load_PNG_file( "app0:/img/menu/doorStar1.png" );
         doorStar2Texture            = vita2d_load_PNG_file( "app0:/img/menu/doorStar2.png" );
         doorStar3Texture            = vita2d_load_PNG_file( "app0:/img/menu/doorStar3.png" );
+        doorPlatformTexture         = vita2d_load_PNG_file( "app0:/img/menu/doorPlatform.png" );
 
         lf_levelCompleteTexture     = vita2d_load_PNG_file( "app0:/img/menu/lf-levelComplete.png" );
         lf_nextLevelTexture         = vita2d_load_PNG_file( "app0:/img/menu/lf-nextLevel.png" );
@@ -153,6 +155,9 @@ namespace Texture {
 
             case Sprite::doorStar3:
                 return doorStar3Texture;
+
+            case Sprite::doorPlatform:
+                return doorPlatformTexture;
 
             case Sprite::lf_levelComplete:
                 return lf_levelCompleteTexture;
