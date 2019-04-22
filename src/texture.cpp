@@ -20,9 +20,6 @@ namespace Texture {
     vita2d_texture *doorOpenedTexture;
     vita2d_texture *doorLockedTexture;
     vita2d_texture *doorLockedOutlineTexture;
-    vita2d_texture *doorStar1Texture;
-    vita2d_texture *doorStar2Texture;
-    vita2d_texture *doorStar3Texture;
     vita2d_texture *doorPlatformTexture;
     vita2d_texture *lf_levelCompleteTexture;
     vita2d_texture *lf_nextLevelTexture;
@@ -64,9 +61,6 @@ namespace Texture {
         doorOpenedTexture           = vita2d_load_PNG_file( "app0:/img/menu/doorOpened.png" );
         doorLockedTexture           = vita2d_load_PNG_file( "app0:/img/menu/doorLocked.png" );
         doorLockedOutlineTexture    = vita2d_load_PNG_file( "app0:/img/menu/doorLockedOutline.png" );
-        doorStar1Texture            = vita2d_load_PNG_file( "app0:/img/menu/doorStar1.png" );
-        doorStar2Texture            = vita2d_load_PNG_file( "app0:/img/menu/doorStar2.png" );
-        doorStar3Texture            = vita2d_load_PNG_file( "app0:/img/menu/doorStar3.png" );
         doorPlatformTexture         = vita2d_load_PNG_file( "app0:/img/menu/doorPlatform.png" );
 
         lf_levelCompleteTexture     = vita2d_load_PNG_file( "app0:/img/menu/lf-levelComplete.png" );
@@ -146,15 +140,6 @@ namespace Texture {
 
             case Sprite::doorLockedOutline:
                 return doorLockedOutlineTexture;
-
-            case Sprite::doorStar1:
-                return doorStar1Texture;
-
-            case Sprite::doorStar2:
-                return doorStar2Texture;
-
-            case Sprite::doorStar3:
-                return doorStar3Texture;
 
             case Sprite::doorPlatform:
                 return doorPlatformTexture;
@@ -254,9 +239,8 @@ namespace Texture {
         vita2d_free_texture( doorOpenedTexture );
         vita2d_free_texture( doorLockedTexture );
         vita2d_free_texture( doorLockedOutlineTexture );
-        vita2d_free_texture( doorStar1Texture );
-        vita2d_free_texture( doorStar2Texture );
-        vita2d_free_texture( doorStar3Texture );
+        vita2d_free_texture( starTexture );
+        vita2d_free_texture( doorPlatformTexture );
         vita2d_free_texture( lf_levelCompleteTexture );
         vita2d_free_texture( lf_nextLevelTexture );
         vita2d_free_texture( lf_nextLevelSelectedTexture );
@@ -264,6 +248,13 @@ namespace Texture {
         vita2d_free_texture( lf_restartSelectedTexture );
         vita2d_free_texture( lf_menuTexture );
         vita2d_free_texture( lf_menuSelectedTexture );
+        vita2d_free_texture( p_menuSelectedTexture );
+        vita2d_free_texture( p_menuTexture );
+        vita2d_free_texture( p_pausedTextTexture );
+        vita2d_free_texture( p_restartSelectedTexture );
+        vita2d_free_texture( p_restartTexture );
+        vita2d_free_texture( p_returnSelectedTexture );
+        vita2d_free_texture( p_returnTexture );
     }
 }
 
