@@ -343,7 +343,6 @@ bool LevelSelect::selectPressed()
     }
     else
     {
-        // TODO maybe add a sound effect here or something
         return false;
     }
 }

@@ -36,9 +36,6 @@ namespace Texture
         doorOpened = 29,
         doorLocked = 30,
         doorLockedOutline = 31,
-        doorStar1 = 32,
-        doorStar2 = 33,
-        doorStar3 = 34,
         doorPlatform = 35,
 
         lf_levelComplete = 41,
@@ -88,9 +85,6 @@ namespace Texture
     extern vita2d_texture *doorOpenedTexture;
     extern vita2d_texture *doorLockedTexture;
     extern vita2d_texture *doorLockedOutlineTexture;
-    extern vita2d_texture *doorStar1Texture;
-    extern vita2d_texture *doorStar2Texture;
-    extern vita2d_texture *doorStar3Texture;
     extern vita2d_texture *doorPlatformTexture;
 
     extern vita2d_texture *lf_levelCompleteTexture;
