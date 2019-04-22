@@ -243,16 +243,6 @@ void LevelFinish::draw()
         Texture::drawTexture( Texture::Sprite::lf_menu, Vec2( 0, 0 ) );
 
     // TODO draw stars here 
-    
-/*
-    for( int i = 0; i < menuItems.size(); ++i )
-    {
-        if( cursor == i )
-            menuItems[ i ].drawSelected();
-        else
-            menuItems[ i ].draw();
-    }
-    */
 }
 
 bool LevelFinish::clickedNextLevel()

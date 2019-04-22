@@ -150,5 +150,13 @@ vita_create_vpk(${SHORT_NAME}.vpk ${VITA_TITLEID} ${SHORT_NAME}.self
   FILE levels/level020.txt       levels/level020.txt
   FILE levels/level021.txt       levels/level021.txt
   FILE levels/level022.txt       levels/level022.txt
+  FILE levels/level023.txt       levels/level023.txt
+  FILE levels/level024.txt       levels/level024.txt
+  FILE levels/level025.txt       levels/level025.txt
+  FILE levels/level026.txt       levels/level026.txt
+  FILE levels/level027.txt       levels/level027.txt
+  FILE levels/level028.txt       levels/level028.txt
+  FILE levels/level029.txt       levels/level029.txt
+  FILE levels/level030.txt       levels/level030.txt
 )
 
