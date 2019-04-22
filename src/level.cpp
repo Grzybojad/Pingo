@@ -451,15 +451,28 @@ void LevelListElement::drawLevelMenuElement( Vec2 pos, bool selected )
         Texture::drawTexture( Texture::Sprite::doorLocked, Vec2( pos.x, pos.y ) );
     }
     
-    /* DEBUG turned off for now
-    if( stars > 0 )
-        Texture::drawTexture( Texture::Sprite::doorStar1, Vec2( pos.x, pos.y ) );
-    if( stars > 1 )
-        Texture::drawTexture( Texture::Sprite::doorStar2, Vec2( pos.x, pos.y ) );
-    if( stars > 2 )
-        Texture::drawTexture( Texture::Sprite::doorStar3, Vec2( pos.x, pos.y ) );
-    */
-    
+    if( !selected && unlocked )
+    {
+        int starPosX, starPosY;
+        if( stars > 0 )
+        {
+            starPosX = pos.x + ( itemWidth / 2 ) - 12;
+            starPosY = pos.y + ( itemHeight / 2 ) - 3;
+            Texture::drawTexture_scale( Texture::Sprite::star, Vec2( starPosX, starPosY ), 0.25 );
+        }  
+        if( stars > 1 )
+        {
+            starPosX = pos.x + ( itemWidth / 2 ) - 25;
+            starPosY = pos.y + ( itemHeight / 2 ) + 13;
+            Texture::drawTexture_scale( Texture::Sprite::star, Vec2( starPosX, starPosY ), 0.25 );
+        } 
+        if( stars > 2 )
+        {
+            starPosX = pos.x + ( itemWidth / 2 ) + 1;
+            starPosY = pos.y + ( itemHeight / 2 ) + 13;
+            Texture::drawTexture_scale( Texture::Sprite::star, Vec2( starPosX, starPosY ), 0.25 );
+        }
+    }
 }
 
 
