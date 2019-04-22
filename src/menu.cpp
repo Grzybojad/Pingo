@@ -130,6 +130,14 @@ void MainMenu::draw()
         Texture::drawTexture( Texture::Sprite::optionsButton, Vec2( 0, 0 ) );
 }
 
+void MainMenu::handleInput()
+{
+    if( Input::wasPressed( Input::Button::up ) || Input::wasPressed( Input::Button::lAnalogUp ) || Input::wasPressed( Input::Button::left ) || Input::wasPressed( Input::Button::lAnalogLeft ) )
+        selectUp();
+    if( Input::wasPressed( Input::Button::down ) || Input::wasPressed( Input::Button::lAnalogDown ) || Input::wasPressed( Input::Button::right ) || Input::wasPressed( Input::Button::lAnalogRight ) )
+        selectDown();
+}
+
 bool MainMenu::clickedStart()
 {
     return selectPressed() && cursor == 0;

@@ -47,7 +47,7 @@ class Menu
         int cursor;
 
         // Handles all input from user
-        void handleInput();
+        virtual void handleInput();
 
         // Returns true if the select button was pressed
         bool selectPressed();
@@ -68,6 +68,9 @@ class MainMenu : public Menu
         bool clickedStart();
         bool clickedLevelSelect();
         bool clickedExit();
+
+    protected:
+        void handleInput() override;
 };
 
 class PauseMenu : public Menu
