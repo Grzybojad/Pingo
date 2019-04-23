@@ -4,7 +4,8 @@ Pingo is a puzzle game in which your goal is to paint the whole level in as litt
 Try to earn all 3 stars in 30 hand crafted levels!
 
 All this gorgeous art was done by Jumbocube.
-@RBDev made a level editor for this game, it was a massive help during development and it will be released along with custom level support in the future
+
+[RobDevs made a level editor](https://github.com/robDevs/pingo-edit) for this game, it was a massive help during development and it will be released along with custom level support in the future
 
 # Screenshots
 ![Pingo gameplay screenshot](screenshots/gameplay.png)
