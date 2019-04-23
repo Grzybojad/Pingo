@@ -8,6 +8,7 @@ Level::Level()
 void Level::init()
 {
     state = State::playing;
+    shouldPlaySound = false;
 
     tileSize = 30;
 }
@@ -57,6 +58,7 @@ void Level::loadFromFile( LevelListElement *levelListElement )
     floorTileCount = countFloorTiles();
     paintedTiles = 0;
     steps = 0;
+    shouldPlaySound = false;
 
     levelFile.close();
 }
@@ -89,7 +91,10 @@ void Level::update()
 
         if( ballHittingWall() )
         {
-            Sound::soloud.play( Sound::ballHit );
+            if( shouldPlaySound )
+                Sound::soloud.play( Sound::ballHit );
+
+            shouldPlaySound = false;
             newStep = false;
             ball.moveBack();
             ball.setWorldPos( getBallTilePosition() );
@@ -97,7 +102,11 @@ void Level::update()
         }
 
         if( newStep )
+        {
+            shouldPlaySound = true;
             steps++;
+        }
+            
 
         if( checkWinCondition() )
         {

@@ -66,6 +66,7 @@ class Level
         int floorTileCount;
         int paintedTiles;
         int steps;
+        bool shouldPlaySound;
 
         Ball ball;
 
