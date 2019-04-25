@@ -103,7 +103,6 @@ void Ball::moveBack()
 
 void Ball::draw()
 {
-    //vita2d_draw_fill_circle( worldPos.x, worldPos.y, 15, RGBA8( 255, 0, 0, 255 ) );
     Texture::drawTexture( Texture::Sprite::ball, Vec2( worldPos.x - 15, worldPos.y - 15 ) );
 }
 

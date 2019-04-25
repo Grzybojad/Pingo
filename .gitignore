@@ -5,16 +5,14 @@
 *.sfo
 *.yml
 
-Pingo
 
 # Cmake files
 CMakeFiles
 Makefile
-vitaSnake
-vitaSnake.self
-vitaSnake.velf
-vitaSnake.vpk_param.sfo
-vitaSnake.vpk.6LWgOo
+Pingo
+Pingo.self
+Pingo.velf
+Pingo.vpk_param.sfo
 cmake_install.cmake
 CMakeCache.txt
 

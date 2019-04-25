@@ -51,14 +51,24 @@ void Level::loadFromFile( LevelListElement *levelListElement )
         }
     }
 
-    // Initialize ball starting position
-    initBall();
+    // Initialize level size
+    levelSize.x = tiles[ tiles.size() / 2 ].size() * tileSize;
+    levelSize.y = tiles.size() * tileSize;
+
+    // Initialize level position
+    levelPosition.x = ( SCREEN_WIDTH - levelSize.x ) / 2;
+    levelPosition.y = 50;
+    if( levelSize.y < SCREEN_HEIGHT - ( levelPosition.y * 2 ) )
+        levelPosition.y = ( SCREEN_HEIGHT - levelSize.y ) / 2;
 
     // Initialize floor count
     floorTileCount = countFloorTiles();
     paintedTiles = 0;
     steps = 0;
     shouldPlaySound = false;
+
+    // Initialize ball starting position
+    initBall();
 
     levelFile.close();
 }
@@ -118,16 +128,8 @@ void Level::update()
 
 void Level::draw()
 {
-    int levelWidth = tiles[ tiles.size() / 2 ].size() * tileSize;
-    int levelHeight = tiles.size() * tileSize;
-
-    int paddingLeft = ( SCREEN_WIDTH - levelWidth ) / 2;
-
-    int paddingTop = 0;
-    if( levelHeight < ( SCREEN_WIDTH / 2 ) )
-        paddingTop = ( SCREEN_HEIGHT - levelHeight ) / 2;
-    else
-        paddingTop = SCREEN_HEIGHT * 0.1;
+    //int levelWidth = tiles[ tiles.size() / 2 ].size() * tileSize;
+    //int levelHeight = tiles.size() * tileSize;
 
     // Draw level tiles
     for( int i = 0; i < tiles.size(); ++i )
@@ -135,8 +137,8 @@ void Level::draw()
         for( int j = 0; j < tiles[ i ].size(); ++j )
         {
             Rect tileRect = Rect( 
-                paddingLeft + ( j * tileSize ), 
-                paddingTop + ( i * tileSize ), 
+                levelPosition.x + ( j * tileSize ), 
+                levelPosition.y + ( i * tileSize ), 
                 tileSize, 
                 tileSize 
             );
@@ -181,17 +183,7 @@ bool Level::complete()
 
 Vec2 Level::getWorldPosFromTilePos( Vec2 tilePos )
 {
-    int levelWidth = tiles[ tiles.size() / 2 ].size() * tileSize;
-    int levelHeight = tiles.size() * tileSize;
-    int paddingLeft = ( SCREEN_WIDTH - levelWidth ) / 2;
-
-    int paddingTop = 0;
-    if( levelHeight < ( SCREEN_WIDTH / 2 ) )
-        paddingTop = ( SCREEN_HEIGHT - levelHeight ) / 2;
-    else
-        paddingTop = SCREEN_HEIGHT * 0.1;
-
-    Vec2 worldPos = Vec2( paddingLeft + ( tilePos.x * tileSize ) + ( tileSize / 2 ), paddingTop + ( tilePos.y * tileSize ) + ( tileSize / 2 ) );
+    Vec2 worldPos = Vec2( levelPosition.x + ( tilePos.x * tileSize ) + ( tileSize / 2 ), levelPosition.y + ( tilePos.y * tileSize ) + ( tileSize / 2 ) );
     return worldPos;
 }
 

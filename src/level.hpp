@@ -59,6 +59,8 @@ class Level
         };
         State state;
 
+        Vec2 levelPosition;
+        Vec2 levelSize;
         std::vector< std::vector<Tile*> > tiles;
         LevelListElement *levelListElement;
         Timer levelTime;
