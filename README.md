@@ -5,7 +5,8 @@ Try to earn all 3 stars in 30 hand crafted levels!
 
 All this gorgeous art was done by Jumbocube.
 
-[RobDevs made a level editor](https://github.com/robDevs/pingo-edit) for this game, it was a massive help during development and it will be released along with custom level support in the future
+[RobDevs made a level editor](https://github.com/robDevs/pingo-edit) for this game, it was a massive help during development. I'll
+try adding custom level support to Pingo, so that you can play around with it yourself.
 
 # Screenshots
 ![Pingo gameplay screenshot](screenshots/gameplay.png)
@@ -25,4 +26,4 @@ Here are some of the planned features:
 * visual improvements
 * better SFX, music
 * custom level support
-* in game level editor 
+* in game level editor
