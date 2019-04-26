@@ -163,6 +163,7 @@ void Game::inMenu()
         }
         else if( mainMenu.clickedLevelSelect() )
         {
+            levelMenu.initStars();
             gameState = GameState::levelMenu;
         }
         else if( mainMenu.clickedExit() )

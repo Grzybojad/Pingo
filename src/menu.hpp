@@ -110,6 +110,7 @@ class LevelSelect
         LevelSelect();
 
         void initLevels( LevelList *levelList );
+        void initStars();
 
         void update();
         void draw();
@@ -138,4 +139,8 @@ class LevelSelect
         int paddingTop;
         int columns;
         int rows;
+
+        // Stars stats
+        int totalStars;
+        int collectedStars;
 };

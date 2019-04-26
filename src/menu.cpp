@@ -292,6 +292,18 @@ void LevelSelect::initLevels( LevelList *levelList )
         levelList->accessElement( 0 )->unlocked = true;
 }
 
+void LevelSelect::initStars()
+{
+    collectedStars = 0;
+    totalStars = 0;
+
+    for( int i = 0; i < levelList->getNrOfLevels(); ++i )
+    {
+        collectedStars += levelList->accessElement( i )->stars;
+        totalStars += 3;
+    }
+}
+
 void LevelSelect::update()
 {
     handleInput();
@@ -315,6 +327,10 @@ void LevelSelect::draw()
 
         levelList->accessElement( i )->drawLevelMenuElement( Vec2( posX, posY ), selected );
     }
+
+    // Draw total star count
+    Gui::drawTextf_position( Gui::Position::alignTopRight, SCREEN_WIDTH - 40, 10, 30, "%d/%d", collectedStars, totalStars );
+    Texture::drawTexture_scale( Texture::Sprite::star, Vec2( SCREEN_WIDTH - 40, 15 ), 0.30 );
 }
 
 int LevelSelect::getCursor()

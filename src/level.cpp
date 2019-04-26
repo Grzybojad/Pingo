@@ -128,9 +128,6 @@ void Level::update()
 
 void Level::draw()
 {
-    //int levelWidth = tiles[ tiles.size() / 2 ].size() * tileSize;
-    //int levelHeight = tiles.size() * tileSize;
-
     // Draw level tiles
     for( int i = 0; i < tiles.size(); ++i )
     {
