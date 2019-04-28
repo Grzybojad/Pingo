@@ -141,6 +141,28 @@ namespace Gui
 
         return drawText_color_position( p, x, y, size, color, buf );
     }
+
+
+    void drawMessageBox( const char *header, const char *body )
+    {
+        Rect boxRect = Rect();
+        boxRect.w = vita2d_texture_get_width( Texture::getTexture( Texture::Sprite::messageBox ) );
+        boxRect.h = vita2d_texture_get_height( Texture::getTexture( Texture::Sprite::messageBox ) );
+        boxRect.x = ( SCREEN_WIDTH - boxRect.w ) / 2;
+        boxRect.y = ( SCREEN_HEIGHT - boxRect.h ) / 2;
+
+        int headerSize = 40;
+        int bodySize = 25;
+        int footerSize = 20;
+
+        //vita2d_draw_rectangle( boxRect.x, boxRect.y, boxRect.w, boxRect.h, RGBA8( 140, 140, 180, 255 ) );
+        Texture::drawTexture( Texture::Sprite::messageBox, Vec2( boxRect.x, boxRect.y ) );
+
+        drawText_color_position( Position::centered, SCREEN_WIDTH / 2, boxRect.y + 90, headerSize, RGBA8( 70, 70, 125, 255 ), header );
+
+        int bodyHeight = vita2d_font_text_height( mainFont[ (int)(bodySize * FONT_SCALE) ], bodySize, body );
+        drawText_color_position( Position::centeredX, SCREEN_WIDTH / 2, boxRect.y + ( ( boxRect.h - bodyHeight ) / 2 ) + 20, bodySize, RGBA8( 70, 70, 125, 255 ), body );
+
+        drawText_color_position( Position::centered, SCREEN_WIDTH / 2, boxRect.y + boxRect.h - 100, footerSize, RGBA8( 70, 70, 125, 255 ), "Press X to close this message" );
+    }
 }
-
-

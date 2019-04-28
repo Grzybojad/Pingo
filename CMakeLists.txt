@@ -104,6 +104,7 @@ vita_create_vpk(${SHORT_NAME}.vpk ${VITA_TITLEID} ${SHORT_NAME}.self
   FILE img/common/background2.png  img/common/background2.png
   FILE img/common/background3.png  img/common/background3.png
   FILE img/common/star.png         img/common/star.png
+  FILE img/common/messageBox.png   img/common/messageBox.png
 
   FILE img/menu/logo.png                  img/menu/logo.png
   FILE img/menu/startButton.png           img/menu/startButton.png

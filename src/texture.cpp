@@ -9,6 +9,7 @@ namespace Texture {
     vita2d_texture *background2Texture;
     vita2d_texture *background3Texture;
     vita2d_texture *starTexture;
+    vita2d_texture *messageBoxTexture;
     vita2d_texture *logoTexture;
     vita2d_texture *startButtonTexture;
     vita2d_texture *startSelectedTexture;
@@ -49,6 +50,7 @@ namespace Texture {
         background3Texture  = vita2d_load_PNG_file( "app0:/img/common/background3.png" );
 
         starTexture         = vita2d_load_PNG_file( "app0:/img/common/star.png" );
+        messageBoxTexture   = vita2d_load_PNG_file( "app0:/img/common/messageBox.png" );
 
         logoTexture                 = vita2d_load_PNG_file( "app0:/img/menu/logo.png" );
         startButtonTexture          = vita2d_load_PNG_file( "app0:/img/menu/startButton.png" );
@@ -110,6 +112,9 @@ namespace Texture {
 
             case Sprite::star:
                 return starTexture;
+
+            case Sprite::messageBox:
+                return messageBoxTexture;
 
             case Sprite::logo:
                 return logoTexture;
@@ -246,6 +251,7 @@ namespace Texture {
         vita2d_free_texture( doorLockedTexture );
         vita2d_free_texture( doorLockedOutlineTexture );
         vita2d_free_texture( starTexture );
+        vita2d_free_texture( messageBoxTexture );
         vita2d_free_texture( doorPlatformTexture );
         vita2d_free_texture( lf_levelCompleteTexture );
         vita2d_free_texture( lf_nextLevelTexture );

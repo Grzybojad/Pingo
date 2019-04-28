@@ -23,6 +23,7 @@ namespace Texture
         background3 = 13,
         
         star = 14,
+        messageBox = 15,
 
         logo = 21,
         startButton = 22,
@@ -74,6 +75,7 @@ namespace Texture
     extern vita2d_texture *background2Texture;
     extern vita2d_texture *background3Texture;
     extern vita2d_texture *starTexture;
+    extern vita2d_texture *messageBoxTexture;
 
     extern vita2d_texture *logoTexture;
     extern vita2d_texture *startButtonTexture;
