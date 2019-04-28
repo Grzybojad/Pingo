@@ -26,7 +26,9 @@ Game::Game()
     Sound::loadSounds();
 
     progressSaved = false;
-    showGameFinishMessage = false;
+    finishMessage = false;
+    gameComplete = false;
+    //alreadyShowedCompleteMessage = false;
 
     gameState = GameState::initialized;
 }
@@ -134,7 +136,7 @@ void Game::inGame()
             {
                 gameState = GameState::mainMenu;
                 destroyLevel();
-                showGameFinishMessage = true;
+                finishMessage = true;
             }
             
         }
@@ -166,11 +168,11 @@ void Game::inMenu()
         curtain.update();
 
         // Handle game finish message box
-        if( showGameFinishMessage )
+        if( finishMessage )
         {
             if( Input::wasPressed( Input::Button::cross ) || Input::wasPressed( Input::Button::circle ) || Input::wasPressed( Input::Button::start ) )
             {
-                showGameFinishMessage = false;
+                finishMessage = false;
             }
         }
         else
@@ -219,20 +221,33 @@ void Game::inMenu()
     // Level select menu
     else if( gameState == GameState::levelMenu )
     {
-        // TODO make this a little more elegant maybe
-        if( Input::wasPressed( Input::Button::circle ) )
+        if( gameComplete && !alreadyShowedCompleteMessage )
         {
-            gameState = GameState::mainMenu;
+            if( Input::wasPressed( Input::Button::cross ) || Input::wasPressed( Input::Button::circle ) || Input::wasPressed( Input::Button::start ) )
+            {
+                alreadyShowedCompleteMessage = true;
+                levelList.saveProgress();
+            }
         }
-        if( levelMenu.selectPressed() )
+        else
         {
-            gameState = GameState::playing;
-            initLevel( levelMenu.getCursor() );
+            if( Input::wasPressed( Input::Button::circle ) )
+            {
+                gameState = GameState::mainMenu;
+            }
+            if( levelMenu.selectPressed() )
+            {
+                gameState = GameState::playing;
+                initLevel( levelMenu.getCursor() );
+            }
+            levelMenu.update();
         }
-
-        levelMenu.update();
 
         draw();
+
+        if( levelMenu.isGameComplete() )
+            gameComplete = true;
+
     }
 
     calcFrameTime();
@@ -280,8 +295,10 @@ void Game::draw()
             mainMenu.draw();
             curtain.draw();
 
-            if( showGameFinishMessage )
+            if( finishMessage && !gameComplete )
                 Gui::drawMessageBox( "Congratualations!", "You've completed all the\nlevels currently available to\nplay in Pingo!\nFor your next challange, try\ngetting 3 stars in every level!" );
+            else if( finishMessage && gameComplete )
+                Gui::drawMessageBox( "Congratualations!", "You've completed all the\nlevels currently available to\nplay in Pingo!\nSince you've already collected all the\nstars, you'll have to wait for more\ncontent. Follow me @_grzybojad if you\ndon't want to miss any updates!" );
 
             break;
 
@@ -295,6 +312,10 @@ void Game::draw()
 
         case GameState::levelMenu:
             levelMenu.draw();
+
+            if( gameComplete && !alreadyShowedCompleteMessage )
+                Gui::drawMessageBox( "Amazing!", "You got 3 stars on every single\nlevel! I'm impressed by your skills\nand your determination to master\nthis game. Thank you so much for\nplaying Pingo!\n- Grzybojad" );
+
             break;
 
         case GameState::paused:

@@ -121,6 +121,9 @@ class LevelSelect
         // Returns true if the select button was pressed
         bool selectPressed();
 
+        // Return true if the player has collected all the stars
+        bool isGameComplete();
+
     protected:
         LevelList *levelList;
         int cursor;

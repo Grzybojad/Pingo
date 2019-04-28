@@ -363,6 +363,11 @@ bool LevelSelect::selectPressed()
     }
 }
 
+bool LevelSelect::isGameComplete()
+{
+    return ( collectedStars == totalStars );
+}
+
 void LevelSelect::selectUp()
 {
     if( levelList->getNrOfLevels() > columns )

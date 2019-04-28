@@ -591,6 +591,7 @@ void LevelList::saveProgress()
     {
         saveData << accessElement( i )->index << "\t"  << accessElement( i )->unlocked << "\t" << accessElement( i )->completed << "\t" << accessElement( i )->stars << "\n";
     }
+    saveData << alreadyShowedCompleteMessage;
 
     saveData.close();
 }
@@ -610,6 +611,8 @@ void LevelList::loadProgress()
         saveData >> accessElement( i )->completed;
         saveData >> accessElement( i )->stars;
     }
+
+    saveData >> alreadyShowedCompleteMessage;
 
     saveData.close();
 }

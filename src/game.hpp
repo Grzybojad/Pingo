@@ -63,5 +63,11 @@ class Game
         Curtain curtain;
 
         bool progressSaved;
-        bool showGameFinishMessage;
+
+        // All levels finished message box
+        bool finishMessage;
+
+        // Game complete message box
+        bool gameComplete;
+        //bool alreadyShowedCompleteMessage;
 };
