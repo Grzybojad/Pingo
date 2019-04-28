@@ -26,6 +26,7 @@ Game::Game()
     Sound::loadSounds();
 
     progressSaved = false;
+    showGameFinishMessage = false;
 
     gameState = GameState::initialized;
 }
@@ -124,9 +125,18 @@ void Game::inGame()
         if( finishMenu.clickedNextLevel() )
         {
             progressSaved = false;
-            levelList.nextLevel();
-            destroyLevel();
-            initLevel();
+            if( levelList.nextLevel() )
+            {
+                destroyLevel();
+                initLevel();
+            }
+            else
+            {
+                gameState = GameState::mainMenu;
+                destroyLevel();
+                showGameFinishMessage = true;
+            }
+            
         }
         else if( finishMenu.clickedRestart() )
         {
@@ -155,20 +165,30 @@ void Game::inMenu()
         mainMenu.update();
         curtain.update();
 
-        // TODO make this more elegant
-        if( mainMenu.clickedStart() )
+        // Handle game finish message box
+        if( showGameFinishMessage )
         {
-            gameState = GameState::playing;
-            initLevel( levelList.lastUnlockedLevel() );
+            if( Input::wasPressed( Input::Button::cross ) || Input::wasPressed( Input::Button::circle ) || Input::wasPressed( Input::Button::start ) )
+            {
+                showGameFinishMessage = false;
+            }
         }
-        else if( mainMenu.clickedLevelSelect() )
+        else
         {
-            levelMenu.initStars();
-            gameState = GameState::levelMenu;
-        }
-        else if( mainMenu.clickedExit() )
-        {
-            gameState = GameState::exiting;
+            if( mainMenu.clickedStart() )
+            {
+                gameState = GameState::playing;
+                initLevel( levelList.lastUnlockedLevel() );
+            }
+            else if( mainMenu.clickedLevelSelect() )
+            {
+                levelMenu.initStars();
+                gameState = GameState::levelMenu;
+            }
+            else if( mainMenu.clickedExit() )
+            {
+                gameState = GameState::exiting;
+            }
         }
 
         draw();
@@ -257,9 +277,12 @@ void Game::draw()
     switch( gameState )
     {
         case GameState::mainMenu:
-            
             mainMenu.draw();
             curtain.draw();
+
+            if( showGameFinishMessage )
+                Gui::drawMessageBox( "Congratualations!", "You've completed all the\nlevels currently available to\nplay in Pingo!\nFor your next challange, try\ngetting 3 stars in every level!" );
+
             break;
 
         case GameState::playing:

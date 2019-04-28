@@ -560,10 +560,17 @@ int LevelList::getNrOfLevels()
     return levels.size();
 }
 
-void LevelList::nextLevel()
+bool LevelList::nextLevel()
 {
     if( currentLevel < levels.size() )
+    {
         currentLevel++;
+        return true;
+    } 
+    else
+    {
+        return false;
+    }    
 }
 
 LevelListElement * LevelList::accessElement( int index )

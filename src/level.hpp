@@ -175,7 +175,7 @@ class LevelList
         int getCurrentLevel();
         int getNrOfLevels();
 
-        void nextLevel();
+        bool nextLevel();
         void setCurrentLevel( int index );
         int lastUnlockedLevel();
         void compleateCurrentLevel();

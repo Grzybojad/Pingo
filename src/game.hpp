@@ -63,4 +63,5 @@ class Game
         Curtain curtain;
 
         bool progressSaved;
+        bool showGameFinishMessage;
 };
