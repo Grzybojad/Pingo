@@ -139,6 +139,8 @@ vita_create_vpk(${SHORT_NAME}.vpk ${VITA_TITLEID} ${SHORT_NAME}.self
   FILE img/menu/pause/menu.png            img/menu/pause/menu.png
   FILE img/menu/pause/menuSelected.png    img/menu/pause/menuSelected.png
 
+  FILE img/menu/underConstruction.png     img/menu/underConstruction.png
+
 
   # Sound effects
   FILE sounds/ballHit.ogg        sounds/ballHit.ogg

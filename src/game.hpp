@@ -45,7 +45,8 @@ class Game
             mainMenu = 1,
             levelMenu = 2,
             playing = 3,
-            paused = 4
+            paused = 4,
+            optionsMenu = 5
         };
         GameState gameState;
 
@@ -53,6 +54,7 @@ class Game
         LevelSelect levelMenu;
         PauseMenu pauseMenu;
         LevelFinish finishMenu;
+        OptionsMenu optionsMenu;
 
         Level level;
 
@@ -69,5 +71,4 @@ class Game
 
         // Game complete message box
         bool gameComplete;
-        //bool alreadyShowedCompleteMessage;
 };

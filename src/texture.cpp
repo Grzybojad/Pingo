@@ -36,6 +36,7 @@ namespace Texture {
     vita2d_texture *p_restartSelectedTexture;
     vita2d_texture *p_menuTexture;
     vita2d_texture *p_menuSelectedTexture;
+    vita2d_texture *underConstructionTexture;
     vita2d_texture *curtainTexture;
 
     void loadTextures()
@@ -81,6 +82,8 @@ namespace Texture {
         p_restartSelectedTexture    = vita2d_load_PNG_file( "app0:/img/menu/pause/restartSelected.png" );
         p_menuTexture               = vita2d_load_PNG_file( "app0:/img/menu/pause/menu.png" );
         p_menuSelectedTexture       = vita2d_load_PNG_file( "app0:/img/menu/pause/menuSelected.png" );
+
+        underConstructionTexture    = vita2d_load_PNG_file( "app0:/img/menu/underConstruction.png" );
 
         curtainTexture              = vita2d_load_PNG_file( "app0:/sce_sys/pic0.png" );
     }
@@ -194,6 +197,9 @@ namespace Texture {
             case Sprite::p_menuSelected:
                 return p_menuSelectedTexture;
 
+            case Sprite::underConstruction:
+                return underConstructionTexture;
+
             case Sprite::curtain:
                 return curtainTexture;
 
@@ -267,6 +273,7 @@ namespace Texture {
         vita2d_free_texture( p_restartTexture );
         vita2d_free_texture( p_returnSelectedTexture );
         vita2d_free_texture( p_returnTexture );
+        vita2d_free_texture( underConstructionTexture );
         vita2d_free_texture( curtainTexture );
     }
 }

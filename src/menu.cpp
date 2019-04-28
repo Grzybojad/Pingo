@@ -158,6 +158,24 @@ bool MainMenu::clickedExit()
 }
 
 
+OptionsMenu::OptionsMenu()
+{
+
+}
+
+void OptionsMenu::draw()
+{
+    Gui::drawText( 20, 40, 30, "Credits:\n\nDirecting, programming, level design:\n  Grzybojad\n\nArt assets:\n  Jumbocube\n\nTesting:\n  Grzybojad\n  JumboCube\n  RobDevs" );
+
+    Gui::drawText_position( Gui::Position::alignRight, SCREEN_WIDTH - 20, SCREEN_HEIGHT - 20, 30, "Press O to go back" );
+
+    // Dim the screen
+    vita2d_draw_rectangle( 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, RGBA8( 0, 0, 0, 128 ) );
+
+    Texture::drawTexture( Texture::Sprite::underConstruction, Vec2( 0, 0 ) );
+}
+
+
 PauseMenu::PauseMenu()
 {
     cursor = 0;

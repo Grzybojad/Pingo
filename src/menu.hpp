@@ -74,6 +74,14 @@ class MainMenu : public Menu
         void handleInput() override;
 };
 
+class OptionsMenu : public Menu
+{
+    public:
+        OptionsMenu();
+
+        void draw() override;
+};
+
 class PauseMenu : public Menu
 {
     public:

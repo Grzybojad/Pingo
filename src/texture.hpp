@@ -55,6 +55,8 @@ namespace Texture
         p_menu = 56,
         p_menuSelected = 57,
 
+        underConstruction = 60,
+
         curtain = 100
     };
 
@@ -106,6 +108,8 @@ namespace Texture
     extern vita2d_texture *p_restartSelectedTexture;
     extern vita2d_texture *p_menuTexture;
     extern vita2d_texture *p_menuSelectedTexture;
+
+    extern vita2d_texture *underConstructionTexture;
 
     extern vita2d_texture *curtainTexture;
 };

@@ -28,7 +28,6 @@ Game::Game()
     progressSaved = false;
     finishMessage = false;
     gameComplete = false;
-    //alreadyShowedCompleteMessage = false;
 
     gameState = GameState::initialized;
 }
@@ -82,6 +81,7 @@ void Game::mainLoop()
             case GameState::mainMenu:
             case GameState::levelMenu:
             case GameState::paused:
+            case GameState::optionsMenu:
                 inMenu();
                 break;
         }
@@ -189,7 +189,8 @@ void Game::inMenu()
             }
             else if( mainMenu.clickedExit() )
             {
-                gameState = GameState::exiting;
+                //gameState = GameState::exiting;
+                gameState = GameState::optionsMenu;
             }
         }
 
@@ -247,7 +248,15 @@ void Game::inMenu()
 
         if( levelMenu.isGameComplete() )
             gameComplete = true;
-
+    }
+    // Options menu
+    else if( gameState == GameState::optionsMenu )
+    {
+        if( Input::wasPressed( Input::Button::circle ) || Input::wasPressed( Input::Button::start ) )
+        {
+            gameState = GameState::mainMenu;
+        }
+        draw();
     }
 
     calcFrameTime();
@@ -321,6 +330,10 @@ void Game::draw()
         case GameState::paused:
             level.draw();
             pauseMenu.draw();
+            break;
+
+        case GameState::optionsMenu:
+            optionsMenu.draw();
             break;
     }
 
