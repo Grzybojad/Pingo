@@ -102,6 +102,11 @@ void Game::inGame()
         }
         else
         {
+            if( Input::wasPressed( Input::Button::triangle ) )
+            {
+                destroyLevel();
+                initLevel();
+            }
             level.update();
             draw();
         }
