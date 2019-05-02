@@ -367,6 +367,8 @@ void Game::draw()
             break;
     }
 
+    Gui::drawDebugText();
+
     vita2d_end_drawing();
     vita2d_swap_buffers();
 }

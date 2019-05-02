@@ -43,6 +43,9 @@ namespace Gui
     // Gui elements drawing
     void drawMessageBox( const char *header, const char *body );
 
+    // Debug text
+    extern std::string debugText;
+    void drawDebugText();
 
     extern float FONT_SCALE;
     extern unsigned int MAIN_FONT_COLOR;

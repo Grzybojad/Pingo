@@ -5,8 +5,8 @@ namespace Gui
     float FONT_SCALE = 1.0;
     vita2d_font *mainFont[ 99 ];
     unsigned int MAIN_FONT_COLOR = RGBA8( 0, 0, 0, 255 );
-    std::vector<const char*> debugText;
-    
+    std::string debugText = "";
+
 
     void loadFont()
     {
@@ -164,5 +164,25 @@ namespace Gui
         drawText_color_position( Position::centeredX, SCREEN_WIDTH / 2, boxRect.y + ( ( boxRect.h - bodyHeight ) / 2 ) + 20, bodySize, RGBA8( 70, 70, 125, 255 ), body );
 
         drawText_color_position( Position::centered, SCREEN_WIDTH / 2, boxRect.y + boxRect.h - 100, footerSize, RGBA8( 70, 70, 125, 255 ), "Press X to close this message" );
+    }
+
+
+    void drawDebugText()
+    {
+        if( debugText != "" )
+        {
+            int textSize = 20;
+            Rect box;
+            int charWidth = vita2d_font_text_width( mainFont[ (int)(textSize * FONT_SCALE) ], (int)(textSize * FONT_SCALE), "A" );
+            box.w = debugText.length() * charWidth + 20;
+            box.h = textSize + 10;
+
+            box.x = SCREEN_WIDTH - box.w;
+            box.y = SCREEN_HEIGHT - box.h;
+
+            vita2d_draw_rectangle( box.x, box.y, box.w, box.h, RGBA8( 0, 0, 0, 255 ) );
+
+            drawText_color_position( Position::centered, box.x + ( box.w / 2 ), box.y + ( box.h / 2 ), textSize, RGBA8( 0, 255, 0, 255 ), debugText.c_str() );
+        }
     }
 }
