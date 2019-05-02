@@ -367,9 +367,6 @@ void Game::draw()
             break;
     }
 
-    // DEBUG draw gametime
-    Gui::drawTextf( 20, 100, 20, "Game time: %d", gameTime.get_ticks() / 1000000 );
-
     vita2d_end_drawing();
     vita2d_swap_buffers();
 }

@@ -4,7 +4,6 @@
 
 #include <vita2d.h>
 
-#include "gui.hpp" // DEBUG
 #include "common.hpp"
 
 namespace Texture
