@@ -13,7 +13,6 @@
 #include "level.hpp"
 #include "ball.hpp"
 #include "gui.hpp"
-#include "debug.hpp"
 #include "sound.hpp"
 #include "timer.hpp"
 #include "stats.hpp"

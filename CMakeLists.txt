@@ -34,8 +34,6 @@ add_executable(${VITA_APP_NAME}
   src/game.cpp
   src/ball.hpp
   src/ball.cpp
-  src/debug.hpp
-  src/debug.cpp
   src/gui.hpp
   src/gui.cpp
   src/level.hpp
