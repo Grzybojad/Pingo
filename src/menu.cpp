@@ -167,6 +167,8 @@ void OptionsMenu::draw()
 {
     Gui::drawText( 20, 40, 30, "Credits:\n\nDirecting, programming, level design:\n  Grzybojad\n\nArt assets:\n  Jumbocube\n\nTesting:\n  Grzybojad\n  JumboCube\n  RobDevs\n  dragnu5" );
 
+    Gui::drawTextf_position( Gui::Position::alignTopRight, SCREEN_WIDTH - 20, 40, 30, "Stats:\n\nTime spend playing: %s\nTotal steps: %d\nTotal levels finished: %d", timeToString( Stats::timePlayed ).c_str(), Stats::totalSteps, Stats::totalLevelFinished );
+
     Gui::drawText_position( Gui::Position::alignRight, SCREEN_WIDTH - 20, SCREEN_HEIGHT - 20, 30, "Press O to go back" );
 
     // Dim the screen

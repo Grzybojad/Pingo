@@ -115,6 +115,7 @@ void Level::update()
         {
             shouldPlaySound = true;
             steps++;
+            Stats::totalSteps++;
         }
             
 

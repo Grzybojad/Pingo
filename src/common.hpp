@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cmath>
+#include <string>
 
 #include <psp2/kernel/processmgr.h>
 
@@ -63,3 +64,6 @@ extern float timestep;              // The multiplier for time sensitive actions
 
 // Calculate the frameTime and timestep (call after each frame!)
 void calcFrameTime();
+
+// Convert time in seconds to a HH:MM:SS string
+std::string timeToString( int time );

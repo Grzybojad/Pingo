@@ -25,6 +25,9 @@ Game::Game()
     Sound::initSoloud();
     Sound::loadSounds();
 
+    // Read stats from file
+    Stats::readStats();
+
     progressSaved = false;
     finishMessage = false;
     gameComplete = false;
@@ -98,6 +101,7 @@ void Game::inGame()
     {
         if( Input::wasPressed( Input::Button::start ) )
         {
+            gameTime.pause();
             gameState = GameState::paused;
         }
         else
@@ -122,6 +126,11 @@ void Game::inGame()
         {
             Sound::soloud.play( Sound::levelFinish );
             levelList.saveProgress();
+            Stats::totalLevelFinished++;
+            Stats::timePlayed += ( gameTime.get_ticks() / 1000000 );
+            gameTime.start();
+            gameTime.pause();
+            Stats::saveStats();
             progressSaved = true;
         }
 
@@ -184,6 +193,11 @@ void Game::inMenu()
         {
             if( mainMenu.clickedStart() )
             {
+                if( gameTime.is_started() )
+                    gameTime.unpause();
+                else
+                    gameTime.start();
+
                 gameState = GameState::playing;
                 initLevel( levelList.lastUnlockedLevel() );
             }
@@ -208,6 +222,7 @@ void Game::inMenu()
 
         if( pauseMenu.clickedResume() )
         {
+            gameTime.unpause();
             gameState = GameState::playing;
         }
         if( pauseMenu.clickedRestart() )
@@ -269,12 +284,22 @@ void Game::inMenu()
 
 void Game::initLevel()
 {
+    if( !gameTime.is_started() )
+        gameTime.start();
+    else if( gameTime.is_paused() )
+        gameTime.unpause();
+
     level.init();
     level.loadFromFile( levelList.accessElement( levelList.getCurrentLevel() - 1 ) );
 }
 
 void Game::initLevel( int levelIndex )
 {
+    if( !gameTime.is_started() )
+        gameTime.start();
+    else if( gameTime.is_paused() )
+        gameTime.unpause();
+
     level.init();
     // TODO don't allow loading unexisting levels
     levelList.setCurrentLevel( levelIndex );
@@ -341,6 +366,9 @@ void Game::draw()
             optionsMenu.draw();
             break;
     }
+
+    // DEBUG draw gametime
+    Gui::drawTextf( 20, 100, 20, "Game time: %d", gameTime.get_ticks() / 1000000 );
 
     vita2d_end_drawing();
     vita2d_swap_buffers();

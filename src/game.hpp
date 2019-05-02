@@ -15,6 +15,8 @@
 #include "gui.hpp"
 #include "debug.hpp"
 #include "sound.hpp"
+#include "timer.hpp"
+#include "stats.hpp"
 #include "common.hpp"
 
 class Game
@@ -57,18 +59,14 @@ class Game
         OptionsMenu optionsMenu;
 
         Level level;
-
         LevelList levelList;
 
         AnimatedBackground background;
-
         Curtain curtain;
 
+        Timer gameTime;
+
         bool progressSaved;
-
-        // All levels finished message box
-        bool finishMessage;
-
-        // Game complete message box
-        bool gameComplete;
+        bool finishMessage; // All levels finished message box
+        bool gameComplete;  // Game complete message box
 };

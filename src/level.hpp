@@ -11,6 +11,7 @@
 #include "gui.hpp"
 #include "texture.hpp"
 #include "sound.hpp"
+#include "stats.hpp"
 #include "common.hpp"
 
 
