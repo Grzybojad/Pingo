@@ -41,6 +41,9 @@ Game::Game()
     gameComplete = false;
 
     gameState = GameState::initialized;
+
+    // DEBUG just play the song
+    Sound::soloud.play( Sound::levelMusic );
 }
 
 Game::~Game()

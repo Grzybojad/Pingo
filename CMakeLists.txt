@@ -147,6 +147,8 @@ vita_create_vpk(${SHORT_NAME}.vpk ${VITA_TITLEID} ${SHORT_NAME}.self
   FILE sounds/menuMove.wav       sounds/menuMove.wav
   FILE sounds/levelFinish.wav    sounds/levelFinish.wav
 
+  FILE sounds/Acrostics.ogg      sounds/Acrostics.ogg
+
 
   # Levels
   # Figure out how to load all levels from file automatically
