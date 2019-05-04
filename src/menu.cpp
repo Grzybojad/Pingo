@@ -152,7 +152,7 @@ bool MainMenu::clickedLevelSelect()
     return selectPressed() && cursor == 1;
 }
 
-bool MainMenu::clickedExit()
+bool MainMenu::clickedOptions()
 {
     return selectPressed() && cursor == 2;
 }

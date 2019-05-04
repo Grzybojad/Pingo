@@ -68,7 +68,7 @@ class MainMenu : public Menu
         // Returns true if the button was clicked
         bool clickedStart();
         bool clickedLevelSelect();
-        bool clickedExit();
+        bool clickedOptions();
 
     protected:
         void handleInput() override;

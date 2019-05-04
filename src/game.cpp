@@ -254,9 +254,8 @@ void Game::inMenu()
 
                 gameState = GameState::levelMenu;
             }
-            else if( mainMenu.clickedExit() )
+            else if( mainMenu.clickedOptions() )
             {
-                //gameState = GameState::exiting;
                 gameState = GameState::optionsMenu;
             }
         }
