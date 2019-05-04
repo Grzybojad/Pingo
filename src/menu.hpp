@@ -117,7 +117,7 @@ class LevelSelect
     public:
         LevelSelect();
 
-        void initLevels( LevelList * levelList );
+        void initLevels( LevelList * levelList, const char * name );
         void initStars();
 
         void update();
@@ -135,6 +135,8 @@ class LevelSelect
     protected:
         LevelList *levelList;
         int cursor;
+
+        const char * name;
 
         // Handles all input from user
         void handleInput();

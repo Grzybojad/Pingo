@@ -303,9 +303,10 @@ LevelSelect::LevelSelect()
     columns = 10;
 }
 
-void LevelSelect::initLevels( LevelList * levelList )
+void LevelSelect::initLevels( LevelList * levelList, const char * name )
 {
     this->levelList = levelList;
+    this->name = name;
 
     // Unlock the first level if it exitst
     if( levelList->getNrOfLevels() > 0 )
@@ -332,7 +333,7 @@ void LevelSelect::update()
 
 void LevelSelect::draw()
 {
-    Gui::drawText_position( Gui::Position::centered, SCREEN_WIDTH / 2, 50, 60, "Level select" );
+    Gui::drawText_position( Gui::Position::centered, SCREEN_WIDTH / 2, 50, 60, name );
 
     if( levelList->getNrOfLevels() > 0 )
     {

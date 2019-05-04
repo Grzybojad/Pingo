@@ -26,8 +26,8 @@ Game::Game()
     LevelSelect world1Levels = LevelSelect();
     levelMenus.push_back( world1Levels );
 
-    levelMenus[ 0 ].initLevels( &levelListList[ 0 ] );
-    levelMenus[ 1 ].initLevels( &levelListList[ 1 ] );
+    levelMenus[ 0 ].initLevels( &levelListList[ 0 ], "Custom" );
+    levelMenus[ 1 ].initLevels( &levelListList[ 1 ], "World 1" );
 
     // Initialize the sound effects
     Sound::initSoloud();
