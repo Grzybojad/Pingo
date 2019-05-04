@@ -418,6 +418,8 @@ LevelListElement::LevelListElement( std::string filePath )
     stepsForThreeStars = 0;
 
     stars = 0;
+
+    animation = 0;
 }
 
 void LevelListElement::drawLevelMenuElement( Vec2 pos, bool selected )
@@ -426,11 +428,29 @@ void LevelListElement::drawLevelMenuElement( Vec2 pos, bool selected )
     int itemHeight = vita2d_texture_get_height( Texture::getTexture( Texture::Sprite::doorOpened ) );
 
     int indexSize = 35;
+    float animationHeight = 10;
+    float animationSpeed = 0.05f;
+    float yOffset = 0;
 
-    Texture::drawTexture( Texture::Sprite::doorPlatform, Vec2( pos.x - 5, pos.y + 10 ) );
     if( selected && unlocked )
     {
-        Texture::drawTexture( Texture::Sprite::doorOpened, Vec2( pos.x, pos.y ) );
+        if( animation < 2 * M_PI )
+            animation -= 2 * M_PI;
+
+        animation += animationSpeed * timestep;
+
+        yOffset = sin( animation ) * animationHeight;
+
+        Texture::drawTexture( Texture::Sprite::doorPlatform, Vec2( pos.x - 5, pos.y + 10 + yOffset ) );
+    } 
+    else
+    {
+        Texture::drawTexture( Texture::Sprite::doorPlatform, Vec2( pos.x - 5, pos.y + 10 ) );
+    }
+        
+    if( selected && unlocked )
+    {
+        Texture::drawTexture( Texture::Sprite::doorOpened, Vec2( pos.x, pos.y + yOffset ) );
     }
     else if( unlocked )
     {

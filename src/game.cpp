@@ -237,6 +237,8 @@ void Game::inMenu()
                     gameTime.start();
 
                 gameState = GameState::playing;
+                
+                // TODO this kinda sucks right now
                 initLevel( levelListList[ selectedLevelList ].lastUnlockedLevel() );
             }
             else if( mainMenu.clickedLevelSelect() )

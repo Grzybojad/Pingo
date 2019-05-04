@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include <cmath>
 
 #include <psp2/io/stat.h> 
 
@@ -162,6 +163,9 @@ class LevelListElement
         int stepsForThreeStars;
 
         int stars;
+
+    protected:
+        float animation;
 };
 
 class LevelList
