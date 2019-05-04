@@ -483,10 +483,10 @@ LevelList::LevelList()
 
 void LevelList::add( std::string filePath )
 {
-    levels.push_back( LevelListElement( "app0:levels/" + filePath ) );
+    levels.push_back( LevelListElement( /*"app0:levels/" +*/ filePath ) );
 
     // Load level file meta data
-    std::ifstream levelFile( "app0:levels/" + filePath );
+    std::ifstream levelFile( /*"app0:levels/" +*/ filePath );
     if( levelFile.fail() )
     {
         // TODO
@@ -580,11 +580,11 @@ LevelListElement * LevelList::accessElement( int index )
     return level;
 }
 
-void LevelList::saveProgress()
+void LevelList::saveProgress( int levelList )
 {
     std::ofstream saveData;
     sceIoMkdir( "ux0:/data/Pingo", 0777 );
-    saveData.open( "ux0:/data/Pingo/saveData.txt" );
+    saveData.open( "ux0:/data/Pingo/saveData" + std::to_string( levelList ) + ".txt" );
 
     saveData << currentLevel << "\n";
 
@@ -597,10 +597,10 @@ void LevelList::saveProgress()
     saveData.close();
 }
 
-void LevelList::loadProgress()
+void LevelList::loadProgress( int levelList )
 {
     std::ifstream saveData;
-    saveData.open( "ux0:/data/Pingo/saveData.txt" );
+    saveData.open( "ux0:/data/Pingo/saveData" + std::to_string( levelList ) + ".txt" );
 
     saveData >> currentLevel;
 

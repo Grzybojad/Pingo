@@ -303,13 +303,14 @@ LevelSelect::LevelSelect()
     columns = 10;
 }
 
-void LevelSelect::initLevels( LevelList *levelList )
+void LevelSelect::initLevels( LevelList * levelList )
 {
     this->levelList = levelList;
 
-    // Unlock the first level
-    if( !levelList->accessElement( 0 )->unlocked )
-        levelList->accessElement( 0 )->unlocked = true;
+    // Unlock the first level if it exitst
+    if( levelList->getNrOfLevels() > 0 )
+        if( !levelList->accessElement( 0 )->unlocked )
+            levelList->accessElement( 0 )->unlocked = true;
 }
 
 void LevelSelect::initStars()
@@ -333,24 +334,32 @@ void LevelSelect::draw()
 {
     Gui::drawText_position( Gui::Position::centered, SCREEN_WIDTH / 2, 50, 60, "Level select" );
 
-    int itemWidth = 70;
-    int itemHeight = 90;
-    int spacing = ( SCREEN_WIDTH - paddingSide * 2 - itemWidth * columns ) / ( columns - 1 );
-
-    for( int i = 0; i < levelList->getNrOfLevels(); ++i )
+    if( levelList->getNrOfLevels() > 0 )
     {
-        int posX = paddingSide + ( ( i % columns ) * itemWidth ) + ( ( i % columns ) * spacing );
-        int posY = paddingTop + ( ( i / columns ) * ( itemHeight + 40 ) );
-        bool selected;
-        if( ( i + 1 ) == cursor ) selected = true;
-        else selected = false;
+        int itemWidth = 70;
+        int itemHeight = 90;
+        int spacing = ( SCREEN_WIDTH - paddingSide * 2 - itemWidth * columns ) / ( columns - 1 );
 
-        levelList->accessElement( i )->drawLevelMenuElement( Vec2( posX, posY ), selected );
+        for( int i = 0; i < levelList->getNrOfLevels(); ++i )
+        {
+            int posX = paddingSide + ( ( i % columns ) * itemWidth ) + ( ( i % columns ) * spacing );
+            int posY = paddingTop + ( ( i / columns ) * ( itemHeight + 40 ) );
+            bool selected;
+            if( ( i + 1 ) == cursor ) selected = true;
+            else selected = false;
+
+            levelList->accessElement( i )->drawLevelMenuElement( Vec2( posX, posY ), selected );
+        }
+
+        // Draw total star count
+        Gui::drawTextf_position( Gui::Position::alignTopRight, SCREEN_WIDTH - 40, 10, 30, "%d/%d", collectedStars, totalStars );
+        Texture::drawTexture_scale( Texture::Sprite::star, Vec2( SCREEN_WIDTH - 40, 15 ), 0.30 );
     }
-
-    // Draw total star count
-    Gui::drawTextf_position( Gui::Position::alignTopRight, SCREEN_WIDTH - 40, 10, 30, "%d/%d", collectedStars, totalStars );
-    Texture::drawTexture_scale( Texture::Sprite::star, Vec2( SCREEN_WIDTH - 40, 15 ), 0.30 );
+    else
+    {
+        Gui::drawText_position( Gui::Position::centered, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 30, "No levels found" );
+    }
+    
 }
 
 int LevelSelect::getCursor()
@@ -360,22 +369,32 @@ int LevelSelect::getCursor()
 
 void LevelSelect::handleInput()
 {
-    if( Input::wasPressed( Input::Button::up ) || Input::wasPressed( Input::Button::lAnalogUp ) )
-        selectUp();
-    if( Input::wasPressed( Input::Button::right ) || Input::wasPressed( Input::Button::lAnalogRight ) )
-        selectRight();
-    if( Input::wasPressed( Input::Button::down ) || Input::wasPressed( Input::Button::lAnalogDown ) )
-        selectDown();
-    if( Input::wasPressed( Input::Button::left ) || Input::wasPressed( Input::Button::lAnalogLeft ) )
-        selectLeft();
+    if( levelList->getNrOfLevels() > 0 )
+    {
+        if( Input::wasPressed( Input::Button::up ) || Input::wasPressed( Input::Button::lAnalogUp ) )
+            selectUp();
+        if( Input::wasPressed( Input::Button::right ) || Input::wasPressed( Input::Button::lAnalogRight ) )
+            selectRight();
+        if( Input::wasPressed( Input::Button::down ) || Input::wasPressed( Input::Button::lAnalogDown ) )
+            selectDown();
+        if( Input::wasPressed( Input::Button::left ) || Input::wasPressed( Input::Button::lAnalogLeft ) )
+            selectLeft();
+    }
 }
 
 bool LevelSelect::selectPressed()
 {
-    // Only allow loading unlocked levels
-    if( levelList->accessElement( cursor - 1 )->unlocked )
+    if( levelList->getNrOfLevels() > 0 )
     {
-        return Input::wasPressed( Input::Button::cross );
+        // Only allow loading unlocked levels
+        if( levelList->accessElement( cursor - 1 )->unlocked )
+        {
+            return Input::wasPressed( Input::Button::cross );
+        }
+        else
+        {
+            return false;
+        }
     }
     else
     {
@@ -385,7 +404,10 @@ bool LevelSelect::selectPressed()
 
 bool LevelSelect::isGameComplete()
 {
-    return ( collectedStars == totalStars );
+    if( levelList->getNrOfLevels() > 0 )
+        return ( collectedStars == totalStars );
+    else
+        return false;    
 }
 
 void LevelSelect::selectUp()

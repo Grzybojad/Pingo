@@ -16,10 +16,18 @@ Game::Game()
     Gui::loadFont();
 
     // Initialize level list
+    selectedLevelList = 1;
+    initCustomLevelList();
     initLevelList();
 
     // Initialize the level select menu
-    levelMenu.initLevels( &levelList );
+    LevelSelect customLevels = LevelSelect();
+    levelMenus.push_back( customLevels );
+    LevelSelect world1Levels = LevelSelect();
+    levelMenus.push_back( world1Levels );
+
+    levelMenus[ 0 ].initLevels( &levelListList[ 0 ] );
+    levelMenus[ 1 ].initLevels( &levelListList[ 1 ] );
 
     // Initialize the sound effects
     Sound::initSoloud();
@@ -43,6 +51,7 @@ Game::~Game()
 void Game::initLevelList()
 {
     int dfd;
+    LevelList newLevelList = LevelList();
     dfd = sceIoDopen( "app0:levels/" );
     if( dfd > 0 )
     {
@@ -50,7 +59,7 @@ void Game::initLevelList()
         while( sceIoDread( dfd, &file ) > 0 )
         {
             std::string fileName( file.d_name );
-            levelList.add( fileName );
+            newLevelList.add( "app0:levels/" + fileName );
         }
     }
     else if( dfd < 0 )
@@ -59,7 +68,36 @@ void Game::initLevelList()
     }
     sceIoDclose( dfd );
 
-    levelList.loadProgress();
+    // TODO This needs to be changes for more levelLists
+    newLevelList.loadProgress( 1 );
+
+    levelListList.push_back( newLevelList );
+}
+
+void Game::initCustomLevelList()
+{
+    int dfd;
+    LevelList newLevelList = LevelList();
+    sceIoMkdir( "ux0:/data/Pingo/levels/", 0777 );
+    dfd = sceIoDopen( "ux0:/data/Pingo/levels/" );
+    if( dfd > 0 )
+    {
+        SceIoDirent file;
+        while( sceIoDread( dfd, &file ) > 0 )
+        {
+            std::string fileName( file.d_name );
+            newLevelList.add( "ux0:/data/Pingo/levels/" + fileName );
+        }
+    }
+    else if( dfd < 0 )
+    {
+        // TODO handle error
+    }
+    sceIoDclose( dfd );
+
+    newLevelList.loadProgress( 0 );
+
+    levelListList.push_back( newLevelList );
 }
 
 void Game::mainLoop()
@@ -118,14 +156,14 @@ void Game::inGame()
     else
     {
         // Set the completion state of the level and unlock the next level
-        if( !levelList.getCompletion( levelList.getCurrentLevel() ) )
-            levelList.compleateCurrentLevel();
+        if( !levelListList[ selectedLevelList ].getCompletion( levelListList[ selectedLevelList ].getCurrentLevel() ) )
+            levelListList[ selectedLevelList ].compleateCurrentLevel();
 
         // Check to only save the data and play sound once
         if( !progressSaved )
         {
             Sound::soloud.play( Sound::levelFinish );
-            levelList.saveProgress();
+            levelListList[ selectedLevelList ].saveProgress( selectedLevelList );
             Stats::totalLevelFinished++;
             Stats::timePlayed += ( gameTime.get_ticks() / 1000000 );
             gameTime.start();
@@ -141,7 +179,7 @@ void Game::inGame()
         if( finishMenu.clickedNextLevel() )
         {
             progressSaved = false;
-            if( levelList.nextLevel() )
+            if( levelListList[ selectedLevelList ].nextLevel() )
             {
                 destroyLevel();
                 initLevel();
@@ -199,11 +237,16 @@ void Game::inMenu()
                     gameTime.start();
 
                 gameState = GameState::playing;
-                initLevel( levelList.lastUnlockedLevel() );
+                initLevel( levelListList[ selectedLevelList ].lastUnlockedLevel() );
             }
             else if( mainMenu.clickedLevelSelect() )
             {
-                levelMenu.initStars();
+                // Init all star counters
+                for( int i = 0; i < levelMenus.size(); ++i )
+                {
+                    levelMenus[ i ].initStars();
+                }
+
                 gameState = GameState::levelMenu;
             }
             else if( mainMenu.clickedExit() )
@@ -247,7 +290,7 @@ void Game::inMenu()
             if( Input::wasPressed( Input::Button::cross ) || Input::wasPressed( Input::Button::circle ) || Input::wasPressed( Input::Button::start ) )
             {
                 alreadyShowedCompleteMessage = true;
-                levelList.saveProgress();
+                levelListList[ selectedLevelList ].saveProgress( selectedLevelList );
             }
         }
         else
@@ -256,17 +299,40 @@ void Game::inMenu()
             {
                 gameState = GameState::mainMenu;
             }
-            if( levelMenu.selectPressed() )
+            // Handle switching between level select screens
+            // TODO move this to menu.hpp/.cpp if possible
+            if( Input::wasPressed( Input::Button::lTrigger ) )
+            {
+                if( selectedLevelList > 0 )
+                    selectedLevelList--;
+                else
+                {
+                    selectedLevelList = levelListList.size() - 1;
+                }
+                Sound::soloud.play( Sound::menuMove );
+            }
+            else if( Input::wasPressed( Input::Button::rTrigger ) )
+            {
+                if( selectedLevelList < levelListList.size() - 1 )
+                    selectedLevelList++;
+                else
+                {
+                    selectedLevelList = 0;
+                }
+                Sound::soloud.play( Sound::menuMove );
+            }
+
+            if( levelMenus[ selectedLevelList ].selectPressed() )
             {
                 gameState = GameState::playing;
-                initLevel( levelMenu.getCursor() );
+                initLevel( levelMenus[ selectedLevelList ].getCursor() );
             }
-            levelMenu.update();
+            levelMenus[ selectedLevelList ].update();
         }
 
         draw();
 
-        if( levelMenu.isGameComplete() )
+        if( levelMenus[ selectedLevelList ].isGameComplete() )
             gameComplete = true;
     }
     // Options menu
@@ -290,7 +356,7 @@ void Game::initLevel()
         gameTime.unpause();
 
     level.init();
-    level.loadFromFile( levelList.accessElement( levelList.getCurrentLevel() - 1 ) );
+    level.loadFromFile( levelListList[ selectedLevelList ].accessElement( levelListList[ selectedLevelList ].getCurrentLevel() - 1 ) );
 }
 
 void Game::initLevel( int levelIndex )
@@ -302,8 +368,8 @@ void Game::initLevel( int levelIndex )
 
     level.init();
     // TODO don't allow loading unexisting levels
-    levelList.setCurrentLevel( levelIndex );
-    level.loadFromFile( levelList.accessElement( levelList.getCurrentLevel() - 1 ) );
+    levelListList[ selectedLevelList ].setCurrentLevel( levelIndex );
+    level.loadFromFile( levelListList[ selectedLevelList ].accessElement( levelListList[ selectedLevelList ].getCurrentLevel() - 1 ) );
 }
 
 void Game::destroyLevel()
@@ -350,7 +416,7 @@ void Game::draw()
             break;
 
         case GameState::levelMenu:
-            levelMenu.draw();
+            levelMenus[ selectedLevelList ].draw();
 
             if( gameComplete && !alreadyShowedCompleteMessage )
                 Gui::drawMessageBox( "Amazing!", "You got 3 stars on every single\nlevel! I'm impressed by your skills\nand your determination to master\nthis game. Thank you so much for\nplaying Pingo!\n- Grzybojad" );

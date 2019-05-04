@@ -31,6 +31,7 @@ class Game
         void inMenu();
         
         void initLevelList();
+        void initCustomLevelList();
         void initLevel();
         void initLevel( int levelIndex );
         void destroyLevel();
@@ -52,13 +53,14 @@ class Game
         GameState gameState;
 
         MainMenu mainMenu;
-        LevelSelect levelMenu;
+        std::vector<LevelSelect> levelMenus;
         PauseMenu pauseMenu;
         LevelFinish finishMenu;
         OptionsMenu optionsMenu;
 
         Level level;
-        LevelList levelList;
+        std::vector<LevelList> levelListList;
+        int selectedLevelList;
 
         AnimatedBackground background;
         Curtain curtain;

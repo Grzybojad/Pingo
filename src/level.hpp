@@ -184,8 +184,8 @@ class LevelList
         LevelListElement * accessElement( int index );
 
         // Save and load progress
-        void saveProgress();
-        void loadProgress();
+        void saveProgress( int levelList );
+        void loadProgress( int levelList );
 
     private:
         std::vector< LevelListElement > levels;

@@ -117,7 +117,7 @@ class LevelSelect
     public:
         LevelSelect();
 
-        void initLevels( LevelList *levelList );
+        void initLevels( LevelList * levelList );
         void initStars();
 
         void update();
