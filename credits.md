@@ -2,7 +2,8 @@
 
 Pingo is made by Grzybojad with art assets by JumboCube.
 
-Sound effects and music come from opengameart.org
-- 
+Music by Eric Matyas, soundimage.org
 
-- Level music "Acrostics" by Cityfires
+Additional testers:
+- RobDevs
+- dragnu5

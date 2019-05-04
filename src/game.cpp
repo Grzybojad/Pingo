@@ -42,8 +42,7 @@ Game::Game()
 
     gameState = GameState::initialized;
 
-    // DEBUG just play the song
-    Sound::soloud.play( Sound::levelMusic );
+    Sound::soloud.play( Sound::menuMusic );
 }
 
 Game::~Game()
@@ -190,6 +189,8 @@ void Game::inGame()
             else
             {
                 gameState = GameState::mainMenu;
+                Sound::levelMusic.stop();
+                Sound::soloud.play( Sound::menuMusic );
                 destroyLevel();
                 finishMessage = true;
             }
@@ -205,6 +206,8 @@ void Game::inGame()
         {
             progressSaved = false;
             gameState = GameState::mainMenu;
+            Sound::levelMusic.stop();
+            Sound::soloud.play( Sound::menuMusic );
             destroyLevel();
         }
 
@@ -240,6 +243,9 @@ void Game::inMenu()
                     gameTime.start();
 
                 gameState = GameState::playing;
+
+                Sound::menuMusic.stop();
+                Sound::soloud.play( Sound::levelMusic );
                 
                 // TODO this kinda sucks right now
                 initLevel( levelListList[ selectedLevelList ].lastUnlockedLevel() );
@@ -281,6 +287,8 @@ void Game::inMenu()
         else if( pauseMenu.clickedMainMenu() )
         {
             gameState = GameState::mainMenu;
+            Sound::levelMusic.stop();
+            Sound::soloud.play( Sound::menuMusic );
             destroyLevel();
         }
 
@@ -329,6 +337,8 @@ void Game::inMenu()
             if( levelMenus[ selectedLevelList ].selectPressed() )
             {
                 gameState = GameState::playing;
+                Sound::menuMusic.stop();
+                Sound::soloud.play( Sound::levelMusic );
                 initLevel( levelMenus[ selectedLevelList ].getCursor() );
             }
             levelMenus[ selectedLevelList ].update();
@@ -388,6 +398,8 @@ void Game::exit()
     Texture::freeTextures();
 
     Gui::freeFont();
+
+    Sound::soloud.deinit();
 }
 
 void Game::draw()

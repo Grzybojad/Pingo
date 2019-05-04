@@ -13,6 +13,7 @@ namespace Sound
     extern SoLoud::Wav ballHit;
     extern SoLoud::Wav levelFinish;
 
+    extern SoLoud::WavStream menuMusic;
     extern SoLoud::WavStream levelMusic;
 
     extern void initSoloud();

@@ -147,7 +147,8 @@ vita_create_vpk(${SHORT_NAME}.vpk ${VITA_TITLEID} ${SHORT_NAME}.self
   FILE sounds/menuMove.wav       sounds/menuMove.wav
   FILE sounds/levelFinish.wav    sounds/levelFinish.wav
 
-  FILE sounds/Acrostics.ogg      sounds/Acrostics.ogg
+  FILE sounds/Good-Morning-Doctor-Weird.ogg      sounds/Good-Morning-Doctor-Weird.ogg
+  FILE sounds/Puzzle-Dreams-3.ogg                sounds/Puzzle-Dreams-3.ogg
 
 
   # Levels
