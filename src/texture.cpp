@@ -41,49 +41,49 @@ namespace Texture {
 
     void loadTextures()
     {
-        wallTexture         = vita2d_load_PNG_file( "app0:/img/level/wall.png" );
-        floorBlankTexture   = vita2d_load_PNG_file( "app0:/img/level/floorBlank.png" );
-        floorPaintedTexture = vita2d_load_PNG_file( "app0:/img/level/floorPainted.png" );
-        ballTexture         = vita2d_load_PNG_file( "app0:/img/level/ball.png" );
+        wallTexture         = vita2d_load_PNG_file( ( pathTexture + "level/wall.png" ).c_str() );
+        floorBlankTexture   = vita2d_load_PNG_file( ( pathTexture + "level/floorBlank.png" ).c_str() );
+        floorPaintedTexture = vita2d_load_PNG_file( ( pathTexture + "level/floorPainted.png" ).c_str() );
+        ballTexture         = vita2d_load_PNG_file( ( pathTexture + "level/ball.png" ).c_str() );
 
-        background1Texture  = vita2d_load_PNG_file( "app0:/img/common/background1.png" );
-        background2Texture  = vita2d_load_PNG_file( "app0:/img/common/background2.png" );
-        background3Texture  = vita2d_load_PNG_file( "app0:/img/common/background3.png" );
+        background1Texture  = vita2d_load_PNG_file( ( pathTexture + "common/background1.png" ).c_str() );
+        background2Texture  = vita2d_load_PNG_file( ( pathTexture + "common/background2.png" ).c_str() );
+        background3Texture  = vita2d_load_PNG_file( ( pathTexture + "common/background3.png" ).c_str() );
 
-        starTexture         = vita2d_load_PNG_file( "app0:/img/common/star.png" );
-        messageBoxTexture   = vita2d_load_PNG_file( "app0:/img/common/messageBox.png" );
+        starTexture         = vita2d_load_PNG_file( ( pathTexture + "common/star.png" ).c_str() );
+        messageBoxTexture   = vita2d_load_PNG_file( ( pathTexture + "common/messageBox.png" ).c_str() );
 
-        logoTexture                 = vita2d_load_PNG_file( "app0:/img/menu/logo.png" );
-        startButtonTexture          = vita2d_load_PNG_file( "app0:/img/menu/startButton.png" );
-        startSelectedTexture        = vita2d_load_PNG_file( "app0:/img/menu/startSelected.png" );
-        levelSelectButtonTexture    = vita2d_load_PNG_file( "app0:/img/menu/levelSelectButton.png" );
-        levelSelectSelectedTexture  = vita2d_load_PNG_file( "app0:/img/menu/levelSelectSelected.png" );
-        optionsButtonTexture        = vita2d_load_PNG_file( "app0:/img/menu/optionsButton.png" );
-        optionsSelectedTexture      = vita2d_load_PNG_file( "app0:/img/menu/optionsSelected.png" );
+        logoTexture                 = vita2d_load_PNG_file( ( pathTexture + "menu/logo.png" ).c_str() );
+        startButtonTexture          = vita2d_load_PNG_file( ( pathTexture + "menu/startButton.png" ).c_str() );
+        startSelectedTexture        = vita2d_load_PNG_file( ( pathTexture + "menu/startSelected.png" ).c_str() );
+        levelSelectButtonTexture    = vita2d_load_PNG_file( ( pathTexture + "menu/levelSelectButton.png" ).c_str() );
+        levelSelectSelectedTexture  = vita2d_load_PNG_file( ( pathTexture + "menu/levelSelectSelected.png" ).c_str() );
+        optionsButtonTexture        = vita2d_load_PNG_file( ( pathTexture + "menu/optionsButton.png" ).c_str() );
+        optionsSelectedTexture      = vita2d_load_PNG_file( ( pathTexture + "menu/optionsSelected.png" ).c_str() );
 
-        doorClosedTexture           = vita2d_load_PNG_file( "app0:/img/menu/doorClosed.png" );
-        doorOpenedTexture           = vita2d_load_PNG_file( "app0:/img/menu/doorOpened.png" );
-        doorLockedTexture           = vita2d_load_PNG_file( "app0:/img/menu/doorLocked.png" );
-        doorLockedOutlineTexture    = vita2d_load_PNG_file( "app0:/img/menu/doorLockedOutline.png" );
-        doorPlatformTexture         = vita2d_load_PNG_file( "app0:/img/menu/doorPlatform.png" );
+        doorClosedTexture           = vita2d_load_PNG_file( ( pathTexture + "menu/doorClosed.png" ).c_str() );
+        doorOpenedTexture           = vita2d_load_PNG_file( ( pathTexture + "menu/doorOpened.png" ).c_str() );
+        doorLockedTexture           = vita2d_load_PNG_file( ( pathTexture + "menu/doorLocked.png" ).c_str() );
+        doorLockedOutlineTexture    = vita2d_load_PNG_file( ( pathTexture + "menu/doorLockedOutline.png" ).c_str() );
+        doorPlatformTexture         = vita2d_load_PNG_file( ( pathTexture + "menu/doorPlatform.png" ).c_str() );
 
-        lf_levelCompleteTexture     = vita2d_load_PNG_file( "app0:/img/menu/lf-levelComplete.png" );
-        lf_nextLevelTexture         = vita2d_load_PNG_file( "app0:/img/menu/lf-nextLevel.png" );
-        lf_nextLevelSelectedTexture = vita2d_load_PNG_file( "app0:/img/menu/lf-nextLevelSelected.png" );
-        lf_restartTexture           = vita2d_load_PNG_file( "app0:/img/menu/lf-restart.png" );
-        lf_restartSelectedTexture   = vita2d_load_PNG_file( "app0:/img/menu/lf-restartSelected.png" );
-        lf_menuTexture              = vita2d_load_PNG_file( "app0:/img/menu/lf-menu.png" );
-        lf_menuSelectedTexture      = vita2d_load_PNG_file( "app0:/img/menu/lf-menuSelected.png" );
+        lf_levelCompleteTexture     = vita2d_load_PNG_file( ( pathTexture + "menu/lf-levelComplete.png" ).c_str() );
+        lf_nextLevelTexture         = vita2d_load_PNG_file( ( pathTexture + "menu/lf-nextLevel.png" ).c_str() );
+        lf_nextLevelSelectedTexture = vita2d_load_PNG_file( ( pathTexture + "menu/lf-nextLevelSelected.png" ).c_str() );
+        lf_restartTexture           = vita2d_load_PNG_file( ( pathTexture + "menu/lf-restart.png" ).c_str() );
+        lf_restartSelectedTexture   = vita2d_load_PNG_file( ( pathTexture + "menu/lf-restartSelected.png" ).c_str() );
+        lf_menuTexture              = vita2d_load_PNG_file( ( pathTexture + "menu/lf-menu.png" ).c_str() );
+        lf_menuSelectedTexture      = vita2d_load_PNG_file( ( pathTexture + "menu/lf-menuSelected.png" ).c_str() );
 
-        p_pausedTextTexture         = vita2d_load_PNG_file( "app0:/img/menu/pause/pausedText.png" );
-        p_returnTexture             = vita2d_load_PNG_file( "app0:/img/menu/pause/return.png" );
-        p_returnSelectedTexture     = vita2d_load_PNG_file( "app0:/img/menu/pause/returnSelected.png" );
-        p_restartTexture            = vita2d_load_PNG_file( "app0:/img/menu/pause/restart.png" );
-        p_restartSelectedTexture    = vita2d_load_PNG_file( "app0:/img/menu/pause/restartSelected.png" );
-        p_menuTexture               = vita2d_load_PNG_file( "app0:/img/menu/pause/menu.png" );
-        p_menuSelectedTexture       = vita2d_load_PNG_file( "app0:/img/menu/pause/menuSelected.png" );
+        p_pausedTextTexture         = vita2d_load_PNG_file( ( pathTexture + "menu/pause/pausedText.png" ).c_str() );
+        p_returnTexture             = vita2d_load_PNG_file( ( pathTexture + "menu/pause/return.png" ).c_str() );
+        p_returnSelectedTexture     = vita2d_load_PNG_file( ( pathTexture + "menu/pause/returnSelected.png" ).c_str() );
+        p_restartTexture            = vita2d_load_PNG_file( ( pathTexture + "menu/pause/restart.png" ).c_str() );
+        p_restartSelectedTexture    = vita2d_load_PNG_file( ( pathTexture + "menu/pause/restartSelected.png" ).c_str() );
+        p_menuTexture               = vita2d_load_PNG_file( ( pathTexture + "menu/pause/menu.png" ).c_str() );
+        p_menuSelectedTexture       = vita2d_load_PNG_file( ( pathTexture + "menu/pause/menuSelected.png" ).c_str() );
 
-        underConstructionTexture    = vita2d_load_PNG_file( "app0:/img/menu/underConstruction.png" );
+        underConstructionTexture    = vita2d_load_PNG_file( ( pathTexture + "menu/underConstruction.png" ).c_str() );
 
         curtainTexture              = vita2d_load_PNG_file( "app0:/sce_sys/pic0.png" );
     }

@@ -603,8 +603,8 @@ LevelListElement * LevelList::accessElement( int index )
 void LevelList::saveProgress( int levelList )
 {
     std::ofstream saveData;
-    sceIoMkdir( "ux0:/data/Pingo", 0777 );
-    saveData.open( "ux0:/data/Pingo/saveData" + std::to_string( levelList ) + ".txt" );
+    sceIoMkdir( pathData.c_str(), 0777 );
+    saveData.open( pathData + "saveData" + std::to_string( levelList ) + ".txt" );
 
     saveData << currentLevel << "\n";
 
@@ -620,7 +620,7 @@ void LevelList::saveProgress( int levelList )
 void LevelList::loadProgress( int levelList )
 {
     std::ifstream saveData;
-    saveData.open( "ux0:/data/Pingo/saveData" + std::to_string( levelList ) + ".txt" );
+    saveData.open( pathData + "saveData" + std::to_string( levelList ) + ".txt" );
 
     saveData >> currentLevel;
 

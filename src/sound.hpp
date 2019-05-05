@@ -1,7 +1,11 @@
+#include <string>
+
 #include <psp2/audioout.h>
 #include "soloud.h"
 #include "soloud_wav.h"
 #include "soloud_wavstream.h"
+
+#include "common.hpp"
 
 namespace Sound
 {

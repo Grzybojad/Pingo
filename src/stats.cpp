@@ -9,7 +9,7 @@ namespace Stats
     void readStats()
     {
         std::ifstream stats;
-        stats.open( "ux0:/data/Pingo/stats.txt", std::ifstream::in );
+        stats.open( pathData + "stats.txt", std::ifstream::in );
 
         if( !stats.fail() )
         {
@@ -30,7 +30,7 @@ namespace Stats
     void saveStats()
     {
         std::ofstream stats;
-        stats.open( "ux0:/data/Pingo/stats.txt" );
+        stats.open( pathData + "stats.txt" );
 
         stats << timePlayed << "\n";
         stats << totalSteps << "\n";

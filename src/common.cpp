@@ -4,6 +4,13 @@ SceUInt64 prevFrameClock = 0;
 SceUInt64 frameTime = 0;
 float timestep = 0;
 
+std::string pathData = "ux0:/data/Pingo/";
+std::string pathTexture = "app0:/img/";
+std::string pathSounds  = "app0:/sounds/";
+std::string pathFonts   = "app0:/font/";
+std::string pathLevels  = "app0:/levels/";
+std::string pathCustomLevels = "ux0:/data/Pingo/levels/";
+
 bool alreadyShowedCompleteMessage = false;
 
 void calcFrameTime()

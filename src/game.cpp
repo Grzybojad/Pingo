@@ -54,14 +54,14 @@ void Game::initLevelList()
 {
     int dfd;
     LevelList newLevelList = LevelList();
-    dfd = sceIoDopen( "app0:levels/" );
+    dfd = sceIoDopen( pathLevels.c_str() );
     if( dfd > 0 )
     {
         SceIoDirent file;
         while( sceIoDread( dfd, &file ) > 0 )
         {
             std::string fileName( file.d_name );
-            newLevelList.add( "app0:levels/" + fileName );
+            newLevelList.add( pathLevels + fileName );
         }
     }
     else if( dfd < 0 )
@@ -80,15 +80,15 @@ void Game::initCustomLevelList()
 {
     int dfd;
     LevelList newLevelList = LevelList();
-    sceIoMkdir( "ux0:/data/Pingo/levels/", 0777 );
-    dfd = sceIoDopen( "ux0:/data/Pingo/levels/" );
+    sceIoMkdir( pathCustomLevels.c_str(), 0777 );
+    dfd = sceIoDopen( pathCustomLevels.c_str() );
     if( dfd > 0 )
     {
         SceIoDirent file;
         while( sceIoDread( dfd, &file ) > 0 )
         {
             std::string fileName( file.d_name );
-            newLevelList.add( "ux0:/data/Pingo/levels/" + fileName );
+            newLevelList.add( pathCustomLevels + fileName );
         }
     }
     else if( dfd < 0 )

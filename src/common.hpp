@@ -8,6 +8,14 @@
 const int SCREEN_WIDTH = 960;
 const int SCREEN_HEIGHT = 544;
 
+// File paths
+extern std::string pathTexture;
+extern std::string pathSounds;
+extern std::string pathFonts;
+extern std::string pathLevels;
+extern std::string pathCustomLevels;
+// The "curtain" texture in texture.hpp/cpp is loaded from "app0:/sce_sys"
+
 extern bool alreadyShowedCompleteMessage;
 
 struct Rect
