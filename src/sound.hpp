@@ -8,6 +8,7 @@
 #include "soloud_wavstream.h"
 
 #include "common.hpp"
+#include "timer.hpp"
 
 namespace Sound
 {
@@ -24,4 +25,7 @@ namespace Sound
 
     extern void initSoloud();
     extern void loadSounds();
+
+    extern void setSFXVolume( float volume );
+    extern void setMusicVolume( float volume );
 }

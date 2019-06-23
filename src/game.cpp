@@ -352,6 +352,8 @@ void Game::inMenu()
     // Options menu
     else if( gameState == GameState::optionsMenu )
     {
+        optionsMenu.update();
+
         if( Input::wasPressed( Input::Button::circle ) || Input::wasPressed( Input::Button::start ) )
         {
             gameState = GameState::mainMenu;

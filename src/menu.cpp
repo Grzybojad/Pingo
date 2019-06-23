@@ -39,7 +39,7 @@ Menu::Menu()
     cursor = 0;
 }
 
-void Menu::addItem( MenuItem item )
+void Menu::addItem( MenuItem * item )
 {
     menuItems.push_back( item );
 }
@@ -62,9 +62,9 @@ void Menu::draw()
     for( int i = 0; i < menuItems.size(); ++i )
     {
         if( cursor == i )
-            menuItems[ i ].drawSelected();
+            menuItems[ i ]->drawSelected();
         else
-            menuItems[ i ].draw();
+            menuItems[ i ]->draw();
     }
 }
 
@@ -104,13 +104,13 @@ MainMenu::MainMenu()
     cursor = 0;
     int buttonWidth = 260;
 
-    MenuItem startButton = MenuItem( Rect( SCREEN_WIDTH / 2 - ( buttonWidth / 2 ), SCREEN_HEIGHT*0.4, buttonWidth, 70 ), "Start" );
+    MenuItem * startButton = new MenuItem( Rect( SCREEN_WIDTH / 2 - ( buttonWidth / 2 ), SCREEN_HEIGHT*0.4, buttonWidth, 70 ), "Start" );
     addItem( startButton );
 
-    MenuItem levelButton = MenuItem( Rect( SCREEN_WIDTH / 2 - ( buttonWidth / 2 ), SCREEN_HEIGHT*0.6, buttonWidth, 70 ), "Level Select" );
+    MenuItem * levelButton = new MenuItem( Rect( SCREEN_WIDTH / 2 - ( buttonWidth / 2 ), SCREEN_HEIGHT*0.6, buttonWidth, 70 ), "Level Select" );
     addItem( levelButton );
 
-    MenuItem exitButton = MenuItem( Rect( SCREEN_WIDTH / 2 - ( buttonWidth / 2 ), SCREEN_HEIGHT*0.8, buttonWidth, 70 ), "Exit" );
+    MenuItem * exitButton = new MenuItem( Rect( SCREEN_WIDTH / 2 - ( buttonWidth / 2 ), SCREEN_HEIGHT*0.8, buttonWidth, 70 ), "Exit" );
     addItem( exitButton );
 }
 
@@ -160,21 +160,172 @@ bool MainMenu::clickedOptions()
 
 OptionsMenu::OptionsMenu()
 {
+    Rect optionsPos = Rect( 50, 100, 250, 50 );
+    int verticalSpacing = 80;
 
+    addItem( new Slider( optionsPos, "SFX volume", 0.1f ) );
+    optionsPos.y += verticalSpacing;
+    addItem( new Slider( optionsPos, "Music volume", 0.1f ) );
+    optionsPos.y += verticalSpacing;
+    addItem( new Checkbox( optionsPos, "Enable touch", true ) );
+
+    sfxVolume = 0.5f;
+    musicVolume = 0.5f;
+    enableTouchInMenu = true;
+    enableTouchInGame = true;
 }
 
 void OptionsMenu::draw()
 {
-    Gui::drawText( 20, 40, 30, "Credits:\n\nDirecting, programming, level design:\n  Grzybojad\n\nArt assets:\n  Jumbocube\n\nTesting:\n  Grzybojad\n  JumboCube\n  RobDevs\n  dragnu5" );
+    for( int i = 0; i < menuItems.size(); ++i )
+    {
+        if( i == cursor )
+            menuItems[ i ]->drawSelected();
+        else 
+            menuItems[ i ]->draw();
+    }
 
+    // Credits
+    //Gui::drawText( 20, 40, 30, "Credits:\n\nDirecting, programming, level design:\n  Grzybojad\n\nArt assets:\n  Jumbocube\n\nTesting:\n  Grzybojad\n  JumboCube\n  RobDevs\n  dragnu5" );
+
+    // Stats
     Gui::drawTextf_position( Gui::Position::alignTopRight, SCREEN_WIDTH - 20, 40, 30, "Stats:\n\nTime spend playing: %s\nTotal steps: %d\nTotal levels finished: %d", timeToString( Stats::timePlayed ).c_str(), Stats::totalSteps, Stats::totalLevelFinished );
 
+    // "Go back" text
     Gui::drawText_position( Gui::Position::alignRight, SCREEN_WIDTH - 20, SCREEN_HEIGHT - 20, 30, "Press O to go back" );
+}
 
-    // Dim the screen
-    vita2d_draw_rectangle( 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, RGBA8( 0, 0, 0, 128 ) );
+void OptionsMenu::update()
+{
+    handleInput();
 
-    Texture::drawTexture( Texture::Sprite::underConstruction, Vec2( 0, 0 ) );
+    menuItems[ cursor ]->handleInput();
+
+    Slider* sfxVolOption = dynamic_cast<Slider *>( menuItems[ 0 ] );
+    Slider* musicVolOption = dynamic_cast<Slider *>( menuItems[ 1 ] ); 
+
+    if( sfxVolume != sfxVolOption->getValue() )
+    {
+        sfxVolume = sfxVolOption->getValue();
+        Sound::setSFXVolume( sfxVolume );
+    }
+
+    if( musicVolume != musicVolOption->getValue() )
+    {
+        musicVolume = musicVolOption->getValue();
+        Sound::setMusicVolume( musicVolume );
+    }
+}
+
+Checkbox::Checkbox( Rect rect, std::string label, bool selected ) : MenuItem( rect, label )
+{
+    this->selected = selected;
+}
+
+void Checkbox::draw()
+{
+    Gui::drawText_color_position( Gui::Position::alignTop, rect.x + 5, rect.y, 40, RGBA8( 0, 0, 0, 255 ), label.c_str() );
+
+    if( selected )
+        vita2d_draw_rectangle( rect.x + rect.w + 100, rect.y, 30, 30, RGBA8( 0, 255, 0, 255 ) );
+    else
+        vita2d_draw_rectangle( rect.x + rect.w + 100, rect.y, 30, 30, RGBA8( 255, 0, 0, 255 ) );
+}
+
+void Checkbox::drawSelected()
+{
+    int border = 4;
+    vita2d_draw_rectangle( rect.x, rect.y, rect.w, border, RGBA8( 255, 0, 0, 255 ) );
+    vita2d_draw_rectangle( rect.x + rect.w - border, rect.y, border, rect.h, RGBA8( 255, 0, 0, 255 ) );
+    vita2d_draw_rectangle( rect.x, rect.y + rect.h - border, rect.w, border, RGBA8( 255, 0, 0, 255 ) );
+    vita2d_draw_rectangle( rect.x, rect.y, border, rect.h, RGBA8( 255, 0, 0, 255 ) );
+
+    draw();
+}
+
+void Checkbox::handleInput()
+{
+    if( Input::wasPressed( Input::Button::right ) || Input::wasPressed( Input::Button::lAnalogRight ) || 
+        Input::wasPressed( Input::Button::left ) || Input::wasPressed( Input::Button::lAnalogLeft ) ||
+        Input::wasPressed( Input::Button::cross ) )
+        selected = !selected;
+}
+
+Selectable::Selectable( Rect rect, std::string label, std::vector<std::string> Selectable ) : MenuItem( rect, label )
+{
+    this->items = items;
+}
+
+void Selectable::draw()
+{
+    Gui::drawText_color_position( Gui::Position::alignTop, rect.x + 5, rect.y, 40, RGBA8( 0, 0, 0, 255 ), label.c_str() );
+
+    // TODO
+}
+
+void Selectable::drawSelected()
+{
+    int border = 4;
+    vita2d_draw_rectangle( rect.x, rect.y, rect.w, border, RGBA8( 255, 0, 0, 255 ) );
+    vita2d_draw_rectangle( rect.x + rect.w - border, rect.y, border, rect.h, RGBA8( 255, 0, 0, 255 ) );
+    vita2d_draw_rectangle( rect.x, rect.y + rect.h - border, rect.w, border, RGBA8( 255, 0, 0, 255 ) );
+    vita2d_draw_rectangle( rect.x, rect.y, border, rect.h, RGBA8( 255, 0, 0, 255 ) );
+
+    draw();
+}
+
+void Selectable::handleInput()
+{
+    // TODO
+}
+
+Slider::Slider( Rect rect, std::string label, float step ) : MenuItem( rect, label )
+{
+    this->step = step;
+
+    // TODO load from file
+    value = 0.5f;
+}
+
+void Slider::draw()
+{
+    Gui::drawText_color_position( Gui::Position::alignTop, rect.x + 5, rect.y, 40, RGBA8( 0, 0, 0, 255 ), label.c_str() );
+
+    Gui::drawText_color_position( Gui::Position::alignTop, rect.x + rect.w + 100, rect.y, 40, RGBA8( 0, 0, 0, 255 ), ( std::to_string( (int)( round( value * 100 ) ) ) + "%" ).c_str() );
+
+    // TODO
+}
+
+void Slider::drawSelected()
+{
+    int border = 4;
+    vita2d_draw_rectangle( rect.x, rect.y, rect.w, border, RGBA8( 255, 0, 0, 255 ) );
+    vita2d_draw_rectangle( rect.x + rect.w - border, rect.y, border, rect.h, RGBA8( 255, 0, 0, 255 ) );
+    vita2d_draw_rectangle( rect.x, rect.y + rect.h - border, rect.w, border, RGBA8( 255, 0, 0, 255 ) );
+    vita2d_draw_rectangle( rect.x, rect.y, border, rect.h, RGBA8( 255, 0, 0, 255 ) );
+
+    draw();
+}
+
+void Slider::handleInput()
+{
+    if( Input::wasPressed( Input::Button::right ) || Input::wasPressed( Input::Button::lAnalogRight ) )
+    {
+        if( value < 1 ) value += step;
+        if( value > 1 ) value = 1;
+        Sound::soloud.play( Sound::menuMove );
+    }
+    if( Input::wasPressed( Input::Button::left ) || Input::wasPressed( Input::Button::lAnalogLeft ) )
+    {
+        if( value > 0 ) value -= step;
+        if( value < step ) value = 0;
+        Sound::soloud.play( Sound::menuMove );
+    }
+}
+
+float Slider::getValue()
+{
+    return value;
 }
 
 
@@ -182,13 +333,13 @@ PauseMenu::PauseMenu()
 {
     cursor = 0;
 
-    MenuItem startButton = MenuItem( Rect( SCREEN_WIDTH / 2 - 100, SCREEN_HEIGHT * 0.55, 200, 70 ), "Resume" );
+    MenuItem * startButton = new MenuItem( Rect( SCREEN_WIDTH / 2 - 100, SCREEN_HEIGHT * 0.55, 200, 70 ), "Resume" );
     addItem( startButton );
 
-    MenuItem restartButton = MenuItem( Rect( SCREEN_WIDTH / 2 - 100, SCREEN_HEIGHT * 0.7, 200, 70 ), "Restart" );
+    MenuItem * restartButton = new MenuItem( Rect( SCREEN_WIDTH / 2 - 100, SCREEN_HEIGHT * 0.7, 200, 70 ), "Restart" );
     addItem( restartButton );
 
-    MenuItem menuButton = MenuItem( Rect( SCREEN_WIDTH / 2 - 100, SCREEN_HEIGHT * 0.85, 200, 70 ), "Main menu" );
+    MenuItem * menuButton = new MenuItem( Rect( SCREEN_WIDTH / 2 - 100, SCREEN_HEIGHT * 0.85, 200, 70 ), "Main menu" );
     addItem( menuButton );
 }
 
@@ -238,13 +389,13 @@ LevelFinish::LevelFinish()
 
     int buttonWidth = 260;
 
-    MenuItem nextButton = MenuItem( Rect( SCREEN_WIDTH / 2 - ( buttonWidth / 2 ), SCREEN_HEIGHT*0.5, buttonWidth, 70 ), "Next Level" );
+    MenuItem * nextButton = new MenuItem( Rect( SCREEN_WIDTH / 2 - ( buttonWidth / 2 ), SCREEN_HEIGHT*0.5, buttonWidth, 70 ), "Next Level" );
     addItem( nextButton );
 
-    MenuItem restartButton = MenuItem( Rect( SCREEN_WIDTH / 2 - ( buttonWidth / 2 ), SCREEN_HEIGHT*0.65, buttonWidth, 70 ), "Try again" );
+    MenuItem * restartButton = new MenuItem( Rect( SCREEN_WIDTH / 2 - ( buttonWidth / 2 ), SCREEN_HEIGHT*0.65, buttonWidth, 70 ), "Try again" );
     addItem( restartButton );
 
-    MenuItem levelSelect = MenuItem( Rect( SCREEN_WIDTH / 2 - ( buttonWidth / 2 ), SCREEN_HEIGHT*0.8, buttonWidth, 70 ), "Main menu" );
+    MenuItem * levelSelect = new MenuItem( Rect( SCREEN_WIDTH / 2 - ( buttonWidth / 2 ), SCREEN_HEIGHT*0.8, buttonWidth, 70 ), "Main menu" );
     addItem( levelSelect );
 }
 

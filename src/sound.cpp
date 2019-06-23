@@ -28,4 +28,21 @@ namespace Sound
         menuMusic.setLooping( 1 );
         levelMusic.setLooping( 1 );
     }
+
+    void setSFXVolume( float volume )
+    {
+        menuMove.setVolume( volume );
+        ballHit.setVolume( volume );
+        levelFinish.setVolume( volume );
+    }
+
+    void setMusicVolume( float volume )
+    {
+        menuMusic.stop();
+
+        menuMusic.setVolume( volume );
+        levelMusic.setVolume( volume );
+
+        soloud.play( menuMusic );
+    }
 }

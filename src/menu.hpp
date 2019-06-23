@@ -23,6 +23,8 @@ class MenuItem
         // Draw the menu item the cursor is currently at
         virtual void drawSelected();
 
+        virtual void handleInput() {}
+
     protected:
         bool selected;
         Rect rect;
@@ -34,7 +36,7 @@ class Menu
     public:
         Menu();
 
-        void addItem( MenuItem item );
+        void addItem( MenuItem * item );
 
         virtual void update();
 
@@ -44,7 +46,7 @@ class Menu
         int getCursor();
 
     protected:
-        std::vector<MenuItem> menuItems;
+        std::vector<MenuItem *> menuItems;
         int cursor;
 
         // Handles all input from user
@@ -57,6 +59,7 @@ class Menu
         void selectUp();
         void selectDown();
 };
+
 
 class MainMenu : public Menu
 {
@@ -74,13 +77,67 @@ class MainMenu : public Menu
         void handleInput() override;
 };
 
+
 class OptionsMenu : public Menu
 {
     public:
         OptionsMenu();
 
         void draw() override;
+        void update() override;
+
+    protected:
+        float sfxVolume;
+        float musicVolume;
+        bool enableTouchInMenu;
+        bool enableTouchInGame;
 };
+
+class Checkbox : public MenuItem
+{
+    public:
+        Checkbox( Rect rect, std::string label, bool selected );
+
+        void draw() override;
+        void drawSelected() override;
+
+    protected:
+        void handleInput() override;
+
+        bool selected;
+};
+
+class Selectable : public MenuItem
+{
+    public:
+        Selectable( Rect rect, std::string label, std::vector<std::string> items );
+
+        void draw() override;
+        void drawSelected() override;
+
+    protected:
+        void handleInput() override;
+
+        std::vector<std::string> items;
+};
+
+class Slider : public MenuItem
+{
+    public:
+        Slider( Rect rect, std::string label, float step );
+
+        void draw() override;
+        void drawSelected() override;
+
+        float getValue();
+    
+    protected:
+        void handleInput() override;
+
+        float value;
+        float step;
+};
+
 
 class PauseMenu : public Menu
 {
@@ -94,6 +151,7 @@ class PauseMenu : public Menu
         bool clickedRestart();
         bool clickedMainMenu();
 };
+
 
 class LevelFinish : public Menu
 {
