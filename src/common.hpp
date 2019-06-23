@@ -9,6 +9,7 @@ const int SCREEN_WIDTH = 960;
 const int SCREEN_HEIGHT = 544;
 
 // File paths
+extern std::string pathData;
 extern std::string pathTexture;
 extern std::string pathSounds;
 extern std::string pathFonts;

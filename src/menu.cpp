@@ -360,7 +360,6 @@ void LevelSelect::draw()
     {
         Gui::drawText_position( Gui::Position::centered, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 30, "No levels found" );
     }
-    
 }
 
 int LevelSelect::getCursor()
@@ -444,8 +443,11 @@ void LevelSelect::selectDown()
     if( cursor <= levelList->getNrOfLevels() - columns )
         cursor += columns;
     else
+    {
         cursor %= columns;
-
+        if( cursor < 1 ) cursor += columns;
+    }
+        
     Sound::soloud.play( Sound::menuMove );
 }
 

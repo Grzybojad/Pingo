@@ -2,6 +2,8 @@
 
 #include <fstream>
 
+#include "common.hpp"
+
 namespace Stats
 {
     extern int timePlayed; // Recorded in seconds
