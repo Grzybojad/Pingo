@@ -6,6 +6,7 @@
 #include <cmath>
 
 #include <psp2/io/stat.h> 
+#include <vita2d.h>
 
 #include "ball.hpp"
 #include "timer.hpp"
@@ -40,6 +41,7 @@ class Level
     public:
         Level();
 
+        void firstInit();
         void init();
         void loadFromFile( LevelListElement *levelListElement );
         void unload();
@@ -65,6 +67,7 @@ class Level
         Vec2 levelSize;
         std::vector< std::vector<Tile*> > tiles;
         LevelListElement *levelListElement;
+        vita2d_texture* levelTexture;
         Timer levelTime;
         int tileSize;
         int floorTileCount;
@@ -74,6 +77,9 @@ class Level
 
         Ball ball;
 
+
+        // Initialize level texture from tiles
+        void initLevelTexture();
 
         // Converts the char that's loaded from the level map to the corresponding Tile type
         Tile* charToTile( char c );

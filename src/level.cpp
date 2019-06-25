@@ -5,6 +5,11 @@ Level::Level()
     
 }
 
+void Level::firstInit()
+{
+    levelTexture = vita2d_create_empty_texture_rendertarget( 960, 544, SCE_GXM_TEXTURE_FORMAT_A8B8G8R8 );
+}
+
 void Level::init()
 {
     state = State::playing;
@@ -71,6 +76,9 @@ void Level::loadFromFile( LevelListElement *levelListElement )
     initBall();
 
     levelFile.close();
+
+    // Initialize level texture
+    initLevelTexture();
 }
 
 void Level::unload()
@@ -118,7 +126,6 @@ void Level::update()
             Stats::totalSteps++;
         }
             
-
         if( checkWinCondition() )
         {
             setStarRating();
@@ -129,6 +136,9 @@ void Level::update()
 
 void Level::draw()
 {
+    // Draw prerendered level texture
+    vita2d_draw_texture( levelTexture, 0, 0 );
+
     // Draw level tiles
     for( int i = 0; i < tiles.size(); ++i )
     {
@@ -140,7 +150,8 @@ void Level::draw()
                 tileSize, 
                 tileSize 
             );
-            tiles[i][j]->draw( tileRect );
+            if( dynamic_cast<FloorTile*>( tiles[i][j] ) ) // TODO check if painted
+                tiles[i][j]->draw( tileRect );
         }
     }
 
@@ -177,6 +188,53 @@ void Level::draw()
 bool Level::complete()
 {
     return state == State::finished;
+}
+
+void Level::initLevelTexture()
+{ 
+    vita2d_free_texture( levelTexture );
+    levelTexture = vita2d_create_empty_texture_rendertarget( 960, 544, SCE_GXM_TEXTURE_FORMAT_A8B8G8R8 );
+
+    vita2d_pool_reset();
+    vita2d_start_drawing_advanced( levelTexture, SCE_GXM_SCENE_VERTEX_WAIT_FOR_DEPENDENCY );
+    
+    // Draw level tiles
+    for( int i = 0; i < tiles.size(); ++i )
+    {
+        for( int j = 0; j < tiles[ i ].size(); ++j )
+        {
+            Rect tileRect = Rect( 
+                levelPosition.x + ( j * tileSize ), 
+                levelPosition.y + ( i * tileSize ), 
+                tileSize, 
+                tileSize 
+            );
+            tiles[i][j]->draw( tileRect );
+        }
+    }
+
+    vita2d_end_drawing();
+    vita2d_wait_rendering_done();
+}
+
+Tile* Level::charToTile( char c )
+{
+    switch( c )
+    {
+        case 'w':
+        case '#':
+            return new WallTile();
+
+        case 'f':
+        case '.':
+            return new FloorTile();
+            
+        case 's':
+            return new StartTile();
+
+        default:
+            return new Tile();
+    }
 }
 
 Vec2 Level::getWorldPosFromTilePos( Vec2 tilePos )
@@ -355,26 +413,6 @@ void Tile::draw( Rect rect )
     vita2d_draw_rectangle( rect.x, rect.y, rect.w, rect.h, RGBA8( 255, 0, 0, 255) );
 }
 
-Tile* Level::charToTile( char c )
-{
-    switch( c )
-    {
-        case 'w':
-        case '#':
-            return new WallTile();
-
-        case 'f':
-        case '.':
-            return new FloorTile();
-            
-        case 's':
-            return new StartTile();
-
-        default:
-            return new Tile();
-    }
-}
-
 void FloorTile::draw( Rect rect )
 {
     if( state == State::blank )
@@ -503,10 +541,10 @@ LevelList::LevelList()
 
 void LevelList::add( std::string filePath )
 {
-    levels.push_back( LevelListElement( /*"app0:levels/" +*/ filePath ) );
+    levels.push_back( LevelListElement( filePath ) );
 
     // Load level file meta data
-    std::ifstream levelFile( /*"app0:levels/" +*/ filePath );
+    std::ifstream levelFile( filePath );
     if( levelFile.fail() )
     {
         // TODO
