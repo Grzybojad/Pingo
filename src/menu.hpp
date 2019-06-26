@@ -25,6 +25,8 @@ class MenuItem
 
         virtual void handleInput() {}
 
+        Rect getRect();
+
     protected:
         bool selected;
         Rect rect;

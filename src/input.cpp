@@ -30,6 +30,8 @@ namespace Input
     void handleInput()
     {
         sceCtrlPeekBufferPositive( 0, &pad, 1 );
+        memcpy( touch_old, touch, sizeof( touch_old ) );
+        sceTouchPeek( SCE_TOUCH_PORT_FRONT, &touch[ SCE_TOUCH_PORT_FRONT ], 1 );
 
         buttonIsHeld[ static_cast<int>( Button::select ) ] = ( pad.buttons & SCE_CTRL_SELECT );
         buttonIsHeld[ static_cast<int>( Button::start ) ] = ( pad.buttons & SCE_CTRL_START );
@@ -55,7 +57,10 @@ namespace Input
         buttonIsHeld[ static_cast<int>( Button::lAnalogDown ) ] = ( lAnalogY > ANALOG_DEADZONE );
         buttonIsHeld[ static_cast<int>( Button::lAnalogLeft  ) ] = ( lAnalogX < -ANALOG_DEADZONE );
 
-        // TODO Add touch checks
+        // Touch
+        buttonIsHeld[ static_cast<int>( Button::frontTouch ) ] = ( touch[ SCE_TOUCH_PORT_FRONT ].reportNum > 0 );
+        buttonIsHeld[ static_cast<int>( Button::backTouch ) ] = ( touch[ SCE_TOUCH_PORT_BACK ].reportNum > 0 );
+
 
         for( int i = 0; i < static_cast<int>( Button::count ); ++i )
             buttonWasPressed[ i ] = checkPressed( i );
@@ -84,6 +89,31 @@ namespace Input
     bool wasPressed( Button id )
     {
         return buttonWasPressed[ static_cast<int>( id ) ];
+    }
+
+    int getFrontTouchX()
+    {
+        memcpy( touch_old, touch, sizeof( touch_old ) );
+        sceTouchPeek( 0, &touch[ 0 ], 1 );
+
+        return touch[ 0 ].report[ 0 ].x / 2;
+    }
+
+    int getFrontTouchY()
+    {
+        memcpy( touch_old, touch, sizeof( touch_old ) );
+        sceTouchPeek( 0, &touch[ 0 ], 1 );
+
+        return touch[ 0 ].report[ 0 ].y / 2;
+    }
+
+    bool rectIsTouched( Rect rect )
+    {
+        int touchX = getFrontTouchX();
+        int touchY = getFrontTouchY();
+
+        return ( touchX > rect.x && touchX < ( rect.x + rect.w ) &&
+                 touchY > rect.y && touchY < ( rect.y + rect.h ) );
     }
 }
 
