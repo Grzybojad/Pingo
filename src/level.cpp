@@ -139,22 +139,6 @@ void Level::draw()
     // Draw prerendered level texture
     vita2d_draw_texture( levelTexture, 0, 0 );
 
-    // Draw level tiles
-    for( int i = 0; i < tiles.size(); ++i )
-    {
-        for( int j = 0; j < tiles[ i ].size(); ++j )
-        {
-            Rect tileRect = Rect( 
-                levelPosition.x + ( j * tileSize ), 
-                levelPosition.y + ( i * tileSize ), 
-                tileSize, 
-                tileSize 
-            );
-            if( dynamic_cast<FloorTile*>( tiles[i][j] ) ) // TODO check if painted
-                tiles[i][j]->draw( tileRect );
-        }
-    }
-
     // Draw ball
     ball.draw();
 
@@ -212,6 +196,24 @@ void Level::initLevelTexture()
             tiles[i][j]->draw( tileRect );
         }
     }
+
+    vita2d_end_drawing();
+    vita2d_wait_rendering_done();
+}
+
+void Level::paintTileOnTexture( int i, int j )
+{
+    vita2d_pool_reset();
+    vita2d_start_drawing_advanced( levelTexture, SCE_GXM_SCENE_VERTEX_WAIT_FOR_DEPENDENCY );
+
+    Rect tileRect = Rect( 
+        levelPosition.x + ( j * tileSize ), 
+        levelPosition.y + ( i * tileSize ), 
+        tileSize, 
+        tileSize 
+    );
+
+    tiles[i][j]->draw( tileRect );
 
     vita2d_end_drawing();
     vita2d_wait_rendering_done();
@@ -350,6 +352,7 @@ void Level::paintTile()
         {
             paintedTiles++;
             ballTile->paint();
+            paintTileOnTexture( getBallTile().y, getBallTile().x );
         }
     }
     else
