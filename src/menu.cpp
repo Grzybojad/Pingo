@@ -33,6 +33,11 @@ void MenuItem::drawSelected()
     Gui::drawText_position( Gui::Position::centered, rect.x + (rect.w / 2), rect.y + (rect.h / 2), rect.h / 2, label.c_str() );
 }
 
+Rect MenuItem::getRect()
+{
+    return rect;
+}
+
 
 Menu::Menu()
 {
@@ -104,13 +109,13 @@ MainMenu::MainMenu()
     cursor = 0;
     int buttonWidth = 260;
 
-    MenuItem * startButton = new MenuItem( Rect( SCREEN_WIDTH / 2 - ( buttonWidth / 2 ), SCREEN_HEIGHT*0.4, buttonWidth, 70 ), "Start" );
+    MenuItem * startButton = new MenuItem( Rect( 150, 230, 320, 128 ), "Start" );
     addItem( startButton );
 
-    MenuItem * levelButton = new MenuItem( Rect( SCREEN_WIDTH / 2 - ( buttonWidth / 2 ), SCREEN_HEIGHT*0.6, buttonWidth, 70 ), "Level Select" );
+    MenuItem * levelButton = new MenuItem( Rect( 265, 360, 270, 110 ), "Level Select" );
     addItem( levelButton );
 
-    MenuItem * exitButton = new MenuItem( Rect( SCREEN_WIDTH / 2 - ( buttonWidth / 2 ), SCREEN_HEIGHT*0.8, buttonWidth, 70 ), "Exit" );
+    MenuItem * exitButton = new MenuItem( Rect( 660, 390, 250, 120 ), "Exit" );
     addItem( exitButton );
 }
 
@@ -144,17 +149,42 @@ void MainMenu::handleInput()
 
 bool MainMenu::clickedStart()
 {
-    return selectPressed() && cursor == 0;
+    if( selectPressed() && cursor == 0 )
+        return true;
+
+    if( Input::wasPressed( Input::Button::frontTouch ) )
+        if( Input::rectIsTouched( menuItems[ 0 ]->getRect() ) )
+            return true;
+
+    return false;
 }
 
 bool MainMenu::clickedLevelSelect()
 {
-    return selectPressed() && cursor == 1;
+    if( selectPressed() && cursor == 1 )
+        return true;
+
+    // Had to add more rects here, because the "buttons" are tilted
+    if( Input::wasPressed( Input::Button::frontTouch ) )
+        if( Input::rectIsTouched( menuItems[ 1 ]->getRect() ) ||
+            Input::rectIsTouched( Rect( 520, 310, 215, 75 ) ) ||
+            Input::rectIsTouched( Rect( 520, 387, 130, 35 ) ) )
+            return true;
+
+    return false;
 }
 
 bool MainMenu::clickedOptions()
 {
-    return selectPressed() && cursor == 2;
+    if( selectPressed() && cursor == 2 )
+        return true;
+
+    if( Input::wasPressed( Input::Button::frontTouch ) )
+        if( Input::rectIsTouched( menuItems[ 2 ]->getRect() ) ||
+            Input::rectIsTouched( Rect( 820, 320, 105, 75 ) ) ) // One more rect to cover the cog icon
+            return true;
+
+    return false;
 }
 
 
@@ -333,13 +363,13 @@ PauseMenu::PauseMenu()
 {
     cursor = 0;
 
-    MenuItem * startButton = new MenuItem( Rect( SCREEN_WIDTH / 2 - 100, SCREEN_HEIGHT * 0.55, 200, 70 ), "Resume" );
+    MenuItem * startButton = new MenuItem( Rect( 316, 250, 300, 100 ), "Resume" );
     addItem( startButton );
 
-    MenuItem * restartButton = new MenuItem( Rect( SCREEN_WIDTH / 2 - 100, SCREEN_HEIGHT * 0.7, 200, 70 ), "Restart" );
+    MenuItem * restartButton = new MenuItem( Rect( 316, 350, 300, 78 ), "Restart" );
     addItem( restartButton );
 
-    MenuItem * menuButton = new MenuItem( Rect( SCREEN_WIDTH / 2 - 100, SCREEN_HEIGHT * 0.85, 200, 70 ), "Main menu" );
+    MenuItem * menuButton = new MenuItem( Rect( 316, 435, 300, 75 ), "Main menu" );
     addItem( menuButton );
 }
 
@@ -368,17 +398,38 @@ void PauseMenu::draw()
 
 bool PauseMenu::clickedResume()
 {
-    return selectPressed() && cursor == 0;
+    if( selectPressed() && cursor == 0 )
+        return true;
+
+    if( Input::wasPressed( Input::Button::frontTouch ) )
+        if( Input::rectIsTouched( menuItems[ 0 ]->getRect() ) )
+            return true;
+
+    return false;
 }
 
 bool PauseMenu::clickedRestart()
 {
-    return selectPressed() && cursor == 1;
+    if( selectPressed() && cursor == 1 )
+        return true;
+
+    if( Input::wasPressed( Input::Button::frontTouch ) )
+        if( Input::rectIsTouched( menuItems[ 1 ]->getRect() ) )
+            return true;
+
+    return false;
 }
 
 bool PauseMenu::clickedMainMenu()
 {
-    return selectPressed() && cursor == 2;
+    if( selectPressed() && cursor == 2 )
+        return true;
+
+    if( Input::wasPressed( Input::Button::frontTouch ) )
+        if( Input::rectIsTouched( menuItems[ 2 ]->getRect() ) )
+            return true;
+
+    return false;
 }
 
 
@@ -389,13 +440,13 @@ LevelFinish::LevelFinish()
 
     int buttonWidth = 260;
 
-    MenuItem * nextButton = new MenuItem( Rect( SCREEN_WIDTH / 2 - ( buttonWidth / 2 ), SCREEN_HEIGHT*0.5, buttonWidth, 70 ), "Next Level" );
+    MenuItem * nextButton = new MenuItem( Rect( 300, 255, 345, 110 ), "Next Level" );
     addItem( nextButton );
 
-    MenuItem * restartButton = new MenuItem( Rect( SCREEN_WIDTH / 2 - ( buttonWidth / 2 ), SCREEN_HEIGHT*0.65, buttonWidth, 70 ), "Try again" );
+    MenuItem * restartButton = new MenuItem( Rect( 300, 365, 345, 78 ), "Try again" );
     addItem( restartButton );
 
-    MenuItem * levelSelect = new MenuItem( Rect( SCREEN_WIDTH / 2 - ( buttonWidth / 2 ), SCREEN_HEIGHT*0.8, buttonWidth, 70 ), "Main menu" );
+    MenuItem * levelSelect = new MenuItem(Rect( 300, 443, 345, 75 ), "Main menu" );
     addItem( levelSelect );
 }
 
@@ -426,17 +477,38 @@ void LevelFinish::draw()
 
 bool LevelFinish::clickedNextLevel()
 {
-    return selectPressed() && cursor == 0;
+    if( selectPressed() && cursor == 0 )
+        return true;
+
+    if( Input::wasPressed( Input::Button::frontTouch ) )
+        if( Input::rectIsTouched( menuItems[ 0 ]->getRect() ) )
+            return true;
+
+    return false;
 }
 
 bool LevelFinish::clickedRestart()
 {
-    return selectPressed() && cursor == 1;
+    if( selectPressed() && cursor == 1 )
+        return true;
+
+    if( Input::wasPressed( Input::Button::frontTouch ) )
+        if( Input::rectIsTouched( menuItems[ 1 ]->getRect() ) )
+            return true;
+
+    return false;
 }
 
 bool LevelFinish::clickedMainMenu()
 {
-    return selectPressed() && cursor == 2;
+    if( selectPressed() && cursor == 2 )
+        return true;
+
+    if( Input::wasPressed( Input::Button::frontTouch ) )
+        if( Input::rectIsTouched( menuItems[ 2 ]->getRect() ) )
+            return true;
+
+    return false;
 }
 
 void LevelFinish::setStars( int stars )

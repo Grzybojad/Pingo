@@ -81,6 +81,9 @@ class Level
         // Initialize level texture from tiles
         void initLevelTexture();
 
+        // Paint the specified tile on the level texture (i = row, j = column)
+        void paintTileOnTexture( int i, int j );
+
         // Converts the char that's loaded from the level map to the corresponding Tile type
         Tile* charToTile( char c );
 

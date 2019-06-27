@@ -6,6 +6,8 @@
 #include <psp2/touch.h>
 #include <psp2/ctrl.h>
 
+#include "common.hpp"
+
 namespace Input
 {
     enum class Button
@@ -62,4 +64,10 @@ namespace Input
 
     // Helper function to find pressed buttons
     bool checkPressed( int i );
+
+
+    /* TOUCH functions */
+    int getFrontTouchX();
+    int getFrontTouchY();
+    bool rectIsTouched( Rect rect );
 }
