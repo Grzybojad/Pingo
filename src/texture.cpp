@@ -53,27 +53,27 @@ namespace Texture {
         starTexture         = vita2d_load_PNG_file( ( pathTexture + "common/star.png" ).c_str() );
         messageBoxTexture   = vita2d_load_PNG_file( ( pathTexture + "common/messageBox.png" ).c_str() );
 
-        logoTexture                 = vita2d_load_PNG_file( ( pathTexture + "menu/logo.png" ).c_str() );
-        startButtonTexture          = vita2d_load_PNG_file( ( pathTexture + "menu/startButton.png" ).c_str() );
-        startSelectedTexture        = vita2d_load_PNG_file( ( pathTexture + "menu/startSelected.png" ).c_str() );
-        levelSelectButtonTexture    = vita2d_load_PNG_file( ( pathTexture + "menu/levelSelectButton.png" ).c_str() );
-        levelSelectSelectedTexture  = vita2d_load_PNG_file( ( pathTexture + "menu/levelSelectSelected.png" ).c_str() );
-        optionsButtonTexture        = vita2d_load_PNG_file( ( pathTexture + "menu/optionsButton.png" ).c_str() );
-        optionsSelectedTexture      = vita2d_load_PNG_file( ( pathTexture + "menu/optionsSelected.png" ).c_str() );
+        logoTexture                 = vita2d_load_PNG_file( ( pathTexture + "menu/main/logo.png" ).c_str() );
+        startButtonTexture          = vita2d_load_PNG_file( ( pathTexture + "menu/main/startButton.png" ).c_str() );
+        startSelectedTexture        = vita2d_load_PNG_file( ( pathTexture + "menu/main/startSelected.png" ).c_str() );
+        levelSelectButtonTexture    = vita2d_load_PNG_file( ( pathTexture + "menu/main/levelSelectButton.png" ).c_str() );
+        levelSelectSelectedTexture  = vita2d_load_PNG_file( ( pathTexture + "menu/main/levelSelectSelected.png" ).c_str() );
+        optionsButtonTexture        = vita2d_load_PNG_file( ( pathTexture + "menu/main/optionsButton.png" ).c_str() );
+        optionsSelectedTexture      = vita2d_load_PNG_file( ( pathTexture + "menu/main/optionsSelected.png" ).c_str() );
 
-        doorClosedTexture           = vita2d_load_PNG_file( ( pathTexture + "menu/doorClosed.png" ).c_str() );
-        doorOpenedTexture           = vita2d_load_PNG_file( ( pathTexture + "menu/doorOpened.png" ).c_str() );
-        doorLockedTexture           = vita2d_load_PNG_file( ( pathTexture + "menu/doorLocked.png" ).c_str() );
-        doorLockedOutlineTexture    = vita2d_load_PNG_file( ( pathTexture + "menu/doorLockedOutline.png" ).c_str() );
-        doorPlatformTexture         = vita2d_load_PNG_file( ( pathTexture + "menu/doorPlatform.png" ).c_str() );
+        doorClosedTexture           = vita2d_load_PNG_file( ( pathTexture + "menu/levelSelect/doorClosed.png" ).c_str() );
+        doorOpenedTexture           = vita2d_load_PNG_file( ( pathTexture + "menu/levelSelect/doorOpened.png" ).c_str() );
+        doorLockedTexture           = vita2d_load_PNG_file( ( pathTexture + "menu/levelSelect/doorLocked.png" ).c_str() );
+        doorLockedOutlineTexture    = vita2d_load_PNG_file( ( pathTexture + "menu/levelSelect/doorLockedOutline.png" ).c_str() );
+        doorPlatformTexture         = vita2d_load_PNG_file( ( pathTexture + "menu/levelSelect/doorPlatform.png" ).c_str() );
 
-        lf_levelCompleteTexture     = vita2d_load_PNG_file( ( pathTexture + "menu/lf-levelComplete.png" ).c_str() );
-        lf_nextLevelTexture         = vita2d_load_PNG_file( ( pathTexture + "menu/lf-nextLevel.png" ).c_str() );
-        lf_nextLevelSelectedTexture = vita2d_load_PNG_file( ( pathTexture + "menu/lf-nextLevelSelected.png" ).c_str() );
-        lf_restartTexture           = vita2d_load_PNG_file( ( pathTexture + "menu/lf-restart.png" ).c_str() );
-        lf_restartSelectedTexture   = vita2d_load_PNG_file( ( pathTexture + "menu/lf-restartSelected.png" ).c_str() );
-        lf_menuTexture              = vita2d_load_PNG_file( ( pathTexture + "menu/lf-menu.png" ).c_str() );
-        lf_menuSelectedTexture      = vita2d_load_PNG_file( ( pathTexture + "menu/lf-menuSelected.png" ).c_str() );
+        lf_levelCompleteTexture     = vita2d_load_PNG_file( ( pathTexture + "menu/levelFinish/lf-levelComplete.png" ).c_str() );
+        lf_nextLevelTexture         = vita2d_load_PNG_file( ( pathTexture + "menu/levelFinish/lf-nextLevel.png" ).c_str() );
+        lf_nextLevelSelectedTexture = vita2d_load_PNG_file( ( pathTexture + "menu/levelFinish/lf-nextLevelSelected.png" ).c_str() );
+        lf_restartTexture           = vita2d_load_PNG_file( ( pathTexture + "menu/levelFinish/lf-restart.png" ).c_str() );
+        lf_restartSelectedTexture   = vita2d_load_PNG_file( ( pathTexture + "menu/levelFinish/lf-restartSelected.png" ).c_str() );
+        lf_menuTexture              = vita2d_load_PNG_file( ( pathTexture + "menu/levelFinish/lf-menu.png" ).c_str() );
+        lf_menuSelectedTexture      = vita2d_load_PNG_file( ( pathTexture + "menu/levelFinish/lf-menuSelected.png" ).c_str() );
 
         p_pausedTextTexture         = vita2d_load_PNG_file( ( pathTexture + "menu/pause/pausedText.png" ).c_str() );
         p_returnTexture             = vita2d_load_PNG_file( ( pathTexture + "menu/pause/return.png" ).c_str() );
