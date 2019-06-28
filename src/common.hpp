@@ -17,6 +17,7 @@ extern std::string pathLevels;
 extern std::string pathCustomLevels;
 // The "curtain" texture in texture.hpp/cpp is loaded from "app0:/sce_sys"
 
+extern bool ENABLE_TOUCH;
 extern bool alreadyShowedCompleteMessage;
 
 struct Rect

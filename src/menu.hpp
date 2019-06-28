@@ -94,7 +94,6 @@ class OptionsMenu : public Menu
     protected:
         float sfxVolume;
         float musicVolume;
-        bool enableTouch;
 };
 
 class Checkbox : public MenuItem

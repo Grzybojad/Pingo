@@ -200,7 +200,7 @@ OptionsMenu::OptionsMenu()
 
     sfxVolume = 1.0f;
     musicVolume = 1.0f;
-    enableTouch = true;
+    ENABLE_TOUCH = true;
 }
 
 void OptionsMenu::draw()
@@ -230,7 +230,8 @@ void OptionsMenu::update()
     menuItems[ cursor ]->handleInput();
 
     Slider* sfxVolOption = dynamic_cast<Slider *>( menuItems[ 0 ] );
-    Slider* musicVolOption = dynamic_cast<Slider *>( menuItems[ 1 ] ); 
+    Slider* musicVolOption = dynamic_cast<Slider *>( menuItems[ 1 ] );
+    Checkbox* enableTouchOption = dynamic_cast<Checkbox *>( menuItems[ 2 ] ); 
 
     if( sfxVolume != sfxVolOption->value )
     {
@@ -243,6 +244,11 @@ void OptionsMenu::update()
         musicVolume = musicVolOption->value;
         Sound::setMusicVolume( musicVolume );
     }
+
+    if( ENABLE_TOUCH != enableTouchOption->selected )
+    {
+        ENABLE_TOUCH = enableTouchOption->selected;
+    }
 }
 
 void OptionsMenu::loadOptions()
@@ -254,13 +260,13 @@ void OptionsMenu::loadOptions()
     {
         settings >> sfxVolume;
         settings >> musicVolume;
-        settings >> enableTouch;
+        settings >> ENABLE_TOUCH;
     }
     else
     {
         sfxVolume = 1.0f;
         musicVolume = 1.0f;
-        enableTouch = true;
+        ENABLE_TOUCH = true;
     }
 
     settings.close();
@@ -271,7 +277,7 @@ void OptionsMenu::loadOptions()
 
     sfxVolOption->value = sfxVolume;
     musicVolOption->value = musicVolume;
-    enableTouchOption->selected = enableTouch;
+    enableTouchOption->selected = ENABLE_TOUCH;
 
     Sound::setSFXVolume( sfxVolume );
     Sound::setMusicVolume( musicVolume );
@@ -284,7 +290,7 @@ void OptionsMenu::saveOptions()
 
     settings << sfxVolume << "\n";
     settings << musicVolume << "\n";
-    settings << enableTouch;
+    settings << ENABLE_TOUCH;
 
     settings.close();
 }

@@ -58,9 +58,11 @@ namespace Input
         buttonIsHeld[ static_cast<int>( Button::lAnalogLeft  ) ] = ( lAnalogX < -ANALOG_DEADZONE );
 
         // Touch
-        buttonIsHeld[ static_cast<int>( Button::frontTouch ) ] = ( touch[ SCE_TOUCH_PORT_FRONT ].reportNum > 0 );
-        buttonIsHeld[ static_cast<int>( Button::backTouch ) ] = ( touch[ SCE_TOUCH_PORT_BACK ].reportNum > 0 );
-
+        if( ENABLE_TOUCH )
+        {
+            buttonIsHeld[ static_cast<int>( Button::frontTouch ) ] = ( touch[ SCE_TOUCH_PORT_FRONT ].reportNum > 0 );
+            buttonIsHeld[ static_cast<int>( Button::backTouch ) ] = ( touch[ SCE_TOUCH_PORT_BACK ].reportNum > 0 );
+        }
 
         for( int i = 0; i < static_cast<int>( Button::count ); ++i )
             buttonWasPressed[ i ] = checkPressed( i );
