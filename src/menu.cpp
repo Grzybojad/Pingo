@@ -603,7 +603,10 @@ void LevelSelect::handleInput()
                 else selected = false;
 
                 if( !selected && Input::rectIsTouched( getItemRect( i ) ) )
+                {
                     cursor = i + 1;
+                    Sound::soloud.play( Sound::menuMove );
+                }
             }
         }
     }
