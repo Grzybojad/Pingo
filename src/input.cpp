@@ -115,5 +115,10 @@ namespace Input
         return ( touchX > rect.x && touchX < ( rect.x + rect.w ) &&
                  touchY > rect.y && touchY < ( rect.y + rect.h ) );
     }
+
+    bool rectWasTouched( Rect rect )
+    {
+        return ( wasPressed( Button::frontTouch ) && rectIsTouched( rect ) );
+    }
 }
 

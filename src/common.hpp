@@ -50,6 +50,12 @@ struct Vec2
             this->y = y;
         }
 
+        Vec2( Rect rect )
+        {
+            this->x = rect.x;
+            this->y = rect.y;
+        }
+
         Rect toRect( float w, float h )
         {
             return Rect(

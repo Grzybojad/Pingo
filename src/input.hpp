@@ -70,4 +70,5 @@ namespace Input
     int getFrontTouchX();
     int getFrontTouchY();
     bool rectIsTouched( Rect rect );
+    bool rectWasTouched( Rect rect );
 }

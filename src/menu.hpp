@@ -207,11 +207,15 @@ class LevelSelect
         void selectDown();
         void selectLeft();
 
+        Rect getItemRect( int i );
+
         // Screen spacing
         int paddingSide;
         int paddingTop;
         int columns;
-        int rows;
+        int itemWidth;
+        int itemHeight;
+        int spacing;
 
         // Stars stats
         int totalStars;
