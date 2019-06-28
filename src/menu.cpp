@@ -198,10 +198,9 @@ OptionsMenu::OptionsMenu()
     optionsPos.y += verticalSpacing;
     addItem( new Checkbox( optionsPos, "Enable touch", true ) );
 
-    sfxVolume = 0.5f;
-    musicVolume = 0.5f;
-    enableTouchInMenu = true;
-    enableTouchInGame = true;
+    sfxVolume = 1.0f;
+    musicVolume = 1.0f;
+    enableTouch = true;
 }
 
 void OptionsMenu::draw()
@@ -233,17 +232,61 @@ void OptionsMenu::update()
     Slider* sfxVolOption = dynamic_cast<Slider *>( menuItems[ 0 ] );
     Slider* musicVolOption = dynamic_cast<Slider *>( menuItems[ 1 ] ); 
 
-    if( sfxVolume != sfxVolOption->getValue() )
+    if( sfxVolume != sfxVolOption->value )
     {
-        sfxVolume = sfxVolOption->getValue();
+        sfxVolume = sfxVolOption->value;
         Sound::setSFXVolume( sfxVolume );
     }
 
-    if( musicVolume != musicVolOption->getValue() )
+    if( musicVolume != musicVolOption->value )
     {
-        musicVolume = musicVolOption->getValue();
+        musicVolume = musicVolOption->value;
         Sound::setMusicVolume( musicVolume );
     }
+}
+
+void OptionsMenu::loadOptions()
+{
+    std::ifstream settings;
+    settings.open( pathData + "settings.txt", std::ifstream::in );
+
+    if( !settings.fail() )
+    {
+        settings >> sfxVolume;
+        settings >> musicVolume;
+        settings >> enableTouch;
+    }
+    else
+    {
+        sfxVolume = 1.0f;
+        musicVolume = 1.0f;
+        enableTouch = true;
+    }
+
+    settings.close();
+
+    Slider* sfxVolOption = dynamic_cast<Slider *>( menuItems[ 0 ] );
+    Slider* musicVolOption = dynamic_cast<Slider *>( menuItems[ 1 ] ); 
+    Checkbox* enableTouchOption = dynamic_cast<Checkbox *>( menuItems[ 2 ] ); 
+
+    sfxVolOption->value = sfxVolume;
+    musicVolOption->value = musicVolume;
+    enableTouchOption->selected = enableTouch;
+
+    Sound::setSFXVolume( sfxVolume );
+    Sound::setMusicVolume( musicVolume );
+}
+
+void OptionsMenu::saveOptions()
+{
+    std::ofstream settings;
+    settings.open( pathData + "settings.txt" );
+
+    settings << sfxVolume << "\n";
+    settings << musicVolume << "\n";
+    settings << enableTouch;
+
+    settings.close();
 }
 
 Checkbox::Checkbox( Rect rect, std::string label, bool selected ) : MenuItem( rect, label )
@@ -350,11 +393,6 @@ void Slider::handleInput()
         if( value < step ) value = 0;
         Sound::soloud.play( Sound::menuMove );
     }
-}
-
-float Slider::getValue()
-{
-    return value;
 }
 
 

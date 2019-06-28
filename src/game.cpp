@@ -37,13 +37,16 @@ Game::Game()
     // Read stats from file
     Stats::readStats();
 
+    // Load settings from file
+    optionsMenu.loadOptions();
+
     progressSaved = false;
     finishMessage = false;
     gameComplete = false;
 
     gameState = GameState::initialized;
 
-    Sound::soloud.play( Sound::menuMusic );
+    //Sound::soloud.play( Sound::menuMusic );
 }
 
 Game::~Game()
@@ -358,6 +361,7 @@ void Game::inMenu()
         if( Input::wasPressed( Input::Button::circle ) || Input::wasPressed( Input::Button::start ) )
         {
             gameState = GameState::mainMenu;
+            optionsMenu.saveOptions();
         }
         draw();
     }
