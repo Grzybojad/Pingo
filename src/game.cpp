@@ -45,8 +45,6 @@ Game::Game()
     gameComplete = false;
 
     gameState = GameState::initialized;
-
-    //Sound::soloud.play( Sound::menuMusic );
 }
 
 Game::~Game()

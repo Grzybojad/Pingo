@@ -16,6 +16,7 @@ namespace Texture
         floorBlank = 1,
         floorPainted = 2,
         ball = 3,
+        wallFill = 4,
 
         background1 = 11,
         background2 = 12,
@@ -72,6 +73,7 @@ namespace Texture
     extern vita2d_texture *floorBlankTexture;
     extern vita2d_texture *floorPaintedTexture;
     extern vita2d_texture *ballTexture;
+    extern vita2d_texture *wallFillTexture;
 
     extern vita2d_texture *background1Texture;
     extern vita2d_texture *background2Texture;

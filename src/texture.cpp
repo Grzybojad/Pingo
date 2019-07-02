@@ -5,6 +5,7 @@ namespace Texture {
     vita2d_texture *floorBlankTexture;
     vita2d_texture *floorPaintedTexture;
     vita2d_texture *ballTexture;
+    vita2d_texture *wallFillTexture;
     vita2d_texture *background1Texture;
     vita2d_texture *background2Texture;
     vita2d_texture *background3Texture;
@@ -45,6 +46,7 @@ namespace Texture {
         floorBlankTexture   = vita2d_load_PNG_file( ( pathTexture + "level/floorBlank.png" ).c_str() );
         floorPaintedTexture = vita2d_load_PNG_file( ( pathTexture + "level/floorPainted.png" ).c_str() );
         ballTexture         = vita2d_load_PNG_file( ( pathTexture + "level/ball.png" ).c_str() );
+        wallFillTexture     = vita2d_load_PNG_file( ( pathTexture + "level/wallFill.png" ).c_str() );
 
         background1Texture  = vita2d_load_PNG_file( ( pathTexture + "common/background1.png" ).c_str() );
         background2Texture  = vita2d_load_PNG_file( ( pathTexture + "common/background2.png" ).c_str() );
@@ -103,6 +105,9 @@ namespace Texture {
 
             case Sprite::ball:
                 return ballTexture;
+
+            case Sprite::wallFill:
+                return wallFillTexture;
 
             case Sprite::background1:
                 return background1Texture;
@@ -247,6 +252,7 @@ namespace Texture {
         vita2d_free_texture( floorBlankTexture );
         vita2d_free_texture( floorPaintedTexture );
         vita2d_free_texture( ballTexture );
+        vita2d_free_texture( wallFillTexture );
         vita2d_free_texture( background1Texture );
         vita2d_free_texture( background2Texture );
         vita2d_free_texture( background3Texture );

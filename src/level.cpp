@@ -182,6 +182,9 @@ void Level::initLevelTexture()
     vita2d_pool_reset();
     vita2d_start_drawing_advanced( levelTexture, SCE_GXM_SCENE_VERTEX_WAIT_FOR_DEPENDENCY );
     
+    int cols = tiles[ tiles.size() / 2 ].size();
+    int rows = tiles.size();
+
     // Draw level tiles
     for( int i = 0; i < tiles.size(); ++i )
     {
@@ -198,8 +201,6 @@ void Level::initLevelTexture()
             if( dynamic_cast<WallTile*>( tiles[i][j] ) )
             {
                 int face = 0;
-                int cols = tiles[ tiles.size() / 2 ].size();
-                int rows = tiles.size();
 
                 // Checking if there's another wall on the left
                 if( j != 0 && dynamic_cast<WallTile*>( tiles[i][j-1] ) )
@@ -222,6 +223,33 @@ void Level::initLevelTexture()
             else
             {
                 tiles[i][j]->draw( tileRect );
+            }
+
+            
+        }
+    }
+
+    // Cover the "holes"
+    for( int i = 0; i < tiles.size(); ++i )
+    {
+        for( int j = 0; j < tiles[ i ].size(); ++j )
+        {
+            if( i < (rows-1) && j < (cols-1) )
+            {
+                if( dynamic_cast<WallTile*>( tiles[i][j] ) && 
+                dynamic_cast<WallTile*>( tiles[i+1][j] ) && 
+                dynamic_cast<WallTile*>( tiles[i][j+1] ) && 
+                dynamic_cast<WallTile*>( tiles[i+1][j+1] ) )
+                {
+                    Rect tileRect = Rect( 
+                        levelPosition.x + ( j * tileSize ), 
+                        levelPosition.y + ( i * tileSize ), 
+                        tileSize, 
+                        tileSize 
+                    );
+
+                    Texture::drawTexture( Texture::Sprite::wallFill, Vec2( tileRect.x + 25, tileRect.y + 25 ) );
+                }
             }
         }
     }
