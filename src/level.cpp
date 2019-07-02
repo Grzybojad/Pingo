@@ -193,7 +193,36 @@ void Level::initLevelTexture()
                 tileSize, 
                 tileSize 
             );
-            tiles[i][j]->draw( tileRect );
+
+            // Looking for wall tiles around the current wall tile
+            if( dynamic_cast<WallTile*>( tiles[i][j] ) )
+            {
+                int face = 0;
+                int cols = tiles[ tiles.size() / 2 ].size();
+                int rows = tiles.size();
+
+                // Checking if there's another wall on the left
+                if( j != 0 && dynamic_cast<WallTile*>( tiles[i][j-1] ) )
+                    face += 0b0001;
+
+                // Checking if there's another wall on the bottom
+                if( i < (rows-1) && dynamic_cast<WallTile*>( tiles[i+1][j] ) )
+                    face += 0b0010;
+
+                // Checking if there's another wall on the right
+                if( j < (cols-1) && dynamic_cast<WallTile*>( tiles[i][j+1] ) )
+                    face += 0b0100;
+
+                // Checking if there's another wall on the top
+                if( i != 0 && dynamic_cast<WallTile*>( tiles[i-1][j] ) )
+                    face += 0b1000;
+
+                Texture::drawWall( tileRect.x, tileRect.y, face );
+            }
+            else
+            {
+                tiles[i][j]->draw( tileRect );
+            }
         }
     }
 

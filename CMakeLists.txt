@@ -95,10 +95,10 @@ vita_create_vpk(${SHORT_NAME}.vpk ${VITA_TITLEID} ${SHORT_NAME}.self
   FILE font/ConcertOne-Regular.ttf  font/ConcertOne-Regular.ttf
 
   # Textures
-  FILE img/level/wall.png          img/level/wall.png
-  FILE img/level/floorBlank.png    img/level/floorBlank.png
-  FILE img/level/floorPainted.png  img/level/floorPainted.png
-  FILE img/level/ball.png          img/level/ball.png
+  FILE img/level/wall.png             img/level/wall.png
+  FILE img/level/floorBlank.png       img/level/floorBlank.png
+  FILE img/level/floorPainted.png     img/level/floorPainted.png
+  FILE img/level/ball.png             img/level/ball.png
 
   FILE img/common/background1.png  img/common/background1.png
   FILE img/common/background2.png  img/common/background2.png

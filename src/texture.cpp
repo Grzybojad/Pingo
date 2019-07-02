@@ -236,6 +236,11 @@ namespace Texture {
         }
     }
 
+    void drawWall( int x, int y, int face )
+    {
+        vita2d_draw_texture_part( wallTexture, x, y, face * 30, 0, 30, 30 );
+    }
+
     void freeTextures()
     {
         vita2d_free_texture( wallTexture );
