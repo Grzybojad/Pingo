@@ -15,6 +15,8 @@ void Level::init()
     state = State::playing;
     shouldPlaySound = false;
 
+    wallColor = RGBA8( 144, 145, 194, 255 );
+
     tileSize = 30;
 }
 
@@ -129,6 +131,7 @@ void Level::update()
         if( checkWinCondition() )
         {
             setStarRating();
+
             state = State::finished;
         }
     }
@@ -218,7 +221,7 @@ void Level::initLevelTexture()
                 if( i != 0 && dynamic_cast<WallTile*>( tiles[i-1][j] ) )
                     face += 0b1000;
 
-                Texture::drawWall( tileRect.x, tileRect.y, face );
+                Texture::drawWall( tileRect.x, tileRect.y, face, wallColor );
             }
             else
             {
@@ -248,7 +251,7 @@ void Level::initLevelTexture()
                         tileSize 
                     );
 
-                    Texture::drawTexture( Texture::Sprite::wallFill, Vec2( tileRect.x + 25, tileRect.y + 25 ) );
+                    Texture::drawWall( tileRect.x + 25, tileRect.y + 25, -1, wallColor );
                 }
             }
         }

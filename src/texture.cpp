@@ -241,9 +241,15 @@ namespace Texture {
         }
     }
 
-    void drawWall( int x, int y, int face )
+    void drawWall( int x, int y, int face, unsigned int color )
     {
-        vita2d_draw_texture_part( wallTexture, x, y, face * 30, 0, 30, 30 );
+        if( face == -1 )
+            // draw the wall fill texture
+            vita2d_draw_texture_tint( wallFillTexture, x, y, color );
+        else
+            vita2d_draw_texture_tint_part( wallTexture, x, y, face * 30, 0, 30, 30, color );
+        
+        //vita2d_draw_texture_part_( wallTexture, x, y, face * 30, 0, 30, 30 );     RGBA8( 139, 140, 194, 255 )
     }
 
     void freeTextures()

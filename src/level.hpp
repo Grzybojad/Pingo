@@ -74,6 +74,7 @@ class Level
         int paintedTiles;
         int steps;
         bool shouldPlaySound;
+        unsigned int wallColor;
 
         Ball ball;
 
