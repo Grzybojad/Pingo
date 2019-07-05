@@ -26,9 +26,12 @@ Game::Game()
     levelMenus.push_back( customLevels );
     LevelSelect world1Levels = LevelSelect();
     levelMenus.push_back( world1Levels );
+    LevelSelect world2Levels = LevelSelect();
+    levelMenus.push_back( world2Levels );
 
     levelMenus[ 0 ].initLevels( &levelListList[ 0 ], "Custom" );
     levelMenus[ 1 ].initLevels( &levelListList[ 1 ], "World 1" );
+    levelMenus[ 2 ].initLevels( &levelListList[ 2 ], "World 2" );
 
     // Initialize the sound effects
     Sound::initSoloud();
@@ -54,27 +57,31 @@ Game::~Game()
 void Game::initLevelList()
 {
     int dfd;
-    LevelList newLevelList = LevelList();
-    dfd = sceIoDopen( pathLevels.c_str() );
-    if( dfd > 0 )
+
+    // TODO: Change the "magic number" here
+    for( int i = 1; i <= 2; ++i )
     {
-        SceIoDirent file;
-        while( sceIoDread( dfd, &file ) > 0 )
+        LevelList newLevelList = LevelList();
+        dfd = sceIoDopen( ( pathLevels + "World" + std::to_string( i ) + "/" ).c_str() );
+        if( dfd > 0 )
         {
-            std::string fileName( file.d_name );
-            newLevelList.add( pathLevels + fileName );
+            SceIoDirent file;
+            while( sceIoDread( dfd, &file ) > 0 )
+            {
+                std::string fileName( file.d_name );
+                newLevelList.add( pathLevels + "World" + std::to_string( i ) + "/" + fileName );
+            }
         }
-    }
-    else if( dfd < 0 )
-    {
-        // TODO handle error
-    }
-    sceIoDclose( dfd );
+        else if( dfd < 0 )
+        {
+            // TODO handle error
+        }
+        sceIoDclose( dfd );
 
-    // TODO This needs to be changes for more levelLists
-    newLevelList.loadProgress( 1 );
+        newLevelList.loadProgress( i );
 
-    levelListList.push_back( newLevelList );
+        levelListList.push_back( newLevelList );
+    }
 }
 
 void Game::initCustomLevelList()
@@ -248,7 +255,8 @@ void Game::inMenu()
                 Sound::menuMusic.stop();
                 Sound::soloud.play( Sound::levelMusic );
                 
-                // TODO this kinda sucks right now
+                // TODO this needs to be changed
+                selectedLevelList = 1;
                 initLevel( levelListList[ selectedLevelList ].lastUnlockedLevel() );
             }
             else if( mainMenu.clickedLevelSelect() )
