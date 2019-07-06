@@ -15,8 +15,6 @@ void Level::init()
     state = State::playing;
     shouldPlaySound = false;
 
-    wallColor = RGBA8( 144, 145, 194, 255 );
-
     tileSize = 30;
 }
 
@@ -221,7 +219,7 @@ void Level::initLevelTexture()
                 if( i != 0 && dynamic_cast<WallTile*>( tiles[i-1][j] ) )
                     face += 0b1000;
 
-                Texture::drawWall( tileRect.x, tileRect.y, face, wallColor );
+                Texture::drawWall( tileRect.x, tileRect.y, face );
             }
             else
             {
@@ -251,7 +249,7 @@ void Level::initLevelTexture()
                         tileSize 
                     );
 
-                    Texture::drawWall( tileRect.x + 25, tileRect.y + 25, -1, wallColor );
+                    Texture::drawWall( tileRect.x + 25, tileRect.y + 25, -1 );
                 }
             }
         }

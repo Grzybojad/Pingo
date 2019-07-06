@@ -241,15 +241,13 @@ namespace Texture {
         }
     }
 
-    void drawWall( int x, int y, int face, unsigned int color )
+    void drawWall( int x, int y, int face )
     {
         if( face == -1 )
             // draw the wall fill texture
-            vita2d_draw_texture_tint( wallFillTexture, x, y, color );
+            vita2d_draw_texture_tint( wallFillTexture, x, y, WALLCOLOR );
         else
-            vita2d_draw_texture_tint_part( wallTexture, x, y, face * 30, 0, 30, 30, color );
-        
-        //vita2d_draw_texture_part_( wallTexture, x, y, face * 30, 0, 30, 30 );     RGBA8( 139, 140, 194, 255 )
+            vita2d_draw_texture_tint_part( wallTexture, x, y, face * 30, 0, 30, 30, WALLCOLOR );
     }
 
     void freeTextures()
@@ -342,7 +340,8 @@ void AnimatedBackground::draw()
                     break;
             }
 
-            Texture::drawTexture( sprite, Vec2( i * textureWidth + animationStep, j * textureHeight + animationStep ) );
+            //Texture::drawTexture( sprite, Vec2( i * textureWidth + animationStep, j * textureHeight + animationStep ) );
+            vita2d_draw_texture_tint( Texture::getTexture( sprite ), i * textureWidth + animationStep, j * textureHeight + animationStep, BGCOLOR );
         }
     }
 }
