@@ -17,6 +17,7 @@ extern std::string pathLevels;
 extern std::string pathCustomLevels;
 // The "curtain" texture in texture.hpp/cpp is loaded from "app0:/sce_sys"
 
+extern bool ENABLE_TOUCH;
 extern bool alreadyShowedCompleteMessage;
 
 struct Rect
@@ -48,6 +49,12 @@ struct Vec2
         {
             this->x = x;
             this->y = y;
+        }
+
+        Vec2( Rect rect )
+        {
+            this->x = rect.x;
+            this->y = rect.y;
         }
 
         Rect toRect( float w, float h )

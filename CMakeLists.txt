@@ -95,10 +95,11 @@ vita_create_vpk(${SHORT_NAME}.vpk ${VITA_TITLEID} ${SHORT_NAME}.self
   FILE font/ConcertOne-Regular.ttf  font/ConcertOne-Regular.ttf
 
   # Textures
-  FILE img/level/wall.png          img/level/wall.png
-  FILE img/level/floorBlank.png    img/level/floorBlank.png
-  FILE img/level/floorPainted.png  img/level/floorPainted.png
-  FILE img/level/ball.png          img/level/ball.png
+  FILE img/level/wall.png             img/level/wall.png
+  FILE img/level/floorBlank.png       img/level/floorBlank.png
+  FILE img/level/floorPainted.png     img/level/floorPainted.png
+  FILE img/level/ball.png             img/level/ball.png
+  FILE img/level/wallFill.png             img/level/wallFill.png
 
   FILE img/common/background1.png  img/common/background1.png
   FILE img/common/background2.png  img/common/background2.png
@@ -106,30 +107,27 @@ vita_create_vpk(${SHORT_NAME}.vpk ${VITA_TITLEID} ${SHORT_NAME}.self
   FILE img/common/star.png         img/common/star.png
   FILE img/common/messageBox.png   img/common/messageBox.png
 
-  FILE img/menu/logo.png                  img/menu/logo.png
-  FILE img/menu/startButton.png           img/menu/startButton.png
-  FILE img/menu/startSelected.png         img/menu/startSelected.png
-  FILE img/menu/levelSelectButton.png     img/menu/levelSelectButton.png
-  FILE img/menu/levelSelectSelected.png   img/menu/levelSelectSelected.png
-  FILE img/menu/optionsButton.png         img/menu/optionsButton.png
-  FILE img/menu/optionsSelected.png       img/menu/optionsSelected.png
+  FILE img/menu/main/logo.png                  img/menu/main/logo.png
+  FILE img/menu/main/startButton.png           img/menu/main/startButton.png
+  FILE img/menu/main/startSelected.png         img/menu/main/startSelected.png
+  FILE img/menu/main/levelSelectButton.png     img/menu/main/levelSelectButton.png
+  FILE img/menu/main/levelSelectSelected.png   img/menu/main/levelSelectSelected.png
+  FILE img/menu/main/optionsButton.png         img/menu/main/optionsButton.png
+  FILE img/menu/main/optionsSelected.png       img/menu/main/optionsSelected.png
 
-  FILE img/menu/doorOpened.png        img/menu/doorOpened.png
-  FILE img/menu/doorClosed.png        img/menu/doorClosed.png
-  FILE img/menu/doorLocked.png        img/menu/doorLocked.png
-  FILE img/menu/doorLockedOutline.png img/menu/doorLockedOutline.png
-  FILE img/menu/doorStar1.png         img/menu/doorStar1.png
-  FILE img/menu/doorStar2.png         img/menu/doorStar2.png
-  FILE img/menu/doorStar3.png         img/menu/doorStar3.png
-  FILE img/menu/doorPlatform.png      img/menu/doorPlatform.png
+  FILE img/menu/levelSelect/doorOpened.png        img/menu/levelSelect/doorOpened.png
+  FILE img/menu/levelSelect/doorClosed.png        img/menu/levelSelect/doorClosed.png
+  FILE img/menu/levelSelect/doorLocked.png        img/menu/levelSelect/doorLocked.png
+  FILE img/menu/levelSelect/doorLockedOutline.png img/menu/levelSelect/doorLockedOutline.png
+  FILE img/menu/levelSelect/doorPlatform.png      img/menu/levelSelect/doorPlatform.png
 
-  FILE img/menu/lf-levelComplete.png      img/menu/lf-levelComplete.png
-  FILE img/menu/lf-nextLevel.png          img/menu/lf-nextLevel.png
-  FILE img/menu/lf-nextLevelSelected.png  img/menu/lf-nextLevelSelected.png
-  FILE img/menu/lf-restart.png            img/menu/lf-restart.png
-  FILE img/menu/lf-restartSelected.png    img/menu/lf-restartSelected.png
-  FILE img/menu/lf-menu.png               img/menu/lf-menu.png
-  FILE img/menu/lf-menuSelected.png       img/menu/lf-menuSelected.png
+  FILE img/menu/levelFinish/lf-levelComplete.png      img/menu/levelFinish/lf-levelComplete.png
+  FILE img/menu/levelFinish/lf-nextLevel.png          img/menu/levelFinish/lf-nextLevel.png
+  FILE img/menu/levelFinish/lf-nextLevelSelected.png  img/menu/levelFinish/lf-nextLevelSelected.png
+  FILE img/menu/levelFinish/lf-restart.png            img/menu/levelFinish/lf-restart.png
+  FILE img/menu/levelFinish/lf-restartSelected.png    img/menu/levelFinish/lf-restartSelected.png
+  FILE img/menu/levelFinish/lf-menu.png               img/menu/levelFinish/lf-menu.png
+  FILE img/menu/levelFinish/lf-menuSelected.png       img/menu/levelFinish/lf-menuSelected.png
 
   FILE img/menu/pause/pausedText.png      img/menu/pause/pausedText.png
   FILE img/menu/pause/return.png          img/menu/pause/return.png

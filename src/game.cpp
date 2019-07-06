@@ -40,13 +40,14 @@ Game::Game()
     // Read stats from file
     Stats::readStats();
 
+    // Load settings from file
+    optionsMenu.loadOptions();
+
     progressSaved = false;
     finishMessage = false;
     gameComplete = false;
 
     gameState = GameState::initialized;
-
-    Sound::soloud.play( Sound::menuMusic );
 }
 
 Game::~Game()
@@ -365,6 +366,7 @@ void Game::inMenu()
         if( Input::wasPressed( Input::Button::circle ) || Input::wasPressed( Input::Button::start ) )
         {
             gameState = GameState::mainMenu;
+            optionsMenu.saveOptions();
         }
         draw();
     }
@@ -415,7 +417,7 @@ void Game::exit()
 void Game::draw()
 {
     vita2d_pool_reset();
-    vita2d_start_drawing_advanced(NULL, SCE_GXM_SCENE_VERTEX_WAIT_FOR_DEPENDENCY);
+    vita2d_start_drawing_advanced( NULL, SCE_GXM_SCENE_VERTEX_WAIT_FOR_DEPENDENCY );
     vita2d_clear_screen();
 
     background.update();

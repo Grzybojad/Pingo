@@ -88,11 +88,12 @@ class OptionsMenu : public Menu
         void draw() override;
         void update() override;
 
+        void loadOptions();
+        void saveOptions();
+        
     protected:
         float sfxVolume;
         float musicVolume;
-        bool enableTouchInMenu;
-        bool enableTouchInGame;
 };
 
 class Checkbox : public MenuItem
@@ -103,10 +104,10 @@ class Checkbox : public MenuItem
         void draw() override;
         void drawSelected() override;
 
+        bool selected;
+
     protected:
         void handleInput() override;
-
-        bool selected;
 };
 
 class Selectable : public MenuItem
@@ -131,12 +132,12 @@ class Slider : public MenuItem
         void draw() override;
         void drawSelected() override;
 
-        float getValue();
+        float value;
     
     protected:
         void handleInput() override;
 
-        float value;
+        
         float step;
 };
 
@@ -207,11 +208,15 @@ class LevelSelect
         void selectDown();
         void selectLeft();
 
+        Rect getItemRect( int i );
+
         // Screen spacing
         int paddingSide;
         int paddingTop;
         int columns;
-        int rows;
+        int itemWidth;
+        int itemHeight;
+        int spacing;
 
         // Stars stats
         int totalStars;

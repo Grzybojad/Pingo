@@ -5,6 +5,7 @@ namespace Texture {
     vita2d_texture *floorBlankTexture;
     vita2d_texture *floorPaintedTexture;
     vita2d_texture *ballTexture;
+    vita2d_texture *wallFillTexture;
     vita2d_texture *background1Texture;
     vita2d_texture *background2Texture;
     vita2d_texture *background3Texture;
@@ -45,6 +46,7 @@ namespace Texture {
         floorBlankTexture   = vita2d_load_PNG_file( ( pathTexture + "level/floorBlank.png" ).c_str() );
         floorPaintedTexture = vita2d_load_PNG_file( ( pathTexture + "level/floorPainted.png" ).c_str() );
         ballTexture         = vita2d_load_PNG_file( ( pathTexture + "level/ball.png" ).c_str() );
+        wallFillTexture     = vita2d_load_PNG_file( ( pathTexture + "level/wallFill.png" ).c_str() );
 
         background1Texture  = vita2d_load_PNG_file( ( pathTexture + "common/background1.png" ).c_str() );
         background2Texture  = vita2d_load_PNG_file( ( pathTexture + "common/background2.png" ).c_str() );
@@ -53,27 +55,27 @@ namespace Texture {
         starTexture         = vita2d_load_PNG_file( ( pathTexture + "common/star.png" ).c_str() );
         messageBoxTexture   = vita2d_load_PNG_file( ( pathTexture + "common/messageBox.png" ).c_str() );
 
-        logoTexture                 = vita2d_load_PNG_file( ( pathTexture + "menu/logo.png" ).c_str() );
-        startButtonTexture          = vita2d_load_PNG_file( ( pathTexture + "menu/startButton.png" ).c_str() );
-        startSelectedTexture        = vita2d_load_PNG_file( ( pathTexture + "menu/startSelected.png" ).c_str() );
-        levelSelectButtonTexture    = vita2d_load_PNG_file( ( pathTexture + "menu/levelSelectButton.png" ).c_str() );
-        levelSelectSelectedTexture  = vita2d_load_PNG_file( ( pathTexture + "menu/levelSelectSelected.png" ).c_str() );
-        optionsButtonTexture        = vita2d_load_PNG_file( ( pathTexture + "menu/optionsButton.png" ).c_str() );
-        optionsSelectedTexture      = vita2d_load_PNG_file( ( pathTexture + "menu/optionsSelected.png" ).c_str() );
+        logoTexture                 = vita2d_load_PNG_file( ( pathTexture + "menu/main/logo.png" ).c_str() );
+        startButtonTexture          = vita2d_load_PNG_file( ( pathTexture + "menu/main/startButton.png" ).c_str() );
+        startSelectedTexture        = vita2d_load_PNG_file( ( pathTexture + "menu/main/startSelected.png" ).c_str() );
+        levelSelectButtonTexture    = vita2d_load_PNG_file( ( pathTexture + "menu/main/levelSelectButton.png" ).c_str() );
+        levelSelectSelectedTexture  = vita2d_load_PNG_file( ( pathTexture + "menu/main/levelSelectSelected.png" ).c_str() );
+        optionsButtonTexture        = vita2d_load_PNG_file( ( pathTexture + "menu/main/optionsButton.png" ).c_str() );
+        optionsSelectedTexture      = vita2d_load_PNG_file( ( pathTexture + "menu/main/optionsSelected.png" ).c_str() );
 
-        doorClosedTexture           = vita2d_load_PNG_file( ( pathTexture + "menu/doorClosed.png" ).c_str() );
-        doorOpenedTexture           = vita2d_load_PNG_file( ( pathTexture + "menu/doorOpened.png" ).c_str() );
-        doorLockedTexture           = vita2d_load_PNG_file( ( pathTexture + "menu/doorLocked.png" ).c_str() );
-        doorLockedOutlineTexture    = vita2d_load_PNG_file( ( pathTexture + "menu/doorLockedOutline.png" ).c_str() );
-        doorPlatformTexture         = vita2d_load_PNG_file( ( pathTexture + "menu/doorPlatform.png" ).c_str() );
+        doorClosedTexture           = vita2d_load_PNG_file( ( pathTexture + "menu/levelSelect/doorClosed.png" ).c_str() );
+        doorOpenedTexture           = vita2d_load_PNG_file( ( pathTexture + "menu/levelSelect/doorOpened.png" ).c_str() );
+        doorLockedTexture           = vita2d_load_PNG_file( ( pathTexture + "menu/levelSelect/doorLocked.png" ).c_str() );
+        doorLockedOutlineTexture    = vita2d_load_PNG_file( ( pathTexture + "menu/levelSelect/doorLockedOutline.png" ).c_str() );
+        doorPlatformTexture         = vita2d_load_PNG_file( ( pathTexture + "menu/levelSelect/doorPlatform.png" ).c_str() );
 
-        lf_levelCompleteTexture     = vita2d_load_PNG_file( ( pathTexture + "menu/lf-levelComplete.png" ).c_str() );
-        lf_nextLevelTexture         = vita2d_load_PNG_file( ( pathTexture + "menu/lf-nextLevel.png" ).c_str() );
-        lf_nextLevelSelectedTexture = vita2d_load_PNG_file( ( pathTexture + "menu/lf-nextLevelSelected.png" ).c_str() );
-        lf_restartTexture           = vita2d_load_PNG_file( ( pathTexture + "menu/lf-restart.png" ).c_str() );
-        lf_restartSelectedTexture   = vita2d_load_PNG_file( ( pathTexture + "menu/lf-restartSelected.png" ).c_str() );
-        lf_menuTexture              = vita2d_load_PNG_file( ( pathTexture + "menu/lf-menu.png" ).c_str() );
-        lf_menuSelectedTexture      = vita2d_load_PNG_file( ( pathTexture + "menu/lf-menuSelected.png" ).c_str() );
+        lf_levelCompleteTexture     = vita2d_load_PNG_file( ( pathTexture + "menu/levelFinish/lf-levelComplete.png" ).c_str() );
+        lf_nextLevelTexture         = vita2d_load_PNG_file( ( pathTexture + "menu/levelFinish/lf-nextLevel.png" ).c_str() );
+        lf_nextLevelSelectedTexture = vita2d_load_PNG_file( ( pathTexture + "menu/levelFinish/lf-nextLevelSelected.png" ).c_str() );
+        lf_restartTexture           = vita2d_load_PNG_file( ( pathTexture + "menu/levelFinish/lf-restart.png" ).c_str() );
+        lf_restartSelectedTexture   = vita2d_load_PNG_file( ( pathTexture + "menu/levelFinish/lf-restartSelected.png" ).c_str() );
+        lf_menuTexture              = vita2d_load_PNG_file( ( pathTexture + "menu/levelFinish/lf-menu.png" ).c_str() );
+        lf_menuSelectedTexture      = vita2d_load_PNG_file( ( pathTexture + "menu/levelFinish/lf-menuSelected.png" ).c_str() );
 
         p_pausedTextTexture         = vita2d_load_PNG_file( ( pathTexture + "menu/pause/pausedText.png" ).c_str() );
         p_returnTexture             = vita2d_load_PNG_file( ( pathTexture + "menu/pause/return.png" ).c_str() );
@@ -103,6 +105,9 @@ namespace Texture {
 
             case Sprite::ball:
                 return ballTexture;
+
+            case Sprite::wallFill:
+                return wallFillTexture;
 
             case Sprite::background1:
                 return background1Texture;
@@ -236,12 +241,24 @@ namespace Texture {
         }
     }
 
+    void drawWall( int x, int y, int face, unsigned int color )
+    {
+        if( face == -1 )
+            // draw the wall fill texture
+            vita2d_draw_texture_tint( wallFillTexture, x, y, color );
+        else
+            vita2d_draw_texture_tint_part( wallTexture, x, y, face * 30, 0, 30, 30, color );
+        
+        //vita2d_draw_texture_part_( wallTexture, x, y, face * 30, 0, 30, 30 );     RGBA8( 139, 140, 194, 255 )
+    }
+
     void freeTextures()
     {
         vita2d_free_texture( wallTexture );
         vita2d_free_texture( floorBlankTexture );
         vita2d_free_texture( floorPaintedTexture );
         vita2d_free_texture( ballTexture );
+        vita2d_free_texture( wallFillTexture );
         vita2d_free_texture( background1Texture );
         vita2d_free_texture( background2Texture );
         vita2d_free_texture( background3Texture );

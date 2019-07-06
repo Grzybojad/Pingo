@@ -15,6 +15,8 @@ void Level::init()
     state = State::playing;
     shouldPlaySound = false;
 
+    wallColor = RGBA8( 144, 145, 194, 255 );
+
     tileSize = 30;
 }
 
@@ -129,6 +131,7 @@ void Level::update()
         if( checkWinCondition() )
         {
             setStarRating();
+
             state = State::finished;
         }
     }
@@ -182,6 +185,9 @@ void Level::initLevelTexture()
     vita2d_pool_reset();
     vita2d_start_drawing_advanced( levelTexture, SCE_GXM_SCENE_VERTEX_WAIT_FOR_DEPENDENCY );
     
+    int cols = tiles[ tiles.size() / 2 ].size();
+    int rows = tiles.size();
+
     // Draw level tiles
     for( int i = 0; i < tiles.size(); ++i )
     {
@@ -193,7 +199,61 @@ void Level::initLevelTexture()
                 tileSize, 
                 tileSize 
             );
-            tiles[i][j]->draw( tileRect );
+
+            // Looking for wall tiles around the current wall tile
+            if( dynamic_cast<WallTile*>( tiles[i][j] ) )
+            {
+                int face = 0;
+
+                // Checking if there's another wall on the left
+                if( j != 0 && dynamic_cast<WallTile*>( tiles[i][j-1] ) )
+                    face += 0b0001;
+
+                // Checking if there's another wall on the bottom
+                if( i < (rows-1) && dynamic_cast<WallTile*>( tiles[i+1][j] ) )
+                    face += 0b0010;
+
+                // Checking if there's another wall on the right
+                if( j < (cols-1) && dynamic_cast<WallTile*>( tiles[i][j+1] ) )
+                    face += 0b0100;
+
+                // Checking if there's another wall on the top
+                if( i != 0 && dynamic_cast<WallTile*>( tiles[i-1][j] ) )
+                    face += 0b1000;
+
+                Texture::drawWall( tileRect.x, tileRect.y, face, wallColor );
+            }
+            else
+            {
+                tiles[i][j]->draw( tileRect );
+            }
+
+            
+        }
+    }
+
+    // Cover the "holes"
+    for( int i = 0; i < tiles.size(); ++i )
+    {
+        for( int j = 0; j < tiles[ i ].size(); ++j )
+        {
+            if( i < (rows-1) && j < (cols-1) )
+            {
+                if( dynamic_cast<WallTile*>( tiles[i][j] ) && 
+                dynamic_cast<WallTile*>( tiles[i+1][j] ) && 
+                dynamic_cast<WallTile*>( tiles[i][j+1] ) && 
+                dynamic_cast<WallTile*>( tiles[i+1][j+1] ) )
+                {
+                    Rect tileRect = Rect( 
+                        levelPosition.x + ( j * tileSize ), 
+                        levelPosition.y + ( i * tileSize ), 
+                        tileSize, 
+                        tileSize 
+                    );
+
+                    Texture::drawWall( tileRect.x + 25, tileRect.y + 25, -1, wallColor );
+                }
+            }
         }
     }
 

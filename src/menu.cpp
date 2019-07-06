@@ -152,9 +152,8 @@ bool MainMenu::clickedStart()
     if( selectPressed() && cursor == 0 )
         return true;
 
-    if( Input::wasPressed( Input::Button::frontTouch ) )
-        if( Input::rectIsTouched( menuItems[ 0 ]->getRect() ) )
-            return true;
+    if( Input::rectWasTouched( menuItems[ 0 ]->getRect() ) )
+        return true;
 
     return false;
 }
@@ -199,10 +198,9 @@ OptionsMenu::OptionsMenu()
     optionsPos.y += verticalSpacing;
     addItem( new Checkbox( optionsPos, "Enable touch", true ) );
 
-    sfxVolume = 0.5f;
-    musicVolume = 0.5f;
-    enableTouchInMenu = true;
-    enableTouchInGame = true;
+    sfxVolume = 1.0f;
+    musicVolume = 1.0f;
+    ENABLE_TOUCH = true;
 }
 
 void OptionsMenu::draw()
@@ -232,19 +230,69 @@ void OptionsMenu::update()
     menuItems[ cursor ]->handleInput();
 
     Slider* sfxVolOption = dynamic_cast<Slider *>( menuItems[ 0 ] );
-    Slider* musicVolOption = dynamic_cast<Slider *>( menuItems[ 1 ] ); 
+    Slider* musicVolOption = dynamic_cast<Slider *>( menuItems[ 1 ] );
+    Checkbox* enableTouchOption = dynamic_cast<Checkbox *>( menuItems[ 2 ] ); 
 
-    if( sfxVolume != sfxVolOption->getValue() )
+    if( sfxVolume != sfxVolOption->value )
     {
-        sfxVolume = sfxVolOption->getValue();
+        sfxVolume = sfxVolOption->value;
         Sound::setSFXVolume( sfxVolume );
     }
 
-    if( musicVolume != musicVolOption->getValue() )
+    if( musicVolume != musicVolOption->value )
     {
-        musicVolume = musicVolOption->getValue();
+        musicVolume = musicVolOption->value;
         Sound::setMusicVolume( musicVolume );
     }
+
+    if( ENABLE_TOUCH != enableTouchOption->selected )
+    {
+        ENABLE_TOUCH = enableTouchOption->selected;
+    }
+}
+
+void OptionsMenu::loadOptions()
+{
+    std::ifstream settings;
+    settings.open( pathData + "settings.txt", std::ifstream::in );
+
+    if( !settings.fail() )
+    {
+        settings >> sfxVolume;
+        settings >> musicVolume;
+        settings >> ENABLE_TOUCH;
+    }
+    else
+    {
+        sfxVolume = 1.0f;
+        musicVolume = 1.0f;
+        ENABLE_TOUCH = true;
+    }
+
+    settings.close();
+
+    Slider* sfxVolOption = dynamic_cast<Slider *>( menuItems[ 0 ] );
+    Slider* musicVolOption = dynamic_cast<Slider *>( menuItems[ 1 ] ); 
+    Checkbox* enableTouchOption = dynamic_cast<Checkbox *>( menuItems[ 2 ] ); 
+
+    sfxVolOption->value = sfxVolume;
+    musicVolOption->value = musicVolume;
+    enableTouchOption->selected = ENABLE_TOUCH;
+
+    Sound::setSFXVolume( sfxVolume );
+    Sound::setMusicVolume( musicVolume );
+}
+
+void OptionsMenu::saveOptions()
+{
+    std::ofstream settings;
+    settings.open( pathData + "settings.txt" );
+
+    settings << sfxVolume << "\n";
+    settings << musicVolume << "\n";
+    settings << ENABLE_TOUCH;
+
+    settings.close();
 }
 
 Checkbox::Checkbox( Rect rect, std::string label, bool selected ) : MenuItem( rect, label )
@@ -353,11 +401,6 @@ void Slider::handleInput()
     }
 }
 
-float Slider::getValue()
-{
-    return value;
-}
-
 
 PauseMenu::PauseMenu()
 {
@@ -401,9 +444,8 @@ bool PauseMenu::clickedResume()
     if( selectPressed() && cursor == 0 )
         return true;
 
-    if( Input::wasPressed( Input::Button::frontTouch ) )
-        if( Input::rectIsTouched( menuItems[ 0 ]->getRect() ) )
-            return true;
+    if( Input::rectWasTouched( menuItems[ 0 ]->getRect() ) )
+        return true;
 
     return false;
 }
@@ -413,9 +455,8 @@ bool PauseMenu::clickedRestart()
     if( selectPressed() && cursor == 1 )
         return true;
 
-    if( Input::wasPressed( Input::Button::frontTouch ) )
-        if( Input::rectIsTouched( menuItems[ 1 ]->getRect() ) )
-            return true;
+    if( Input::rectWasTouched( menuItems[ 1 ]->getRect() ) )
+        return true;
 
     return false;
 }
@@ -425,9 +466,8 @@ bool PauseMenu::clickedMainMenu()
     if( selectPressed() && cursor == 2 )
         return true;
 
-    if( Input::wasPressed( Input::Button::frontTouch ) )
-        if( Input::rectIsTouched( menuItems[ 2 ]->getRect() ) )
-            return true;
+    if( Input::rectWasTouched( menuItems[ 2 ]->getRect() ) )
+        return true;
 
     return false;
 }
@@ -480,9 +520,8 @@ bool LevelFinish::clickedNextLevel()
     if( selectPressed() && cursor == 0 )
         return true;
 
-    if( Input::wasPressed( Input::Button::frontTouch ) )
-        if( Input::rectIsTouched( menuItems[ 0 ]->getRect() ) )
-            return true;
+    if( Input::rectWasTouched( menuItems[ 0 ]->getRect() ) )
+        return true;
 
     return false;
 }
@@ -492,9 +531,8 @@ bool LevelFinish::clickedRestart()
     if( selectPressed() && cursor == 1 )
         return true;
 
-    if( Input::wasPressed( Input::Button::frontTouch ) )
-        if( Input::rectIsTouched( menuItems[ 1 ]->getRect() ) )
-            return true;
+    if( Input::rectWasTouched( menuItems[ 1 ]->getRect() ) )
+        return true;
 
     return false;
 }
@@ -504,9 +542,8 @@ bool LevelFinish::clickedMainMenu()
     if( selectPressed() && cursor == 2 )
         return true;
 
-    if( Input::wasPressed( Input::Button::frontTouch ) )
-        if( Input::rectIsTouched( menuItems[ 2 ]->getRect() ) )
-            return true;
+    if( Input::rectWasTouched( menuItems[ 2 ]->getRect() ) )
+        return true;
 
     return false;
 }
@@ -524,6 +561,10 @@ LevelSelect::LevelSelect()
     paddingSide = 40;
     paddingTop = 140;
     columns = 10;
+
+    itemWidth = vita2d_texture_get_width( Texture::getTexture( Texture::Sprite::doorClosed ) );
+    itemHeight = vita2d_texture_get_height( Texture::getTexture( Texture::Sprite::doorClosed ) );
+    spacing = ( SCREEN_WIDTH - paddingSide * 2 - itemWidth * columns ) / ( columns - 1 );
 }
 
 void LevelSelect::initLevels( LevelList * levelList, const char * name )
@@ -560,19 +601,13 @@ void LevelSelect::draw()
 
     if( levelList->getNrOfLevels() > 0 )
     {
-        int itemWidth = 70;
-        int itemHeight = 90;
-        int spacing = ( SCREEN_WIDTH - paddingSide * 2 - itemWidth * columns ) / ( columns - 1 );
-
         for( int i = 0; i < levelList->getNrOfLevels(); ++i )
         {
-            int posX = paddingSide + ( ( i % columns ) * itemWidth ) + ( ( i % columns ) * spacing );
-            int posY = paddingTop + ( ( i / columns ) * ( itemHeight + 40 ) );
             bool selected;
             if( ( i + 1 ) == cursor ) selected = true;
             else selected = false;
 
-            levelList->accessElement( i )->drawLevelMenuElement( Vec2( posX, posY ), selected );
+            levelList->accessElement( i )->drawLevelMenuElement( Vec2( getItemRect( i ) ), selected );
         }
 
         // Draw total star count
@@ -602,6 +637,22 @@ void LevelSelect::handleInput()
             selectDown();
         if( Input::wasPressed( Input::Button::left ) || Input::wasPressed( Input::Button::lAnalogLeft ) )
             selectLeft();
+
+        if( Input::isHeld( Input::Button::frontTouch ) )
+        {
+            for( int i = 0; i < levelList->getNrOfLevels(); ++i )
+            {
+                bool selected;
+                if( ( i + 1 ) == cursor ) selected = true;
+                else selected = false;
+
+                if( !selected && Input::rectIsTouched( getItemRect( i ) ) )
+                {
+                    cursor = i + 1;
+                    Sound::soloud.play( Sound::menuMove );
+                }
+            }
+        }
     }
 }
 
@@ -612,7 +663,12 @@ bool LevelSelect::selectPressed()
         // Only allow loading unlocked levels
         if( levelList->accessElement( cursor - 1 )->unlocked )
         {
-            return Input::wasPressed( Input::Button::cross );
+            if( Input::wasPressed( Input::Button::cross ) )
+                return true;
+            if( Input::rectWasTouched( getItemRect( cursor - 1 ) ) )
+                return true;
+
+            return false;
         }
         else
         {
@@ -682,4 +738,12 @@ void LevelSelect::selectLeft()
         cursor = levelList->getNrOfLevels();
 
     Sound::soloud.play( Sound::menuMove );
+}
+
+Rect LevelSelect::getItemRect( int i )
+{
+    int posX = paddingSide + ( ( i % columns ) * itemWidth ) + ( ( i % columns ) * spacing );
+    int posY = paddingTop + ( ( i / columns ) * ( itemHeight + 20 ) );
+
+    return Rect( posX, posY, itemWidth, itemHeight );
 }

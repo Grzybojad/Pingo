@@ -11,6 +11,7 @@ std::string pathFonts   = "app0:/font/";
 std::string pathLevels  = "app0:/levels/";
 std::string pathCustomLevels = "ux0:/data/Pingo/levels/";
 
+bool ENABLE_TOUCH = true;
 bool alreadyShowedCompleteMessage = false;
 
 void calcFrameTime()
