@@ -58,8 +58,7 @@ void Game::initLevelList()
 {
     int dfd;
 
-    // TODO: Change the "magic number" here
-    for( int i = 1; i <= 2; ++i )
+    for( int i = 1; i <= nrOfWorlds; ++i )
     {
         LevelList newLevelList = LevelList();
         dfd = sceIoDopen( ( pathLevels + "World" + std::to_string( i ) + "/" ).c_str() );
