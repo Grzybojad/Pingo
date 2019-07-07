@@ -130,6 +130,11 @@ void Game::mainLoop()
                 break;
 
             case GameState::mainMenu:
+                WALLCOLOR = RGBA8( 144, 145, 194, 255 );
+                BGCOLOR = RGBA8( 97, 90, 160, 255 );
+                inMenu();
+                break;
+
             case GameState::levelMenu:
             case GameState::paused:
             case GameState::optionsMenu:
@@ -321,7 +326,6 @@ void Game::inMenu()
                 gameState = GameState::mainMenu;
             }
             // Handle switching between level select screens
-            // TODO move this to menu.hpp/.cpp if possible
             if( Input::wasPressed( Input::Button::lTrigger ) )
             {
                 if( selectedLevelList > 0 )
@@ -341,6 +345,23 @@ void Game::inMenu()
                     selectedLevelList = 0;
                 }
                 Sound::soloud.play( Sound::menuMove );
+            }
+            
+            switch( selectedLevelList )
+            {
+                case 0:
+                case 1:
+                    WALLCOLOR = RGBA8( 144, 145, 194, 255 );
+                    BGCOLOR = RGBA8( 97, 90, 160, 255 );
+                    break;
+                case 2:
+                    WALLCOLOR = RGBA8( 101, 133, 101, 255 );
+                    BGCOLOR = RGBA8( 47, 92, 48, 255 );
+                    break;
+                default:
+                    WALLCOLOR = RGBA8( 144, 145, 194, 255 );
+                    BGCOLOR = RGBA8( 97, 90, 160, 255 );
+                    break;
             }
 
             if( levelMenus[ selectedLevelList ].selectPressed() )

@@ -15,7 +15,7 @@ bool ENABLE_TOUCH = true;
 bool alreadyShowedCompleteMessage = false;
 
 unsigned int WALLCOLOR = RGBA8( 144, 145, 194, 255 );
-unsigned int BGCOLOR = RGBA8( 99, 92, 149, 255 );
+unsigned int BGCOLOR = RGBA8( 97, 90, 160, 255 );
 
 void calcFrameTime()
 {	
