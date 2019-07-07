@@ -441,6 +441,9 @@ void PauseMenu::draw()
 
 bool PauseMenu::clickedResume()
 {
+    if( Input::wasPressed( Input::Button::circle ) || Input::wasPressed( Input::Button::start ) )
+        return true;
+
     if( selectPressed() && cursor == 0 )
         return true;
 
