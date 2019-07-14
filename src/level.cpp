@@ -109,8 +109,22 @@ void Level::update()
 
         ball.move();
         
-        if( previousBallPos != getBallTile() )//ball.state != Ball::State::stationary )
+        if( previousBallPos != getBallTile() )
+        {
             paintTile();
+
+            if( ballOnStop() )
+            {
+                if( shouldPlaySound )
+                    Sound::soloud.play( Sound::ballHit );
+
+                shouldPlaySound = false;
+                newStep = false;
+                ball.setWorldPos( getBallTilePosition() );
+                ball.stop();
+            }
+        }
+            
 
         if( ballHittingWall() )
         {
@@ -120,17 +134,6 @@ void Level::update()
             shouldPlaySound = false;
             newStep = false;
             ball.moveBack();
-            ball.setWorldPos( getBallTilePosition() );
-            ball.stop();
-        }
-
-        if( ballOnStop() )
-        {
-            if( shouldPlaySound )
-                Sound::soloud.play( Sound::ballHit );
-
-            shouldPlaySound = false;
-            newStep = false;
             ball.setWorldPos( getBallTilePosition() );
             ball.stop();
         }
@@ -431,10 +434,10 @@ bool Level::ballOnStop()
             if( dynamic_cast<StopTile*>( tiles[i][j] ) )
             {
                 Rect smallTile = Rect(
-                    ball.getRect().x + 10,
-                    ball.getRect().y + 10,
-                    -20,
-                    -20
+                    ball.getRect().x + 5,
+                    ball.getRect().y + 5,
+                    -10,
+                    -10
                 );
                 if( checkCollision( ball.getRect() + smallTile, getWorldPosFromTilePos( Vec2( j, i ) ).toRect( tileSize, tileSize ) + smallTile ) )
                     return true;
