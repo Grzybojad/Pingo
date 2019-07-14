@@ -23,6 +23,19 @@ Rect operator +( const Rect& a, const Rect& b )
     return Rect( a.x + b.x, a.y + b.y, a.w + b.w, a.h + b.h );
 }
 
+Vec2 operator +( const Vec2& a, const Vec2& b )
+{
+	return Vec2( a.x + b.x, a.y + b.y );
+}
+bool operator ==( const Vec2& a, const Vec2& b )
+{
+	return ( a.x == b.x && a.y == b.y );
+}
+bool operator !=( const Vec2& a, const Vec2& b )
+{
+	return !( a == b );
+}
+
 
 void calcFrameTime()
 {	

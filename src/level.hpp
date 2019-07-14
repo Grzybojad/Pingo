@@ -76,6 +76,7 @@ class Level
         bool shouldPlaySound;
 
         Ball ball;
+        Vec2 previousBallPos;
 
 
         // Initialize level texture from tiles
@@ -144,6 +145,26 @@ class FloorTile : public Tile
         {
             blank = 0,
             painted = 1
+        };
+        State state;
+
+        void paint() override;
+        bool paintable() override;
+};
+
+class DoubleFloorTile : public FloorTile
+{
+    public:
+        using FloorTile::FloorTile;
+
+        void draw( Rect rect ) override;
+
+    protected:
+        enum class State
+        {
+            blank = 0,
+            paintedHalfway = 1,
+            painted = 2
         };
         State state;
 

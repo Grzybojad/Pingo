@@ -77,6 +77,9 @@ void Level::loadFromFile( LevelListElement *levelListElement )
 
     levelFile.close();
 
+    // Paint the starting tile
+    paintTile();
+
     // Initialize level texture
     initLevelTexture();
 }
@@ -102,9 +105,11 @@ void Level::update()
         bool newStep = true;
         if( !ball.handleInput() ) newStep = false;
 
-        ball.move();
+        previousBallPos = getBallTile();
 
-        if( ball.state != Ball::State::stationary )
+        ball.move();
+        
+        if( previousBallPos != getBallTile() )//ball.state != Ball::State::stationary )
             paintTile();
 
         if( ballHittingWall() )
@@ -306,6 +311,9 @@ Tile* Level::charToTile( char c )
         case 'x':
             return new StopTile();
 
+        case 'd':
+            return new DoubleFloorTile();
+
         default:
             return new Tile();
     }
@@ -445,9 +453,11 @@ void Level::paintTile()
     {
         if( ballTile->paintable() )
         {
-            paintedTiles++;
             ballTile->paint();
             paintTileOnTexture( getBallTile().y, getBallTile().x );
+
+            if( !ballTile->paintable() )
+                paintedTiles++;
         }
     }
     else
@@ -522,7 +532,6 @@ void FloorTile::draw( Rect rect )
     {
         Texture::drawTexture( Texture::Sprite::floorBlank, Vec2( rect.x, rect.y ) );
     }
-        
     else if( state == State::painted )
     {
         Texture::drawTexture( Texture::Sprite::floorPainted, Vec2( rect.x, rect.y ) );
@@ -536,10 +545,37 @@ void FloorTile::paint()
 
 bool FloorTile::paintable()
 {
+    return ( state == State::blank );
+}
+
+void DoubleFloorTile::draw( Rect rect )
+{
     if( state == State::blank )
-        return true;
-    else
-        return false;
+    {
+        Texture::drawTexture( Texture::Sprite::floorEmpty, Vec2( rect.x, rect.y ) );
+    }
+    else if( state == State::paintedHalfway )
+    {
+        Texture::drawTexture( Texture::Sprite::paintBlob, Vec2( rect.x, rect.y ) );
+    }
+    else if( state == State::painted )
+    {
+        Texture::drawTexture( Texture::Sprite::floorPainted, Vec2( rect.x, rect.y ) );
+        Texture::drawTexture( Texture::Sprite::paintBlob, Vec2( rect.x, rect.y ) );
+    }
+}
+
+void DoubleFloorTile::paint()
+{
+    if( state == State::blank )
+        state = State::paintedHalfway;
+    else if( state == State::paintedHalfway )
+        state = State::painted;
+}
+
+bool DoubleFloorTile::paintable()
+{
+    return ( state == State::blank || state == State::paintedHalfway );
 }
 
 void StopTile::draw( Rect rect )

@@ -74,6 +74,10 @@ struct Vec2
         }
 };
 
+extern Vec2 operator +( const Vec2& a, const Vec2& b );
+extern bool operator ==( const Vec2& a, const Vec2& b );
+extern bool operator !=( const Vec2& a, const Vec2& b );
+
 // Framerate independance
 extern SceUInt64 prevFrameClock;    // The time between the start of the program and the previous frame (in microseconds)
 extern SceUInt64 frameTime;		    // Time between frames (in microseconds)

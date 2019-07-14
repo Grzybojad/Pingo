@@ -101,6 +101,8 @@ vita_create_vpk(${SHORT_NAME}.vpk ${VITA_TITLEID} ${SHORT_NAME}.self
   FILE img/level/ball.png             img/level/ball.png
   FILE img/level/wallFill.png         img/level/wallFill.png
   FILE img/level/stopTile.png         img/level/stopTile.png
+  FILE img/level/paintBlob.png        img/level/paintBlob.png
+  FILE img/level/floorEmpty.png       img/level/floorEmpty.png
 
   FILE img/common/background1.png  img/common/background1.png
   FILE img/common/background2.png  img/common/background2.png
@@ -151,7 +153,6 @@ vita_create_vpk(${SHORT_NAME}.vpk ${VITA_TITLEID} ${SHORT_NAME}.self
 
 
   # Levels
-  # Figure out how to load all levels from file automatically
   FILE levels/World1/level001.txt       levels/World1/level001.txt
   FILE levels/World1/level002.txt       levels/World1/level002.txt
   FILE levels/World1/level003.txt       levels/World1/level003.txt
@@ -198,5 +199,6 @@ vita_create_vpk(${SHORT_NAME}.vpk ${VITA_TITLEID} ${SHORT_NAME}.self
   FILE levels/World2/level013.txt       levels/World2/level013.txt
   FILE levels/World2/level014.txt       levels/World2/level014.txt
   FILE levels/World2/level015.txt       levels/World2/level015.txt
+  FILE levels/World2/level016.txt       levels/World2/level016.txt
 )
 
