@@ -105,6 +105,9 @@ class Level
         // Is the ball hitting a wall?
         bool ballHittingWall();
 
+        // Is the ball on a stop tile?
+        bool ballOnStop();
+
         // Paint the tile the ball is on
         void paintTile();
 
@@ -146,6 +149,14 @@ class FloorTile : public Tile
 
         void paint() override;
         bool paintable() override;
+};
+
+class StopTile : public FloorTile
+{
+    public:
+        using FloorTile::FloorTile;
+
+        void draw( Rect rect ) override;
 };
 
 class StartTile : public FloorTile

@@ -17,6 +17,13 @@ bool alreadyShowedCompleteMessage = false;
 unsigned int WALLCOLOR = RGBA8( 144, 145, 194, 255 );
 unsigned int BGCOLOR = RGBA8( 97, 90, 160, 255 );
 
+
+Rect operator +( const Rect& a, const Rect& b )
+{
+    return Rect( a.x + b.x, a.y + b.y, a.w + b.w, a.h + b.h );
+}
+
+
 void calcFrameTime()
 {	
 	frameTime = ( sceKernelGetProcessTimeWide() - prevFrameClock );

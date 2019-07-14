@@ -99,7 +99,8 @@ vita_create_vpk(${SHORT_NAME}.vpk ${VITA_TITLEID} ${SHORT_NAME}.self
   FILE img/level/floorBlank.png       img/level/floorBlank.png
   FILE img/level/floorPainted.png     img/level/floorPainted.png
   FILE img/level/ball.png             img/level/ball.png
-  FILE img/level/wallFill.png             img/level/wallFill.png
+  FILE img/level/wallFill.png         img/level/wallFill.png
+  FILE img/level/stopTile.png         img/level/stopTile.png
 
   FILE img/common/background1.png  img/common/background1.png
   FILE img/common/background2.png  img/common/background2.png
@@ -183,5 +184,19 @@ vita_create_vpk(${SHORT_NAME}.vpk ${VITA_TITLEID} ${SHORT_NAME}.self
   FILE levels/World1/level030.txt       levels/World1/level030.txt
 
   FILE levels/World2/level001.txt       levels/World2/level001.txt
+  FILE levels/World2/level002.txt       levels/World2/level002.txt
+  FILE levels/World2/level003.txt       levels/World2/level003.txt
+  FILE levels/World2/level004.txt       levels/World2/level004.txt
+  FILE levels/World2/level005.txt       levels/World2/level005.txt
+  FILE levels/World2/level006.txt       levels/World2/level006.txt
+  FILE levels/World2/level007.txt       levels/World2/level007.txt
+  FILE levels/World2/level008.txt       levels/World2/level008.txt
+  FILE levels/World2/level009.txt       levels/World2/level009.txt
+  FILE levels/World2/level010.txt       levels/World2/level010.txt
+  FILE levels/World2/level011.txt       levels/World2/level011.txt
+  FILE levels/World2/level012.txt       levels/World2/level012.txt
+  FILE levels/World2/level013.txt       levels/World2/level013.txt
+  FILE levels/World2/level014.txt       levels/World2/level014.txt
+  FILE levels/World2/level015.txt       levels/World2/level015.txt
 )
 

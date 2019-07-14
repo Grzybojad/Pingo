@@ -42,6 +42,8 @@ struct Rect
         }
 };
 
+extern Rect operator +( const Rect& a, const Rect& b );
+
 struct Vec2
 {
     public:

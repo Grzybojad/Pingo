@@ -119,6 +119,17 @@ void Level::update()
             ball.stop();
         }
 
+        if( ballOnStop() )
+        {
+            if( shouldPlaySound )
+                Sound::soloud.play( Sound::ballHit );
+
+            shouldPlaySound = false;
+            newStep = false;
+            ball.setWorldPos( getBallTilePosition() );
+            ball.stop();
+        }
+
         if( newStep )
         {
             shouldPlaySound = true;
@@ -292,6 +303,9 @@ Tile* Level::charToTile( char c )
         case 's':
             return new StartTile();
 
+        case 'x':
+            return new StopTile();
+
         default:
             return new Tile();
     }
@@ -400,6 +414,29 @@ bool Level::ballHittingWall()
     return false;
 }
 
+bool Level::ballOnStop()
+{
+    for( int i = 0; i < tiles.size(); ++i )
+    {
+        for( int j = 0; j < tiles[ i ].size(); ++j )
+        {
+            if( dynamic_cast<StopTile*>( tiles[i][j] ) )
+            {
+                Rect smallTile = Rect(
+                    ball.getRect().x + 10,
+                    ball.getRect().y + 10,
+                    -20,
+                    -20
+                );
+                if( checkCollision( ball.getRect() + smallTile, getWorldPosFromTilePos( Vec2( j, i ) ).toRect( tileSize, tileSize ) + smallTile ) )
+                    return true;
+            }
+        }
+    }
+
+    return false;
+}
+
 void Level::paintTile()
 {
     Tile* ballTile = tiles[ getBallTile().y ][ getBallTile().x ];
@@ -474,6 +511,11 @@ void Tile::draw( Rect rect )
     vita2d_draw_rectangle( rect.x, rect.y, rect.w, rect.h, RGBA8( 255, 0, 0, 255) );
 }
 
+void WallTile::draw( Rect rect )
+{
+    Texture::drawTexture( Texture::Sprite::wall, Vec2( rect.x, rect.y ) );
+}
+
 void FloorTile::draw( Rect rect )
 {
     if( state == State::blank )
@@ -500,9 +542,10 @@ bool FloorTile::paintable()
         return false;
 }
 
-void WallTile::draw( Rect rect )
+void StopTile::draw( Rect rect )
 {
-    Texture::drawTexture( Texture::Sprite::wall, Vec2( rect.x, rect.y ) );
+    FloorTile::draw( rect );
+    Texture::drawTexture( Texture::Sprite::stop, Vec2( rect.x, rect.y ) );
 }
 
 
