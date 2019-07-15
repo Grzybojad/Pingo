@@ -205,7 +205,7 @@ void Game::inGame()
                 Sound::levelMusic.stop();
                 Sound::soloud.play( Sound::menuMusic );
                 destroyLevel();
-                finishMessage = true;
+                //finishMessage = true;
             }
             
         }
@@ -376,8 +376,8 @@ void Game::inMenu()
 
         draw();
 
-        if( levelMenus[ selectedLevelList ].isGameComplete() )
-            gameComplete = true;
+        //if( levelMenus[ selectedLevelList ].isGameComplete() )
+            //gameComplete = true;
     }
     // Options menu
     else if( gameState == GameState::optionsMenu )
@@ -454,7 +454,6 @@ void Game::draw()
                 Gui::drawMessageBox( "Congratualations!", "You've completed all the\nlevels currently available to\nplay in Pingo!\nFor your next challange, try\ngetting 3 stars in every level!" );
             else if( finishMessage && gameComplete )
                 Gui::drawMessageBox( "Congratualations!", "You've completed all the\nlevels currently available to\nplay in Pingo!\nSince you've already collected all the\nstars, you'll have to wait for more\ncontent. Follow me @_grzybojad if you\ndon't want to miss any updates!" );
-
             break;
 
         case GameState::playing:
