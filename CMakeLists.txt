@@ -140,6 +140,17 @@ vita_create_vpk(${SHORT_NAME}.vpk ${VITA_TITLEID} ${SHORT_NAME}.self
   FILE img/menu/pause/menu.png            img/menu/pause/menu.png
   FILE img/menu/pause/menuSelected.png    img/menu/pause/menuSelected.png
 
+  FILE img/menu/options/header.png        img/menu/options/header.png
+  FILE img/menu/options/music.png         img/menu/options/music.png
+  FILE img/menu/options/music_on.png      img/menu/options/music_on.png
+  FILE img/menu/options/sfx.png           img/menu/options/sfx.png
+  FILE img/menu/options/sfx_on.png        img/menu/options/sfx_on.png
+  FILE img/menu/options/touch.png         img/menu/options/touch.png
+  FILE img/menu/options/touch_on.png      img/menu/options/touch_on.png
+  FILE img/menu/options/stats.png         img/menu/options/stats.png
+  FILE img/menu/options/checkbox_off.png  img/menu/options/checkbox_off.png
+  FILE img/menu/options/checkbox_on.png   img/menu/options/checkbox_on.png
+
   FILE img/menu/underConstruction.png     img/menu/underConstruction.png
 
 

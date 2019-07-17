@@ -40,6 +40,16 @@ namespace Texture {
     vita2d_texture *p_restartSelectedTexture;
     vita2d_texture *p_menuTexture;
     vita2d_texture *p_menuSelectedTexture;
+    vita2d_texture *o_headerTexture;
+    vita2d_texture *o_musicTexture;
+    vita2d_texture *o_musicOnTexture;
+    vita2d_texture *o_sfxTexture;
+    vita2d_texture *o_sfxOnTexture;
+    vita2d_texture *o_touchTexture;
+    vita2d_texture *o_touchOnTexture;
+    vita2d_texture *o_statsTexture;
+    vita2d_texture *o_checkboxOffTexture;
+    vita2d_texture *o_checkboxOnTexture;
     vita2d_texture *underConstructionTexture;
     vita2d_texture *curtainTexture;
 
@@ -90,6 +100,17 @@ namespace Texture {
         p_restartSelectedTexture    = vita2d_load_PNG_file( ( pathTexture + "menu/pause/restartSelected.png" ).c_str() );
         p_menuTexture               = vita2d_load_PNG_file( ( pathTexture + "menu/pause/menu.png" ).c_str() );
         p_menuSelectedTexture       = vita2d_load_PNG_file( ( pathTexture + "menu/pause/menuSelected.png" ).c_str() );
+
+        o_headerTexture             = vita2d_load_PNG_file( ( pathTexture + "menu/options/header.png" ).c_str() );
+        o_musicTexture              = vita2d_load_PNG_file( ( pathTexture + "menu/options/music.png" ).c_str() );
+        o_musicOnTexture            = vita2d_load_PNG_file( ( pathTexture + "menu/options/music_on.png" ).c_str() );
+        o_sfxTexture                = vita2d_load_PNG_file( ( pathTexture + "menu/options/sfx.png" ).c_str() );
+        o_sfxOnTexture              = vita2d_load_PNG_file( ( pathTexture + "menu/options/sfx_on.png" ).c_str() );
+        o_touchTexture              = vita2d_load_PNG_file( ( pathTexture + "menu/options/touch.png" ).c_str() );
+        o_touchOnTexture            = vita2d_load_PNG_file( ( pathTexture + "menu/options/touch_on.png" ).c_str() );
+        o_statsTexture              = vita2d_load_PNG_file( ( pathTexture + "menu/options/stats.png" ).c_str() );
+        o_checkboxOffTexture        = vita2d_load_PNG_file( ( pathTexture + "menu/options/checkbox_off.png" ).c_str() );
+        o_checkboxOnTexture         = vita2d_load_PNG_file( ( pathTexture + "menu/options/checkbox_on.png" ).c_str() );
 
         underConstructionTexture    = vita2d_load_PNG_file( ( pathTexture + "menu/underConstruction.png" ).c_str() );
 
@@ -220,8 +241,38 @@ namespace Texture {
             case Sprite::underConstruction:
                 return underConstructionTexture;
 
+            case Sprite::o_header:
+                return o_headerTexture;
+
+            case Sprite::o_music:
+                return o_musicTexture;
+
+            case Sprite::o_musicOn:
+                return o_musicOnTexture;
+
+            case Sprite::o_sfx:
+                return o_sfxTexture;
+
+            case Sprite::o_sfxOn:
+                return o_sfxOnTexture;
+
+            case Sprite::o_touch:
+                return o_touchTexture;
+
+            case Sprite::o_touchOn:
+                return o_touchOnTexture;
+
+            case Sprite::o_stats:
+                return o_statsTexture;
+
             case Sprite::curtain:
                 return curtainTexture;
+
+            case Sprite::o_checkboxOff:
+                return o_checkboxOffTexture;
+
+            case Sprite::o_checkboxOn:
+                return o_checkboxOnTexture;
 
             default:
                 break;
@@ -233,6 +284,16 @@ namespace Texture {
     void drawTexture( Sprite sprite, Vec2 pos )
     {
         vita2d_draw_texture( getTexture( sprite ), pos.x, pos.y );
+    }
+
+    void drawTexture( Sprite sprite, int x, int y )
+    {
+        drawTexture( sprite, Vec2( x, y ) );
+    }
+
+    void drawTexture( Sprite sprite )
+    {
+        vita2d_draw_texture( getTexture( sprite ), 0, 0 );
     }
 
     void drawTexture_scale( Sprite sprite, Vec2 pos, float scale )
@@ -305,6 +366,14 @@ namespace Texture {
         vita2d_free_texture( p_restartTexture );
         vita2d_free_texture( p_returnSelectedTexture );
         vita2d_free_texture( p_returnTexture );
+        vita2d_free_texture( o_headerTexture );
+        vita2d_free_texture( o_musicTexture );
+        vita2d_free_texture( o_musicOnTexture );
+        vita2d_free_texture( o_sfxTexture );
+        vita2d_free_texture( o_sfxOnTexture );
+        vita2d_free_texture( o_touchTexture );
+        vita2d_free_texture( o_touchOnTexture );
+        vita2d_free_texture( o_statsTexture );
         vita2d_free_texture( underConstructionTexture );
         vita2d_free_texture( curtainTexture );
     }
@@ -357,7 +426,6 @@ void AnimatedBackground::draw()
                     break;
             }
 
-            //Texture::drawTexture( sprite, Vec2( i * textureWidth + animationStep, j * textureHeight + animationStep ) );
             vita2d_draw_texture_tint( Texture::getTexture( sprite ), i * textureWidth + animationStep, j * textureHeight + animationStep, BGCOLOR );
         }
     }

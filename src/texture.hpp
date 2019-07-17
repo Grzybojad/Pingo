@@ -58,7 +58,18 @@ namespace Texture
         p_menu = 56,
         p_menuSelected = 57,
 
-        underConstruction = 60,
+        o_header = 61,
+        o_music = 62,
+        o_musicOn = 63,
+        o_sfx = 64,
+        o_sfxOn = 65,
+        o_touch = 66,
+        o_touchOn = 67,
+        o_stats = 68,
+        o_checkboxOff = 69,
+        o_checkboxOn = 70,
+
+        underConstruction = 80,
 
         curtain = 100
     };
@@ -66,6 +77,8 @@ namespace Texture
     vita2d_texture * getTexture( Sprite sprite );
 
     void drawTexture( Sprite sprite, Vec2 pos );
+    void drawTexture( Sprite sprite, int x, int y );
+    void drawTexture( Sprite sprite );
     void drawTexture_scale( Sprite sprite, Vec2 pos, float scale );
     void drawTexture_fillScreen( Sprite sprite );
     void drawWall( int x, int y, int face );
@@ -116,6 +129,17 @@ namespace Texture
     extern vita2d_texture *p_restartSelectedTexture;
     extern vita2d_texture *p_menuTexture;
     extern vita2d_texture *p_menuSelectedTexture;
+
+    extern vita2d_texture *o_headerTexture;
+    extern vita2d_texture *o_musicTexture;
+    extern vita2d_texture *o_musicOnTexture;
+    extern vita2d_texture *o_sfxTexture;
+    extern vita2d_texture *o_sfxOnTexture;
+    extern vita2d_texture *o_touchTexture;
+    extern vita2d_texture *o_touchOnTexture;
+    extern vita2d_texture *o_statsTexture;
+    extern vita2d_texture *o_checkboxOffTexture;
+    extern vita2d_texture *o_checkboxOnTexture;
 
     extern vita2d_texture *underConstructionTexture;
 
