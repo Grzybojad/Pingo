@@ -123,7 +123,6 @@ class Slider : public MenuItem
     protected:
         void handleInput() override;
 
-        
         float step;
 };
 

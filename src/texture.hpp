@@ -68,6 +68,8 @@ namespace Texture
         o_stats = 68,
         o_checkboxOff = 69,
         o_checkboxOn = 70,
+        o_sliderOff = 71,
+        o_sliderOn = 72,
 
         underConstruction = 80,
 
@@ -140,6 +142,8 @@ namespace Texture
     extern vita2d_texture *o_statsTexture;
     extern vita2d_texture *o_checkboxOffTexture;
     extern vita2d_texture *o_checkboxOnTexture;
+    extern vita2d_texture *o_sliderOffTexture;
+    extern vita2d_texture *o_sliderOnTexture;
 
     extern vita2d_texture *underConstructionTexture;
 

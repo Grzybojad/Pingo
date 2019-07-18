@@ -150,6 +150,8 @@ vita_create_vpk(${SHORT_NAME}.vpk ${VITA_TITLEID} ${SHORT_NAME}.self
   FILE img/menu/options/stats.png         img/menu/options/stats.png
   FILE img/menu/options/checkbox_off.png  img/menu/options/checkbox_off.png
   FILE img/menu/options/checkbox_on.png   img/menu/options/checkbox_on.png
+  FILE img/menu/options/slider_off.png    img/menu/options/slider_off.png
+  FILE img/menu/options/slider_on.png     img/menu/options/slider_on.png
 
   FILE img/menu/underConstruction.png     img/menu/underConstruction.png
 

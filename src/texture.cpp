@@ -50,6 +50,8 @@ namespace Texture {
     vita2d_texture *o_statsTexture;
     vita2d_texture *o_checkboxOffTexture;
     vita2d_texture *o_checkboxOnTexture;
+    vita2d_texture *o_sliderOffTexture;
+    vita2d_texture *o_sliderOnTexture;
     vita2d_texture *underConstructionTexture;
     vita2d_texture *curtainTexture;
 
@@ -111,6 +113,8 @@ namespace Texture {
         o_statsTexture              = vita2d_load_PNG_file( ( pathTexture + "menu/options/stats.png" ).c_str() );
         o_checkboxOffTexture        = vita2d_load_PNG_file( ( pathTexture + "menu/options/checkbox_off.png" ).c_str() );
         o_checkboxOnTexture         = vita2d_load_PNG_file( ( pathTexture + "menu/options/checkbox_on.png" ).c_str() );
+        o_sliderOffTexture          = vita2d_load_PNG_file( ( pathTexture + "menu/options/slider_off.png" ).c_str() );
+        o_sliderOnTexture           = vita2d_load_PNG_file( ( pathTexture + "menu/options/slider_on.png" ).c_str() );
 
         underConstructionTexture    = vita2d_load_PNG_file( ( pathTexture + "menu/underConstruction.png" ).c_str() );
 
@@ -273,6 +277,12 @@ namespace Texture {
 
             case Sprite::o_checkboxOn:
                 return o_checkboxOnTexture;
+                
+            case Sprite::o_sliderOff:
+                return o_sliderOffTexture;
+
+            case Sprite::o_sliderOn:
+                return o_sliderOnTexture;
 
             default:
                 break;

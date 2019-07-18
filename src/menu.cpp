@@ -189,13 +189,12 @@ bool MainMenu::clickedOptions()
 
 OptionsMenu::OptionsMenu()
 {
-    Rect optionsPos = Rect( 450, 180, 100, 50 );
-    int verticalSpacing = 80;
+    Rect optionsPos = Rect( SCREEN_WIDTH / 2, 200, 100, 50 );
 
     addItem( new Slider( optionsPos, "SFX volume", 0.1f ) );
-    optionsPos.y += verticalSpacing;
+    optionsPos.y += 90;
     addItem( new Slider( optionsPos, "Music volume", 0.1f ) );
-    optionsPos.y += verticalSpacing;
+    optionsPos.y += 80;
     addItem( new Checkbox( optionsPos, "Enable touch", true ) );
 
     sfxVolume = 1.0f;
@@ -206,29 +205,29 @@ OptionsMenu::OptionsMenu()
 void OptionsMenu::draw()
 {
     // Header
-    Texture::drawTexture( Texture::Sprite::o_header, 320, 30 );
+    Texture::drawTexture( Texture::Sprite::o_header, 320, 20 );
 
     switch( cursor )
     {
         case 0:
-            Texture::drawTexture( Texture::Sprite::o_sfxOn, 20, 160 );
+            Texture::drawTexture( Texture::Sprite::o_sfxOn, 20, menuItems[ 0 ]->getRect().y - 20 );
             break;
             
         case 1:
-            Texture::drawTexture( Texture::Sprite::o_musicOn, 20, 260 );
+            Texture::drawTexture( Texture::Sprite::o_musicOn, 20, menuItems[ 1 ]->getRect().y - 10 );
             break;
 
         case 2:
-            Texture::drawTexture( Texture::Sprite::o_touchOn, 20, 340 );
+            Texture::drawTexture( Texture::Sprite::o_touchOn, 20, menuItems[ 2 ]->getRect().y - 10 );
             break;  
         
         default:
             break;
     }
 
-    Texture::drawTexture( Texture::Sprite::o_sfx, 20, 160 );
-    Texture::drawTexture( Texture::Sprite::o_music, 20, 260 );
-    Texture::drawTexture( Texture::Sprite::o_touch, 20, 340 );
+    Texture::drawTexture( Texture::Sprite::o_sfx, 20, menuItems[ 0 ]->getRect().y - 20 );
+    Texture::drawTexture( Texture::Sprite::o_music, 20, menuItems[ 1 ]->getRect().y - 10 );
+    Texture::drawTexture( Texture::Sprite::o_touch, 20, menuItems[ 2 ]->getRect().y - 10 );
 
     for( int i = 0; i < menuItems.size(); ++i )
     {
@@ -239,7 +238,7 @@ void OptionsMenu::draw()
     //Gui::drawText( 20, 40, 30, "Credits:\n\nDirecting, programming, level design:\n  Grzybojad\n\nArt assets:\n  Jumbocube\n\nTesting:\n  Grzybojad\n  JumboCube\n  RobDevs\n  dragnu5" );
 
     // Stats
-    Texture::drawTexture( Texture::Sprite::o_stats , Vec2( SCREEN_WIDTH - 300, 140 ) );
+    Texture::drawTexture( Texture::Sprite::o_stats , Vec2( SCREEN_WIDTH - 280, 170 ) );
     Gui::drawTextf_position( Gui::Position::alignTopRight, SCREEN_WIDTH - 20, 200, 30, "Time: %s\nSteps: %d\nLevels finished: %d", timeToString( Stats::timePlayed ).c_str(), Stats::totalSteps, Stats::totalLevelFinished );
 
     // "Go back" text
@@ -359,9 +358,16 @@ Slider::Slider( Rect rect, std::string label, float step ) : MenuItem( rect, lab
 
 void Slider::draw()
 {
-    Gui::drawText_color_position( Gui::Position::alignTop, rect.x, rect.y, 40, RGBA8( 0, 0, 0, 255 ), ( std::to_string( (int)( round( value * 100 ) ) ) + "%" ).c_str() );
-
-    //TODO change to texture
+    int cells = 10;
+    int spacing = 30;
+    int size = spacing * ( cells - 1 );
+    for( int i = 0; i < cells; ++i )
+    {
+        if( i < (int)( round( value * cells ) ) )
+            Texture::drawTexture( Texture::Sprite::o_sliderOn, rect.x + i * spacing - ( size / 2 ), rect.y );
+        else
+            Texture::drawTexture( Texture::Sprite::o_sliderOff, rect.x + i * spacing - ( size / 2 ), rect.y );
+    }
 }
 
 void Slider::drawSelected()
