@@ -403,7 +403,7 @@ void AnimatedBackground::update()
 void AnimatedBackground::draw()
 {
     int textureHeight = vita2d_texture_get_height( Texture::getTexture( Texture::Sprite::background1 ) );
-    int textureWidth = vita2d_texture_get_height( Texture::getTexture( Texture::Sprite::background1 ) );
+    int textureWidth = vita2d_texture_get_width( Texture::getTexture( Texture::Sprite::background1 ) );
     int rows = ceil( SCREEN_HEIGHT / textureHeight );
     int columns = ceil( SCREEN_WIDTH / textureWidth );
 
