@@ -4,6 +4,7 @@
 *.self
 *.sfo
 *.yml
+tempV
 
 
 # Cmake files

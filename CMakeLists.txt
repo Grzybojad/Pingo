@@ -99,7 +99,10 @@ vita_create_vpk(${SHORT_NAME}.vpk ${VITA_TITLEID} ${SHORT_NAME}.self
   FILE img/level/floorBlank.png       img/level/floorBlank.png
   FILE img/level/floorPainted.png     img/level/floorPainted.png
   FILE img/level/ball.png             img/level/ball.png
-  FILE img/level/wallFill.png             img/level/wallFill.png
+  FILE img/level/wallFill.png         img/level/wallFill.png
+  FILE img/level/stopTile.png         img/level/stopTile.png
+  FILE img/level/paintBlob.png        img/level/paintBlob.png
+  FILE img/level/floorEmpty.png       img/level/floorEmpty.png
 
   FILE img/common/background1.png  img/common/background1.png
   FILE img/common/background2.png  img/common/background2.png
@@ -137,6 +140,19 @@ vita_create_vpk(${SHORT_NAME}.vpk ${VITA_TITLEID} ${SHORT_NAME}.self
   FILE img/menu/pause/menu.png            img/menu/pause/menu.png
   FILE img/menu/pause/menuSelected.png    img/menu/pause/menuSelected.png
 
+  FILE img/menu/options/header.png        img/menu/options/header.png
+  FILE img/menu/options/music.png         img/menu/options/music.png
+  FILE img/menu/options/music_on.png      img/menu/options/music_on.png
+  FILE img/menu/options/sfx.png           img/menu/options/sfx.png
+  FILE img/menu/options/sfx_on.png        img/menu/options/sfx_on.png
+  FILE img/menu/options/touch.png         img/menu/options/touch.png
+  FILE img/menu/options/touch_on.png      img/menu/options/touch_on.png
+  FILE img/menu/options/stats.png         img/menu/options/stats.png
+  FILE img/menu/options/checkbox_off.png  img/menu/options/checkbox_off.png
+  FILE img/menu/options/checkbox_on.png   img/menu/options/checkbox_on.png
+  FILE img/menu/options/slider_off.png    img/menu/options/slider_off.png
+  FILE img/menu/options/slider_on.png     img/menu/options/slider_on.png
+
   FILE img/menu/underConstruction.png     img/menu/underConstruction.png
 
 
@@ -150,36 +166,55 @@ vita_create_vpk(${SHORT_NAME}.vpk ${VITA_TITLEID} ${SHORT_NAME}.self
 
 
   # Levels
-  # Figure out how to load all levels from file automatically
-  FILE levels/level001.txt       levels/level001.txt
-  FILE levels/level002.txt       levels/level002.txt
-  FILE levels/level003.txt       levels/level003.txt
-  FILE levels/level004.txt       levels/level004.txt
-  FILE levels/level005.txt       levels/level005.txt
-  FILE levels/level006.txt       levels/level006.txt
-  FILE levels/level007.txt       levels/level007.txt
-  FILE levels/level008.txt       levels/level008.txt
-  FILE levels/level009.txt       levels/level009.txt
-  FILE levels/level010.txt       levels/level010.txt
-  FILE levels/level011.txt       levels/level011.txt
-  FILE levels/level012.txt       levels/level012.txt
-  FILE levels/level013.txt       levels/level013.txt
-  FILE levels/level014.txt       levels/level014.txt
-  FILE levels/level015.txt       levels/level015.txt
-  FILE levels/level016.txt       levels/level016.txt
-  FILE levels/level017.txt       levels/level017.txt
-  FILE levels/level018.txt       levels/level018.txt
-  FILE levels/level019.txt       levels/level019.txt
-  FILE levels/level020.txt       levels/level020.txt
-  FILE levels/level021.txt       levels/level021.txt
-  FILE levels/level022.txt       levels/level022.txt
-  FILE levels/level023.txt       levels/level023.txt
-  FILE levels/level024.txt       levels/level024.txt
-  FILE levels/level025.txt       levels/level025.txt
-  FILE levels/level026.txt       levels/level026.txt
-  FILE levels/level027.txt       levels/level027.txt
-  FILE levels/level028.txt       levels/level028.txt
-  FILE levels/level029.txt       levels/level029.txt
-  FILE levels/level030.txt       levels/level030.txt
+  FILE levels/World1/level001.txt       levels/World1/level001.txt
+  FILE levels/World1/level002.txt       levels/World1/level002.txt
+  FILE levels/World1/level003.txt       levels/World1/level003.txt
+  FILE levels/World1/level004.txt       levels/World1/level004.txt
+  FILE levels/World1/level005.txt       levels/World1/level005.txt
+  FILE levels/World1/level006.txt       levels/World1/level006.txt
+  FILE levels/World1/level007.txt       levels/World1/level007.txt
+  FILE levels/World1/level008.txt       levels/World1/level008.txt
+  FILE levels/World1/level009.txt       levels/World1/level009.txt
+  FILE levels/World1/level010.txt       levels/World1/level010.txt
+  FILE levels/World1/level011.txt       levels/World1/level011.txt
+  FILE levels/World1/level012.txt       levels/World1/level012.txt
+  FILE levels/World1/level013.txt       levels/World1/level013.txt
+  FILE levels/World1/level014.txt       levels/World1/level014.txt
+  FILE levels/World1/level015.txt       levels/World1/level015.txt
+  FILE levels/World1/level016.txt       levels/World1/level016.txt
+  FILE levels/World1/level017.txt       levels/World1/level017.txt
+  FILE levels/World1/level018.txt       levels/World1/level018.txt
+  FILE levels/World1/level019.txt       levels/World1/level019.txt
+  FILE levels/World1/level020.txt       levels/World1/level020.txt
+  FILE levels/World1/level021.txt       levels/World1/level021.txt
+  FILE levels/World1/level022.txt       levels/World1/level022.txt
+  FILE levels/World1/level023.txt       levels/World1/level023.txt
+  FILE levels/World1/level024.txt       levels/World1/level024.txt
+  FILE levels/World1/level025.txt       levels/World1/level025.txt
+  FILE levels/World1/level026.txt       levels/World1/level026.txt
+  FILE levels/World1/level027.txt       levels/World1/level027.txt
+  FILE levels/World1/level028.txt       levels/World1/level028.txt
+  FILE levels/World1/level029.txt       levels/World1/level029.txt
+  FILE levels/World1/level030.txt       levels/World1/level030.txt
+
+  FILE levels/World2/level001.txt       levels/World2/level001.txt
+  FILE levels/World2/level002.txt       levels/World2/level002.txt
+  FILE levels/World2/level003.txt       levels/World2/level003.txt
+  FILE levels/World2/level004.txt       levels/World2/level004.txt
+  FILE levels/World2/level005.txt       levels/World2/level005.txt
+  FILE levels/World2/level006.txt       levels/World2/level006.txt
+  FILE levels/World2/level007.txt       levels/World2/level007.txt
+  FILE levels/World2/level008.txt       levels/World2/level008.txt
+  FILE levels/World2/level009.txt       levels/World2/level009.txt
+  FILE levels/World2/level010.txt       levels/World2/level010.txt
+  FILE levels/World2/level011.txt       levels/World2/level011.txt
+  FILE levels/World2/level012.txt       levels/World2/level012.txt
+  FILE levels/World2/level013.txt       levels/World2/level013.txt
+  FILE levels/World2/level014.txt       levels/World2/level014.txt
+  FILE levels/World2/level015.txt       levels/World2/level015.txt
+  FILE levels/World2/level016.txt       levels/World2/level016.txt
+  FILE levels/World2/level017.txt       levels/World2/level017.txt
+  FILE levels/World2/level018.txt       levels/World2/level018.txt
+  FILE levels/World2/level019.txt       levels/World2/level019.txt
 )
 

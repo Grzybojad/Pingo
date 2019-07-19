@@ -15,8 +15,6 @@ void Level::init()
     state = State::playing;
     shouldPlaySound = false;
 
-    wallColor = RGBA8( 144, 145, 194, 255 );
-
     tileSize = 30;
 }
 
@@ -79,6 +77,9 @@ void Level::loadFromFile( LevelListElement *levelListElement )
 
     levelFile.close();
 
+    // Paint the starting tile
+    paintTile();
+
     // Initialize level texture
     initLevelTexture();
 }
@@ -104,10 +105,26 @@ void Level::update()
         bool newStep = true;
         if( !ball.handleInput() ) newStep = false;
 
-        ball.move();
+        previousBallPos = getBallTile();
 
-        if( ball.state != Ball::State::stationary )
+        ball.move();
+        
+        if( previousBallPos != getBallTile() )
+        {
             paintTile();
+
+            if( ballOnStop() )
+            {
+                if( shouldPlaySound )
+                    Sound::soloud.play( Sound::ballHit );
+
+                shouldPlaySound = false;
+                newStep = false;
+                ball.setWorldPos( getBallTilePosition() );
+                ball.stop();
+            }
+        }
+            
 
         if( ballHittingWall() )
         {
@@ -222,7 +239,7 @@ void Level::initLevelTexture()
                 if( i != 0 && dynamic_cast<WallTile*>( tiles[i-1][j] ) )
                     face += 0b1000;
 
-                Texture::drawWall( tileRect.x, tileRect.y, face, wallColor );
+                Texture::drawWall( tileRect.x, tileRect.y, face );
             }
             else
             {
@@ -252,7 +269,7 @@ void Level::initLevelTexture()
                         tileSize 
                     );
 
-                    Texture::drawWall( tileRect.x + 25, tileRect.y + 25, -1, wallColor );
+                    Texture::drawWall( tileRect.x + 25, tileRect.y + 25, -1 );
                 }
             }
         }
@@ -294,6 +311,12 @@ Tile* Level::charToTile( char c )
             
         case 's':
             return new StartTile();
+
+        case 'x':
+            return new StopTile();
+
+        case 'd':
+            return new DoubleFloorTile();
 
         default:
             return new Tile();
@@ -403,6 +426,29 @@ bool Level::ballHittingWall()
     return false;
 }
 
+bool Level::ballOnStop()
+{
+    for( int i = 0; i < tiles.size(); ++i )
+    {
+        for( int j = 0; j < tiles[ i ].size(); ++j )
+        {
+            if( dynamic_cast<StopTile*>( tiles[i][j] ) )
+            {
+                Rect smallTile = Rect(
+                    ball.getRect().x + 5,
+                    ball.getRect().y + 5,
+                    -10,
+                    -10
+                );
+                if( checkCollision( ball.getRect() + smallTile, getWorldPosFromTilePos( Vec2( j, i ) ).toRect( tileSize, tileSize ) + smallTile ) )
+                    return true;
+            }
+        }
+    }
+
+    return false;
+}
+
 void Level::paintTile()
 {
     Tile* ballTile = tiles[ getBallTile().y ][ getBallTile().x ];
@@ -411,9 +457,11 @@ void Level::paintTile()
     {
         if( ballTile->paintable() )
         {
-            paintedTiles++;
             ballTile->paint();
             paintTileOnTexture( getBallTile().y, getBallTile().x );
+
+            if( !ballTile->paintable() )
+                paintedTiles++;
         }
     }
     else
@@ -477,13 +525,17 @@ void Tile::draw( Rect rect )
     vita2d_draw_rectangle( rect.x, rect.y, rect.w, rect.h, RGBA8( 255, 0, 0, 255) );
 }
 
+void WallTile::draw( Rect rect )
+{
+    Texture::drawTexture( Texture::Sprite::wall, Vec2( rect.x, rect.y ) );
+}
+
 void FloorTile::draw( Rect rect )
 {
     if( state == State::blank )
     {
         Texture::drawTexture( Texture::Sprite::floorBlank, Vec2( rect.x, rect.y ) );
     }
-        
     else if( state == State::painted )
     {
         Texture::drawTexture( Texture::Sprite::floorPainted, Vec2( rect.x, rect.y ) );
@@ -497,15 +549,43 @@ void FloorTile::paint()
 
 bool FloorTile::paintable()
 {
-    if( state == State::blank )
-        return true;
-    else
-        return false;
+    return ( state == State::blank );
 }
 
-void WallTile::draw( Rect rect )
+void DoubleFloorTile::draw( Rect rect )
 {
-    Texture::drawTexture( Texture::Sprite::wall, Vec2( rect.x, rect.y ) );
+    if( state == State::blank )
+    {
+        Texture::drawTexture( Texture::Sprite::floorEmpty, Vec2( rect.x, rect.y ) );
+    }
+    else if( state == State::paintedHalfway )
+    {
+        Texture::drawTexture( Texture::Sprite::paintBlob, Vec2( rect.x, rect.y ) );
+    }
+    else if( state == State::painted )
+    {
+        Texture::drawTexture( Texture::Sprite::floorPainted, Vec2( rect.x, rect.y ) );
+        Texture::drawTexture( Texture::Sprite::paintBlob, Vec2( rect.x, rect.y ) );
+    }
+}
+
+void DoubleFloorTile::paint()
+{
+    if( state == State::blank )
+        state = State::paintedHalfway;
+    else if( state == State::paintedHalfway )
+        state = State::painted;
+}
+
+bool DoubleFloorTile::paintable()
+{
+    return ( state == State::blank || state == State::paintedHalfway );
+}
+
+void StopTile::draw( Rect rect )
+{
+    FloorTile::draw( rect );
+    Texture::drawTexture( Texture::Sprite::stop, Vec2( rect.x, rect.y ) );
 }
 
 

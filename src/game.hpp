@@ -60,6 +60,7 @@ class Game
 
         Level level;
         std::vector<LevelList> levelListList;
+        const int nrOfWorlds = 2;
         int selectedLevelList;
 
         AnimatedBackground background;

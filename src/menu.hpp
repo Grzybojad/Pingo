@@ -110,20 +110,6 @@ class Checkbox : public MenuItem
         void handleInput() override;
 };
 
-class Selectable : public MenuItem
-{
-    public:
-        Selectable( Rect rect, std::string label, std::vector<std::string> items );
-
-        void draw() override;
-        void drawSelected() override;
-
-    protected:
-        void handleInput() override;
-
-        std::vector<std::string> items;
-};
-
 class Slider : public MenuItem
 {
     public:
@@ -137,7 +123,6 @@ class Slider : public MenuItem
     protected:
         void handleInput() override;
 
-        
         float step;
 };
 

@@ -26,9 +26,12 @@ Game::Game()
     levelMenus.push_back( customLevels );
     LevelSelect world1Levels = LevelSelect();
     levelMenus.push_back( world1Levels );
+    LevelSelect world2Levels = LevelSelect();
+    levelMenus.push_back( world2Levels );
 
     levelMenus[ 0 ].initLevels( &levelListList[ 0 ], "Custom" );
     levelMenus[ 1 ].initLevels( &levelListList[ 1 ], "World 1" );
+    levelMenus[ 2 ].initLevels( &levelListList[ 2 ], "World 2" );
 
     // Initialize the sound effects
     Sound::initSoloud();
@@ -55,27 +58,30 @@ Game::~Game()
 void Game::initLevelList()
 {
     int dfd;
-    LevelList newLevelList = LevelList();
-    dfd = sceIoDopen( pathLevels.c_str() );
-    if( dfd > 0 )
+
+    for( int i = 1; i <= nrOfWorlds; ++i )
     {
-        SceIoDirent file;
-        while( sceIoDread( dfd, &file ) > 0 )
+        LevelList newLevelList = LevelList();
+        dfd = sceIoDopen( ( pathLevels + "World" + std::to_string( i ) + "/" ).c_str() );
+        if( dfd > 0 )
         {
-            std::string fileName( file.d_name );
-            newLevelList.add( pathLevels + fileName );
+            SceIoDirent file;
+            while( sceIoDread( dfd, &file ) > 0 )
+            {
+                std::string fileName( file.d_name );
+                newLevelList.add( pathLevels + "World" + std::to_string( i ) + "/" + fileName );
+            }
         }
-    }
-    else if( dfd < 0 )
-    {
-        // TODO handle error
-    }
-    sceIoDclose( dfd );
+        else if( dfd < 0 )
+        {
+            // TODO handle error
+        }
+        sceIoDclose( dfd );
 
-    // TODO This needs to be changes for more levelLists
-    newLevelList.loadProgress( 1 );
+        newLevelList.loadProgress( i );
 
-    levelListList.push_back( newLevelList );
+        levelListList.push_back( newLevelList );
+    }
 }
 
 void Game::initCustomLevelList()
@@ -124,6 +130,11 @@ void Game::mainLoop()
                 break;
 
             case GameState::mainMenu:
+                WALLCOLOR = RGBA8( 144, 145, 194, 255 );
+                BGCOLOR = RGBA8( 97, 90, 160, 255 );
+                inMenu();
+                break;
+
             case GameState::levelMenu:
             case GameState::paused:
             case GameState::optionsMenu:
@@ -194,7 +205,7 @@ void Game::inGame()
                 Sound::levelMusic.stop();
                 Sound::soloud.play( Sound::menuMusic );
                 destroyLevel();
-                finishMessage = true;
+                //finishMessage = true;
             }
             
         }
@@ -249,7 +260,8 @@ void Game::inMenu()
                 Sound::menuMusic.stop();
                 Sound::soloud.play( Sound::levelMusic );
                 
-                // TODO this kinda sucks right now
+                // TODO this needs to be changed
+                selectedLevelList = 1;
                 initLevel( levelListList[ selectedLevelList ].lastUnlockedLevel() );
             }
             else if( mainMenu.clickedLevelSelect() )
@@ -314,7 +326,6 @@ void Game::inMenu()
                 gameState = GameState::mainMenu;
             }
             // Handle switching between level select screens
-            // TODO move this to menu.hpp/.cpp if possible
             if( Input::wasPressed( Input::Button::lTrigger ) )
             {
                 if( selectedLevelList > 0 )
@@ -335,6 +346,23 @@ void Game::inMenu()
                 }
                 Sound::soloud.play( Sound::menuMove );
             }
+            
+            switch( selectedLevelList )
+            {
+                case 0:
+                case 1:
+                    WALLCOLOR = RGBA8( 144, 145, 194, 255 );
+                    BGCOLOR = RGBA8( 97, 90, 160, 255 );
+                    break;
+                case 2:
+                    WALLCOLOR = RGBA8( 101, 133, 101, 255 );
+                    BGCOLOR = RGBA8( 47, 92, 48, 255 );
+                    break;
+                default:
+                    WALLCOLOR = RGBA8( 144, 145, 194, 255 );
+                    BGCOLOR = RGBA8( 97, 90, 160, 255 );
+                    break;
+            }
 
             if( levelMenus[ selectedLevelList ].selectPressed() )
             {
@@ -348,8 +376,8 @@ void Game::inMenu()
 
         draw();
 
-        if( levelMenus[ selectedLevelList ].isGameComplete() )
-            gameComplete = true;
+        //if( levelMenus[ selectedLevelList ].isGameComplete() )
+            //gameComplete = true;
     }
     // Options menu
     else if( gameState == GameState::optionsMenu )
@@ -426,7 +454,6 @@ void Game::draw()
                 Gui::drawMessageBox( "Congratualations!", "You've completed all the\nlevels currently available to\nplay in Pingo!\nFor your next challange, try\ngetting 3 stars in every level!" );
             else if( finishMessage && gameComplete )
                 Gui::drawMessageBox( "Congratualations!", "You've completed all the\nlevels currently available to\nplay in Pingo!\nSince you've already collected all the\nstars, you'll have to wait for more\ncontent. Follow me @_grzybojad if you\ndon't want to miss any updates!" );
-
             break;
 
         case GameState::playing:

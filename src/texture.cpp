@@ -6,6 +6,9 @@ namespace Texture {
     vita2d_texture *floorPaintedTexture;
     vita2d_texture *ballTexture;
     vita2d_texture *wallFillTexture;
+    vita2d_texture *stopTexture;
+    vita2d_texture *paintBlobTexture;
+    vita2d_texture *floorEmptyTexture;
     vita2d_texture *background1Texture;
     vita2d_texture *background2Texture;
     vita2d_texture *background3Texture;
@@ -37,6 +40,18 @@ namespace Texture {
     vita2d_texture *p_restartSelectedTexture;
     vita2d_texture *p_menuTexture;
     vita2d_texture *p_menuSelectedTexture;
+    vita2d_texture *o_headerTexture;
+    vita2d_texture *o_musicTexture;
+    vita2d_texture *o_musicOnTexture;
+    vita2d_texture *o_sfxTexture;
+    vita2d_texture *o_sfxOnTexture;
+    vita2d_texture *o_touchTexture;
+    vita2d_texture *o_touchOnTexture;
+    vita2d_texture *o_statsTexture;
+    vita2d_texture *o_checkboxOffTexture;
+    vita2d_texture *o_checkboxOnTexture;
+    vita2d_texture *o_sliderOffTexture;
+    vita2d_texture *o_sliderOnTexture;
     vita2d_texture *underConstructionTexture;
     vita2d_texture *curtainTexture;
 
@@ -47,6 +62,9 @@ namespace Texture {
         floorPaintedTexture = vita2d_load_PNG_file( ( pathTexture + "level/floorPainted.png" ).c_str() );
         ballTexture         = vita2d_load_PNG_file( ( pathTexture + "level/ball.png" ).c_str() );
         wallFillTexture     = vita2d_load_PNG_file( ( pathTexture + "level/wallFill.png" ).c_str() );
+        stopTexture         = vita2d_load_PNG_file( ( pathTexture + "level/stopTile.png" ).c_str() );
+        paintBlobTexture    = vita2d_load_PNG_file( ( pathTexture + "level/paintBlob.png" ).c_str() );
+        floorEmptyTexture   = vita2d_load_PNG_file( ( pathTexture + "level/floorEmpty.png" ).c_str() );
 
         background1Texture  = vita2d_load_PNG_file( ( pathTexture + "common/background1.png" ).c_str() );
         background2Texture  = vita2d_load_PNG_file( ( pathTexture + "common/background2.png" ).c_str() );
@@ -85,6 +103,19 @@ namespace Texture {
         p_menuTexture               = vita2d_load_PNG_file( ( pathTexture + "menu/pause/menu.png" ).c_str() );
         p_menuSelectedTexture       = vita2d_load_PNG_file( ( pathTexture + "menu/pause/menuSelected.png" ).c_str() );
 
+        o_headerTexture             = vita2d_load_PNG_file( ( pathTexture + "menu/options/header.png" ).c_str() );
+        o_musicTexture              = vita2d_load_PNG_file( ( pathTexture + "menu/options/music.png" ).c_str() );
+        o_musicOnTexture            = vita2d_load_PNG_file( ( pathTexture + "menu/options/music_on.png" ).c_str() );
+        o_sfxTexture                = vita2d_load_PNG_file( ( pathTexture + "menu/options/sfx.png" ).c_str() );
+        o_sfxOnTexture              = vita2d_load_PNG_file( ( pathTexture + "menu/options/sfx_on.png" ).c_str() );
+        o_touchTexture              = vita2d_load_PNG_file( ( pathTexture + "menu/options/touch.png" ).c_str() );
+        o_touchOnTexture            = vita2d_load_PNG_file( ( pathTexture + "menu/options/touch_on.png" ).c_str() );
+        o_statsTexture              = vita2d_load_PNG_file( ( pathTexture + "menu/options/stats.png" ).c_str() );
+        o_checkboxOffTexture        = vita2d_load_PNG_file( ( pathTexture + "menu/options/checkbox_off.png" ).c_str() );
+        o_checkboxOnTexture         = vita2d_load_PNG_file( ( pathTexture + "menu/options/checkbox_on.png" ).c_str() );
+        o_sliderOffTexture          = vita2d_load_PNG_file( ( pathTexture + "menu/options/slider_off.png" ).c_str() );
+        o_sliderOnTexture           = vita2d_load_PNG_file( ( pathTexture + "menu/options/slider_on.png" ).c_str() );
+
         underConstructionTexture    = vita2d_load_PNG_file( ( pathTexture + "menu/underConstruction.png" ).c_str() );
 
         curtainTexture              = vita2d_load_PNG_file( "app0:/sce_sys/pic0.png" );
@@ -102,6 +133,15 @@ namespace Texture {
 
             case Sprite::floorPainted:
                 return floorPaintedTexture;
+
+            case Sprite::stop:
+                return stopTexture;
+
+            case Sprite::paintBlob:
+                return paintBlobTexture;
+
+            case Sprite::floorEmpty:
+                return floorEmptyTexture;
 
             case Sprite::ball:
                 return ballTexture;
@@ -205,8 +245,44 @@ namespace Texture {
             case Sprite::underConstruction:
                 return underConstructionTexture;
 
+            case Sprite::o_header:
+                return o_headerTexture;
+
+            case Sprite::o_music:
+                return o_musicTexture;
+
+            case Sprite::o_musicOn:
+                return o_musicOnTexture;
+
+            case Sprite::o_sfx:
+                return o_sfxTexture;
+
+            case Sprite::o_sfxOn:
+                return o_sfxOnTexture;
+
+            case Sprite::o_touch:
+                return o_touchTexture;
+
+            case Sprite::o_touchOn:
+                return o_touchOnTexture;
+
+            case Sprite::o_stats:
+                return o_statsTexture;
+
             case Sprite::curtain:
                 return curtainTexture;
+
+            case Sprite::o_checkboxOff:
+                return o_checkboxOffTexture;
+
+            case Sprite::o_checkboxOn:
+                return o_checkboxOnTexture;
+                
+            case Sprite::o_sliderOff:
+                return o_sliderOffTexture;
+
+            case Sprite::o_sliderOn:
+                return o_sliderOnTexture;
 
             default:
                 break;
@@ -218,6 +294,16 @@ namespace Texture {
     void drawTexture( Sprite sprite, Vec2 pos )
     {
         vita2d_draw_texture( getTexture( sprite ), pos.x, pos.y );
+    }
+
+    void drawTexture( Sprite sprite, int x, int y )
+    {
+        drawTexture( sprite, Vec2( x, y ) );
+    }
+
+    void drawTexture( Sprite sprite )
+    {
+        vita2d_draw_texture( getTexture( sprite ), 0, 0 );
     }
 
     void drawTexture_scale( Sprite sprite, Vec2 pos, float scale )
@@ -241,15 +327,13 @@ namespace Texture {
         }
     }
 
-    void drawWall( int x, int y, int face, unsigned int color )
+    void drawWall( int x, int y, int face )
     {
         if( face == -1 )
             // draw the wall fill texture
-            vita2d_draw_texture_tint( wallFillTexture, x, y, color );
+            vita2d_draw_texture_tint( wallFillTexture, x, y, WALLCOLOR );
         else
-            vita2d_draw_texture_tint_part( wallTexture, x, y, face * 30, 0, 30, 30, color );
-        
-        //vita2d_draw_texture_part_( wallTexture, x, y, face * 30, 0, 30, 30 );     RGBA8( 139, 140, 194, 255 )
+            vita2d_draw_texture_tint_part( wallTexture, x, y, face * 30, 0, 30, 30, WALLCOLOR );
     }
 
     void freeTextures()
@@ -259,6 +343,8 @@ namespace Texture {
         vita2d_free_texture( floorPaintedTexture );
         vita2d_free_texture( ballTexture );
         vita2d_free_texture( wallFillTexture );
+        vita2d_free_texture( stopTexture );
+        vita2d_free_texture( paintBlobTexture );
         vita2d_free_texture( background1Texture );
         vita2d_free_texture( background2Texture );
         vita2d_free_texture( background3Texture );
@@ -290,6 +376,14 @@ namespace Texture {
         vita2d_free_texture( p_restartTexture );
         vita2d_free_texture( p_returnSelectedTexture );
         vita2d_free_texture( p_returnTexture );
+        vita2d_free_texture( o_headerTexture );
+        vita2d_free_texture( o_musicTexture );
+        vita2d_free_texture( o_musicOnTexture );
+        vita2d_free_texture( o_sfxTexture );
+        vita2d_free_texture( o_sfxOnTexture );
+        vita2d_free_texture( o_touchTexture );
+        vita2d_free_texture( o_touchOnTexture );
+        vita2d_free_texture( o_statsTexture );
         vita2d_free_texture( underConstructionTexture );
         vita2d_free_texture( curtainTexture );
     }
@@ -319,7 +413,7 @@ void AnimatedBackground::update()
 void AnimatedBackground::draw()
 {
     int textureHeight = vita2d_texture_get_height( Texture::getTexture( Texture::Sprite::background1 ) );
-    int textureWidth = vita2d_texture_get_height( Texture::getTexture( Texture::Sprite::background1 ) );
+    int textureWidth = vita2d_texture_get_width( Texture::getTexture( Texture::Sprite::background1 ) );
     int rows = ceil( SCREEN_HEIGHT / textureHeight );
     int columns = ceil( SCREEN_WIDTH / textureWidth );
 
@@ -342,7 +436,7 @@ void AnimatedBackground::draw()
                     break;
             }
 
-            Texture::drawTexture( sprite, Vec2( i * textureWidth + animationStep, j * textureHeight + animationStep ) );
+            vita2d_draw_texture_tint( Texture::getTexture( sprite ), i * textureWidth + animationStep, j * textureHeight + animationStep, BGCOLOR );
         }
     }
 }

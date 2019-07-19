@@ -4,6 +4,7 @@
 #include <string>
 
 #include <psp2/kernel/processmgr.h>
+#include <vita2d.h>
 
 const int SCREEN_WIDTH = 960;
 const int SCREEN_HEIGHT = 544;
@@ -20,6 +21,9 @@ extern std::string pathCustomLevels;
 extern bool ENABLE_TOUCH;
 extern bool alreadyShowedCompleteMessage;
 
+extern unsigned int WALLCOLOR;
+extern unsigned int BGCOLOR;
+
 struct Rect
 {
     public:
@@ -35,8 +39,10 @@ struct Rect
             this->y = y;
             this->w = w;
             this->h = h;
-    }
+        }
 };
+
+extern Rect operator +( const Rect& a, const Rect& b );
 
 struct Vec2
 {
@@ -59,12 +65,7 @@ struct Vec2
 
         Rect toRect( float w, float h )
         {
-            return Rect(
-                x,
-                y,
-                w,
-                h
-            );
+            return Rect( x, y, w, h );
         }
 
         static float distance( Vec2 a, Vec2 b )
@@ -72,6 +73,10 @@ struct Vec2
             return sqrt( pow( b.x - a.x, 2 ) + pow( b.y - a.y, 2 ) );
         }
 };
+
+extern Vec2 operator +( const Vec2& a, const Vec2& b );
+extern bool operator ==( const Vec2& a, const Vec2& b );
+extern bool operator !=( const Vec2& a, const Vec2& b );
 
 // Framerate independance
 extern SceUInt64 prevFrameClock;    // The time between the start of the program and the previous frame (in microseconds)

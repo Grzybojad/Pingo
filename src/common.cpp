@@ -14,6 +14,29 @@ std::string pathCustomLevels = "ux0:/data/Pingo/levels/";
 bool ENABLE_TOUCH = true;
 bool alreadyShowedCompleteMessage = false;
 
+unsigned int WALLCOLOR = RGBA8( 144, 145, 194, 255 );
+unsigned int BGCOLOR = RGBA8( 97, 90, 160, 255 );
+
+
+Rect operator +( const Rect& a, const Rect& b )
+{
+    return Rect( a.x + b.x, a.y + b.y, a.w + b.w, a.h + b.h );
+}
+
+Vec2 operator +( const Vec2& a, const Vec2& b )
+{
+	return Vec2( a.x + b.x, a.y + b.y );
+}
+bool operator ==( const Vec2& a, const Vec2& b )
+{
+	return ( a.x == b.x && a.y == b.y );
+}
+bool operator !=( const Vec2& a, const Vec2& b )
+{
+	return !( a == b );
+}
+
+
 void calcFrameTime()
 {	
 	frameTime = ( sceKernelGetProcessTimeWide() - prevFrameClock );

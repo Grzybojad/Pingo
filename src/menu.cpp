@@ -189,13 +189,12 @@ bool MainMenu::clickedOptions()
 
 OptionsMenu::OptionsMenu()
 {
-    Rect optionsPos = Rect( 50, 100, 250, 50 );
-    int verticalSpacing = 80;
+    Rect optionsPos = Rect( SCREEN_WIDTH / 2, 200, 100, 50 );
 
     addItem( new Slider( optionsPos, "SFX volume", 0.1f ) );
-    optionsPos.y += verticalSpacing;
+    optionsPos.y += 90;
     addItem( new Slider( optionsPos, "Music volume", 0.1f ) );
-    optionsPos.y += verticalSpacing;
+    optionsPos.y += 80;
     addItem( new Checkbox( optionsPos, "Enable touch", true ) );
 
     sfxVolume = 1.0f;
@@ -205,19 +204,42 @@ OptionsMenu::OptionsMenu()
 
 void OptionsMenu::draw()
 {
+    // Header
+    Texture::drawTexture( Texture::Sprite::o_header, 320, 20 );
+
+    switch( cursor )
+    {
+        case 0:
+            Texture::drawTexture( Texture::Sprite::o_sfxOn, 20, menuItems[ 0 ]->getRect().y - 20 );
+            break;
+            
+        case 1:
+            Texture::drawTexture( Texture::Sprite::o_musicOn, 20, menuItems[ 1 ]->getRect().y - 10 );
+            break;
+
+        case 2:
+            Texture::drawTexture( Texture::Sprite::o_touchOn, 20, menuItems[ 2 ]->getRect().y - 10 );
+            break;  
+        
+        default:
+            break;
+    }
+
+    Texture::drawTexture( Texture::Sprite::o_sfx, 20, menuItems[ 0 ]->getRect().y - 20 );
+    Texture::drawTexture( Texture::Sprite::o_music, 20, menuItems[ 1 ]->getRect().y - 10 );
+    Texture::drawTexture( Texture::Sprite::o_touch, 20, menuItems[ 2 ]->getRect().y - 10 );
+
     for( int i = 0; i < menuItems.size(); ++i )
     {
-        if( i == cursor )
-            menuItems[ i ]->drawSelected();
-        else 
-            menuItems[ i ]->draw();
+        menuItems[ i ]->draw();
     }
 
     // Credits
     //Gui::drawText( 20, 40, 30, "Credits:\n\nDirecting, programming, level design:\n  Grzybojad\n\nArt assets:\n  Jumbocube\n\nTesting:\n  Grzybojad\n  JumboCube\n  RobDevs\n  dragnu5" );
 
     // Stats
-    Gui::drawTextf_position( Gui::Position::alignTopRight, SCREEN_WIDTH - 20, 40, 30, "Stats:\n\nTime spend playing: %s\nTotal steps: %d\nTotal levels finished: %d", timeToString( Stats::timePlayed ).c_str(), Stats::totalSteps, Stats::totalLevelFinished );
+    Texture::drawTexture( Texture::Sprite::o_stats , Vec2( SCREEN_WIDTH - 280, 170 ) );
+    Gui::drawTextf_position( Gui::Position::alignTopRight, SCREEN_WIDTH - 20, 200, 30, "Time: %s\nSteps: %d\nLevels finished: %d", timeToString( Stats::timePlayed ).c_str(), Stats::totalSteps, Stats::totalLevelFinished );
 
     // "Go back" text
     Gui::drawText_position( Gui::Position::alignRight, SCREEN_WIDTH - 20, SCREEN_HEIGHT - 20, 30, "Press O to go back" );
@@ -302,12 +324,10 @@ Checkbox::Checkbox( Rect rect, std::string label, bool selected ) : MenuItem( re
 
 void Checkbox::draw()
 {
-    Gui::drawText_color_position( Gui::Position::alignTop, rect.x + 5, rect.y, 40, RGBA8( 0, 0, 0, 255 ), label.c_str() );
-
     if( selected )
-        vita2d_draw_rectangle( rect.x + rect.w + 100, rect.y, 30, 30, RGBA8( 0, 255, 0, 255 ) );
+        Texture::drawTexture( Texture::Sprite::o_checkboxOn, rect.x, rect.y );
     else
-        vita2d_draw_rectangle( rect.x + rect.w + 100, rect.y, 30, 30, RGBA8( 255, 0, 0, 255 ) );
+        Texture::drawTexture( Texture::Sprite::o_checkboxOff, rect.x, rect.y );
 }
 
 void Checkbox::drawSelected()
@@ -329,59 +349,29 @@ void Checkbox::handleInput()
         selected = !selected;
 }
 
-Selectable::Selectable( Rect rect, std::string label, std::vector<std::string> Selectable ) : MenuItem( rect, label )
-{
-    this->items = items;
-}
-
-void Selectable::draw()
-{
-    Gui::drawText_color_position( Gui::Position::alignTop, rect.x + 5, rect.y, 40, RGBA8( 0, 0, 0, 255 ), label.c_str() );
-
-    // TODO
-}
-
-void Selectable::drawSelected()
-{
-    int border = 4;
-    vita2d_draw_rectangle( rect.x, rect.y, rect.w, border, RGBA8( 255, 0, 0, 255 ) );
-    vita2d_draw_rectangle( rect.x + rect.w - border, rect.y, border, rect.h, RGBA8( 255, 0, 0, 255 ) );
-    vita2d_draw_rectangle( rect.x, rect.y + rect.h - border, rect.w, border, RGBA8( 255, 0, 0, 255 ) );
-    vita2d_draw_rectangle( rect.x, rect.y, border, rect.h, RGBA8( 255, 0, 0, 255 ) );
-
-    draw();
-}
-
-void Selectable::handleInput()
-{
-    // TODO
-}
-
 Slider::Slider( Rect rect, std::string label, float step ) : MenuItem( rect, label )
 {
     this->step = step;
 
-    // TODO load from file
     value = 0.5f;
 }
 
 void Slider::draw()
 {
-    Gui::drawText_color_position( Gui::Position::alignTop, rect.x + 5, rect.y, 40, RGBA8( 0, 0, 0, 255 ), label.c_str() );
-
-    Gui::drawText_color_position( Gui::Position::alignTop, rect.x + rect.w + 100, rect.y, 40, RGBA8( 0, 0, 0, 255 ), ( std::to_string( (int)( round( value * 100 ) ) ) + "%" ).c_str() );
-
-    // TODO
+    int cells = 10;
+    int spacing = 30;
+    int size = spacing * ( cells - 1 );
+    for( int i = 0; i < cells; ++i )
+    {
+        if( i < (int)( round( value * cells ) ) )
+            Texture::drawTexture( Texture::Sprite::o_sliderOn, rect.x + i * spacing - ( size / 2 ), rect.y );
+        else
+            Texture::drawTexture( Texture::Sprite::o_sliderOff, rect.x + i * spacing - ( size / 2 ), rect.y );
+    }
 }
 
 void Slider::drawSelected()
 {
-    int border = 4;
-    vita2d_draw_rectangle( rect.x, rect.y, rect.w, border, RGBA8( 255, 0, 0, 255 ) );
-    vita2d_draw_rectangle( rect.x + rect.w - border, rect.y, border, rect.h, RGBA8( 255, 0, 0, 255 ) );
-    vita2d_draw_rectangle( rect.x, rect.y + rect.h - border, rect.w, border, RGBA8( 255, 0, 0, 255 ) );
-    vita2d_draw_rectangle( rect.x, rect.y, border, rect.h, RGBA8( 255, 0, 0, 255 ) );
-
     draw();
 }
 
@@ -441,6 +431,9 @@ void PauseMenu::draw()
 
 bool PauseMenu::clickedResume()
 {
+    if( Input::wasPressed( Input::Button::circle ) || Input::wasPressed( Input::Button::start ) )
+        return true;
+
     if( selectPressed() && cursor == 0 )
         return true;
 
