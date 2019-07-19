@@ -179,6 +179,7 @@ bool Level::complete()
 
 void Level::initLevelTexture()
 { 
+    vita2d_wait_rendering_done();
     vita2d_free_texture( levelTexture );
     levelTexture = vita2d_create_empty_texture_rendertarget( 960, 544, SCE_GXM_TEXTURE_FORMAT_A8B8G8R8 );
 
