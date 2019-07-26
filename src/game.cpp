@@ -355,8 +355,8 @@ void Game::inMenu()
                     BGCOLOR = RGBA8( 97, 90, 160, 255 );
                     break;
                 case 2:
-                    WALLCOLOR = RGBA8( 101, 133, 101, 255 );
-                    BGCOLOR = RGBA8( 47, 92, 48, 255 );
+                    WALLCOLOR = RGBA8( 110, 142, 110, 255 );
+                    BGCOLOR = RGBA8( 47, 98, 52, 255 );
                     break;
                 default:
                     WALLCOLOR = RGBA8( 144, 145, 194, 255 );
