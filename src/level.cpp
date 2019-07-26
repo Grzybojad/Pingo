@@ -166,26 +166,34 @@ void Level::draw()
     Gui::drawTextf_position( Gui::Position::centered, SCREEN_WIDTH / 2, 40, 40, "%s", levelListElement->name.c_str() );
 
     // Draw step count
-    int starPosX = 120;
-    int starPosY = 10;
+    int starPosX = 10;
+    int starPosY = 71;
+    float starScale = 0.25;
+    unsigned int lostStarTint = RGBA8( 0, 0, 0, 100 );
     
     if( steps <= levelListElement->stepsForThreeStars )
     {
-        Gui::drawTextf_color_position( Gui::Position::alignTop, 10, 10, 20, RGBA8( 220, 119, 47, 255 ), "Steps: %d/%d", steps, levelListElement->stepsForThreeStars );
-        Texture::drawTexture_scale( Texture::Sprite::star, Vec2( starPosX, starPosY ), 0.25 );
-        Texture::drawTexture_scale( Texture::Sprite::star, Vec2( starPosX + 20, starPosY ), 0.25 );
-        Texture::drawTexture_scale( Texture::Sprite::star, Vec2( starPosX + 40, starPosY ), 0.25 );
+        Gui::drawTextf_position( Gui::Position::alignTop, 10, 10, 19, "Steps" );
+        Gui::drawTextf_position( Gui::Position::alignTop, 10, 28, 40, "%d/%d", steps, levelListElement->stepsForThreeStars );
+        Texture::drawTexture_scale( Texture::Sprite::star, Vec2( starPosX, starPosY ), starScale );
+        Texture::drawTexture_scale( Texture::Sprite::star, Vec2( starPosX + 20, starPosY ), starScale );
+        Texture::drawTexture_scale( Texture::Sprite::star, Vec2( starPosX + 40, starPosY ), starScale );
     }  
     else if( steps <= levelListElement->stepsForTwoStars )
     {
-        Gui::drawTextf_color_position( Gui::Position::alignTop, 10, 10, 20, RGBA8( 220, 119, 47, 255 ), "Steps: %d/%d", steps, levelListElement->stepsForTwoStars );
-        Texture::drawTexture_scale( Texture::Sprite::star, Vec2( starPosX, starPosY ), 0.25 );
-        Texture::drawTexture_scale( Texture::Sprite::star, Vec2( starPosX + 20, starPosY ), 0.25 );
+        Gui::drawTextf_position( Gui::Position::alignTop, 10, 10, 19, "Steps" );
+        Gui::drawTextf_position( Gui::Position::alignTop, 10, 28, 40, "%d/%d", steps, levelListElement->stepsForTwoStars );
+        Texture::drawTexture_scale( Texture::Sprite::star, Vec2( starPosX, starPosY ), starScale );
+        Texture::drawTexture_scale( Texture::Sprite::star, Vec2( starPosX + 20, starPosY ), starScale );
+        Texture::drawTexture_tint_scale( Texture::Sprite::star, Vec2( starPosX + 40, starPosY ), lostStarTint, starScale );
     }    
     else
     {
-        Gui::drawTextf_color_position( Gui::Position::alignTop, 10, 10, 20, RGBA8( 220, 119, 47, 255 ), "Steps: %d", steps );
-        Texture::drawTexture_scale( Texture::Sprite::star, Vec2( starPosX, starPosY ), 0.25 );
+        Gui::drawTextf_position( Gui::Position::alignTop, 10, 10, 19, "Steps" );
+        Gui::drawTextf_position( Gui::Position::alignTop, 10, 28, 40, "%d", steps );
+        Texture::drawTexture_scale( Texture::Sprite::star, Vec2( starPosX, starPosY ), starScale );
+        Texture::drawTexture_tint_scale( Texture::Sprite::star, Vec2( starPosX + 20, starPosY ), lostStarTint, starScale );
+        Texture::drawTexture_tint_scale( Texture::Sprite::star, Vec2( starPosX + 40, starPosY ), lostStarTint, starScale );
     }
 }
 

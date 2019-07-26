@@ -321,9 +321,19 @@ namespace Texture {
         vita2d_draw_texture( getTexture( sprite ), 0, 0 );
     }
 
+    void drawTexture_tint( Sprite sprite, Vec2 pos, unsigned int color )
+    {
+        vita2d_draw_texture_tint( getTexture( sprite ), pos.x, pos.y, color );
+    }
+
     void drawTexture_scale( Sprite sprite, Vec2 pos, float scale )
     {
         vita2d_draw_texture_scale( getTexture( sprite ), pos.x, pos.y, scale, scale );
+    }
+
+    void drawTexture_tint_scale( Sprite sprite, Vec2 pos, unsigned int color, float scale )
+    {
+        vita2d_draw_texture_tint_scale( getTexture( sprite ), pos.x, pos.y, scale, scale, color );
     }
 
     void drawTexture_fillScreen( Sprite sprite )

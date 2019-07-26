@@ -84,7 +84,9 @@ namespace Texture
     void drawTexture( Sprite sprite, Vec2 pos );
     void drawTexture( Sprite sprite, int x, int y );
     void drawTexture( Sprite sprite );
+    void drawTexture_tint( Sprite sprite, Vec2 pos, unsigned int color );
     void drawTexture_scale( Sprite sprite, Vec2 pos, float scale );
+    void drawTexture_tint_scale( Sprite sprite, Vec2 pos, unsigned int color, float scale );
     void drawTexture_fillScreen( Sprite sprite );
     void drawWall( int x, int y, int face );
 
