@@ -555,7 +555,7 @@ LevelSelect::LevelSelect()
     paddingTop = 140;
     columns = 10;
 
-    itemWidth = vita2d_texture_get_width( Texture::getTexture( Texture::Sprite::doorClosed ) );
+    itemWidth = vita2d_texture_get_width( Texture::getTexture( Texture::Sprite::doorClosed ) ) - 5;
     itemHeight = vita2d_texture_get_height( Texture::getTexture( Texture::Sprite::doorClosed ) );
     spacing = ( SCREEN_WIDTH - paddingSide * 2 - itemWidth * columns ) / ( columns - 1 );
 }
