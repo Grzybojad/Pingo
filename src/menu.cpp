@@ -504,8 +504,13 @@ void LevelFinish::draw()
     Texture::drawTexture( Texture::Sprite::star, Vec2( SCREEN_WIDTH / 2 - 125, starHeight ) );
     if( stars > 1 )
         Texture::drawTexture( Texture::Sprite::star, Vec2( SCREEN_WIDTH / 2 - 50, starHeight ) );
+    else
+        Texture::drawTexture_tint( Texture::Sprite::star, Vec2( SCREEN_WIDTH / 2 - 50, starHeight ), RGBA8( 0, 0, 0, 100 ) );
+
     if( stars > 2 )
         Texture::drawTexture( Texture::Sprite::star, Vec2( SCREEN_WIDTH / 2 + 25, starHeight ) );
+    else
+        Texture::drawTexture_tint( Texture::Sprite::star, Vec2( SCREEN_WIDTH / 2 + 25, starHeight ), RGBA8( 0, 0, 0, 100 ) );
 }
 
 bool LevelFinish::clickedNextLevel()

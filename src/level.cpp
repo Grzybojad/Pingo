@@ -669,19 +669,40 @@ void LevelListElement::drawLevelMenuElement( Vec2 pos, bool selected )
             starPosX = pos.x + ( itemWidth / 2 ) - 12;
             starPosY = pos.y + ( itemHeight / 2 ) - 3;
             Texture::drawTexture_scale( Texture::Sprite::star, Vec2( starPosX, starPosY ), 0.25 );
-        }  
+        }
+        else
+        {
+            starPosX = pos.x + ( itemWidth / 2 ) - 12;
+            starPosY = pos.y + ( itemHeight / 2 ) - 3;
+            Texture::drawTexture_tint_scale( Texture::Sprite::star, Vec2( starPosX, starPosY ), RGBA8( 0, 0, 0, 100 ), 0.25 );
+        }
+        
         if( stars > 1 )
         {
             starPosX = pos.x + ( itemWidth / 2 ) - 25;
             starPosY = pos.y + ( itemHeight / 2 ) + 13;
             Texture::drawTexture_scale( Texture::Sprite::star, Vec2( starPosX, starPosY ), 0.25 );
-        } 
+        }
+        else
+        {
+            starPosX = pos.x + ( itemWidth / 2 ) - 25;
+            starPosY = pos.y + ( itemHeight / 2 ) + 13;
+            Texture::drawTexture_tint_scale( Texture::Sprite::star, Vec2( starPosX, starPosY ), RGBA8( 0, 0, 0, 100 ), 0.25 );
+        }
+        
         if( stars > 2 )
         {
             starPosX = pos.x + ( itemWidth / 2 ) + 1;
             starPosY = pos.y + ( itemHeight / 2 ) + 13;
             Texture::drawTexture_scale( Texture::Sprite::star, Vec2( starPosX, starPosY ), 0.25 );
         }
+        else
+        {
+            starPosX = pos.x + ( itemWidth / 2 ) + 1;
+            starPosY = pos.y + ( itemHeight / 2 ) + 13;
+            Texture::drawTexture_tint_scale( Texture::Sprite::star, Vec2( starPosX, starPosY ), RGBA8( 0, 0, 0, 100 ), 0.25 );
+        }
+        
     }
 }
 
