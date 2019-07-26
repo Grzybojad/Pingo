@@ -26,6 +26,9 @@ namespace Texture {
     vita2d_texture *doorLockedTexture;
     vita2d_texture *doorLockedOutlineTexture;
     vita2d_texture *doorPlatformTexture;
+    vita2d_texture *headerWorldTexture;
+    vita2d_texture *header1Texture;
+    vita2d_texture *header2Texture;
     vita2d_texture *lf_levelCompleteTexture;
     vita2d_texture *lf_nextLevelTexture;
     vita2d_texture *lf_nextLevelSelectedTexture;
@@ -86,6 +89,9 @@ namespace Texture {
         doorLockedTexture           = vita2d_load_PNG_file( ( pathTexture + "menu/levelSelect/doorLocked.png" ).c_str() );
         doorLockedOutlineTexture    = vita2d_load_PNG_file( ( pathTexture + "menu/levelSelect/doorLockedOutline.png" ).c_str() );
         doorPlatformTexture         = vita2d_load_PNG_file( ( pathTexture + "menu/levelSelect/doorPlatform.png" ).c_str() );
+        headerWorldTexture          = vita2d_load_PNG_file( ( pathTexture + "menu/levelSelect/headerWorld.png" ).c_str() );
+        header1Texture              = vita2d_load_PNG_file( ( pathTexture + "menu/levelSelect/header1.png" ).c_str() );
+        header2Texture              = vita2d_load_PNG_file( ( pathTexture + "menu/levelSelect/header2.png" ).c_str() );
 
         lf_levelCompleteTexture     = vita2d_load_PNG_file( ( pathTexture + "menu/levelFinish/lf-levelComplete.png" ).c_str() );
         lf_nextLevelTexture         = vita2d_load_PNG_file( ( pathTexture + "menu/levelFinish/lf-nextLevel.png" ).c_str() );
@@ -199,6 +205,15 @@ namespace Texture {
 
             case Sprite::doorPlatform:
                 return doorPlatformTexture;
+
+            case Sprite::headerWorld:
+                return headerWorldTexture;
+
+            case Sprite::header1:
+                return header1Texture;
+
+            case Sprite::header2:
+                return header2Texture;
 
             case Sprite::lf_levelComplete:
                 return lf_levelCompleteTexture;
@@ -359,6 +374,9 @@ namespace Texture {
         vita2d_free_texture( doorOpenedTexture );
         vita2d_free_texture( doorLockedTexture );
         vita2d_free_texture( doorLockedOutlineTexture );
+        vita2d_free_texture( headerWorldTexture );
+        vita2d_free_texture( header1Texture );
+        vita2d_free_texture( header2Texture );
         vita2d_free_texture( starTexture );
         vita2d_free_texture( messageBoxTexture );
         vita2d_free_texture( doorPlatformTexture );

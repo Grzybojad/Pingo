@@ -41,6 +41,9 @@ namespace Texture
         doorLocked = 30,
         doorLockedOutline = 31,
         doorPlatform = 35,
+        headerWorld = 36,
+        header1 = 37,
+        header2 = 38,
 
         lf_levelComplete = 41,
         lf_nextLevel = 42,
@@ -115,6 +118,9 @@ namespace Texture
     extern vita2d_texture *doorLockedTexture;
     extern vita2d_texture *doorLockedOutlineTexture;
     extern vita2d_texture *doorPlatformTexture;
+    extern vita2d_texture *headerWorldTexture;
+    extern vita2d_texture *header1Texture;
+    extern vita2d_texture *header2Texture;
 
     extern vita2d_texture *lf_levelCompleteTexture;
     extern vita2d_texture *lf_nextLevelTexture;

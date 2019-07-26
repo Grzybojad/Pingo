@@ -590,8 +590,21 @@ void LevelSelect::update()
 
 void LevelSelect::draw()
 {
-    Gui::drawText_position( Gui::Position::centered, SCREEN_WIDTH / 2, 50, 60, name );
-
+    if( strcmp( name, "World 1" ) == 0 )
+    {
+        Texture::drawTexture( Texture::Sprite::headerWorld, SCREEN_WIDTH / 2 - 140, 30 );
+        Texture::drawTexture( Texture::Sprite::header1, SCREEN_WIDTH / 2 + 110, 20 );
+    }
+    else if( strcmp( name, "World 2" ) == 0 )
+    {
+        Texture::drawTexture( Texture::Sprite::headerWorld, SCREEN_WIDTH / 2 - 140, 30 );
+        Texture::drawTexture( Texture::Sprite::header2, SCREEN_WIDTH / 2 + 110, 20 );
+    }
+    else
+    {
+        Gui::drawText_position( Gui::Position::centered, SCREEN_WIDTH / 2, 50, 60, name );
+    }
+        
     if( levelList->getNrOfLevels() > 0 )
     {
         for( int i = 0; i < levelList->getNrOfLevels(); ++i )
