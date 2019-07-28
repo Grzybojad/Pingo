@@ -103,6 +103,8 @@ vita_create_vpk(${SHORT_NAME}.vpk ${VITA_TITLEID} ${SHORT_NAME}.self
   FILE img/level/stopTile.png         img/level/stopTile.png
   FILE img/level/paintBlob.png        img/level/paintBlob.png
   FILE img/level/floorEmpty.png       img/level/floorEmpty.png
+  FILE img/level/conveyorBlank.png    img/level/conveyorBlank.png
+  FILE img/level/conveyorPainted.png  img/level/conveyorPainted.png
 
   FILE img/common/background1.png  img/common/background1.png
   FILE img/common/background2.png  img/common/background2.png
@@ -219,5 +221,7 @@ vita_create_vpk(${SHORT_NAME}.vpk ${VITA_TITLEID} ${SHORT_NAME}.self
   FILE levels/World2/level017.txt       levels/World2/level017.txt
   FILE levels/World2/level018.txt       levels/World2/level018.txt
   FILE levels/World2/level019.txt       levels/World2/level019.txt
+
+  FILE levels/World2/level021.txt       levels/World2/level021.txt
 )
 

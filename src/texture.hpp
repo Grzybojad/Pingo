@@ -20,6 +20,8 @@ namespace Texture
         stop = 5,
         paintBlob = 6,
         floorEmpty = 7,
+        conveyorBlank = 8,
+        conveyorPainted = 9,
 
         background1 = 11,
         background2 = 12,
@@ -84,11 +86,15 @@ namespace Texture
     void drawTexture( Sprite sprite, Vec2 pos );
     void drawTexture( Sprite sprite, int x, int y );
     void drawTexture( Sprite sprite );
+    void drawTexture_rotate( Sprite sprite, Vec2 pos, float rad );
     void drawTexture_tint( Sprite sprite, Vec2 pos, unsigned int color );
     void drawTexture_scale( Sprite sprite, Vec2 pos, float scale );
     void drawTexture_tint_scale( Sprite sprite, Vec2 pos, unsigned int color, float scale );
     void drawTexture_fillScreen( Sprite sprite );
     void drawWall( int x, int y, int face );
+
+    void drawTexture_sliced( Sprite sprite, Vec2 pos, float slice );
+    void drawTexture_rotate_sliced( Sprite sprite, Vec2 pos, float rad, float slice );
 
     void freeTextures();
 
@@ -100,6 +106,8 @@ namespace Texture
     extern vita2d_texture *stopTexture;
     extern vita2d_texture *paintBlobTexture;
     extern vita2d_texture *floorEmptyTexture;
+    extern vita2d_texture *conveyorBlankTexture;
+    extern vita2d_texture *conveyorPaintedTexture;
 
     extern vita2d_texture *background1Texture;
     extern vita2d_texture *background2Texture;

@@ -9,6 +9,8 @@ namespace Texture {
     vita2d_texture *stopTexture;
     vita2d_texture *paintBlobTexture;
     vita2d_texture *floorEmptyTexture;
+    vita2d_texture *conveyorBlankTexture;
+    vita2d_texture *conveyorPaintedTexture;
     vita2d_texture *background1Texture;
     vita2d_texture *background2Texture;
     vita2d_texture *background3Texture;
@@ -60,14 +62,16 @@ namespace Texture {
 
     void loadTextures()
     {
-        wallTexture         = vita2d_load_PNG_file( ( pathTexture + "level/wall.png" ).c_str() );
-        floorBlankTexture   = vita2d_load_PNG_file( ( pathTexture + "level/floorBlank.png" ).c_str() );
-        floorPaintedTexture = vita2d_load_PNG_file( ( pathTexture + "level/floorPainted.png" ).c_str() );
-        ballTexture         = vita2d_load_PNG_file( ( pathTexture + "level/ball.png" ).c_str() );
-        wallFillTexture     = vita2d_load_PNG_file( ( pathTexture + "level/wallFill.png" ).c_str() );
-        stopTexture         = vita2d_load_PNG_file( ( pathTexture + "level/stopTile.png" ).c_str() );
-        paintBlobTexture    = vita2d_load_PNG_file( ( pathTexture + "level/paintBlob.png" ).c_str() );
-        floorEmptyTexture   = vita2d_load_PNG_file( ( pathTexture + "level/floorEmpty.png" ).c_str() );
+        wallTexture             = vita2d_load_PNG_file( ( pathTexture + "level/wall.png" ).c_str() );
+        floorBlankTexture       = vita2d_load_PNG_file( ( pathTexture + "level/floorBlank.png" ).c_str() );
+        floorPaintedTexture     = vita2d_load_PNG_file( ( pathTexture + "level/floorPainted.png" ).c_str() );
+        ballTexture             = vita2d_load_PNG_file( ( pathTexture + "level/ball.png" ).c_str() );
+        wallFillTexture         = vita2d_load_PNG_file( ( pathTexture + "level/wallFill.png" ).c_str() );
+        stopTexture             = vita2d_load_PNG_file( ( pathTexture + "level/stopTile.png" ).c_str() );
+        paintBlobTexture        = vita2d_load_PNG_file( ( pathTexture + "level/paintBlob.png" ).c_str() );
+        floorEmptyTexture       = vita2d_load_PNG_file( ( pathTexture + "level/floorEmpty.png" ).c_str() );
+        conveyorBlankTexture    = vita2d_load_PNG_file( ( pathTexture + "level/conveyorBlank.png" ).c_str() );
+        conveyorPaintedTexture  = vita2d_load_PNG_file( ( pathTexture + "level/conveyorPainted.png" ).c_str() );
 
         background1Texture  = vita2d_load_PNG_file( ( pathTexture + "common/background1.png" ).c_str() );
         background2Texture  = vita2d_load_PNG_file( ( pathTexture + "common/background2.png" ).c_str() );
@@ -148,6 +152,12 @@ namespace Texture {
 
             case Sprite::floorEmpty:
                 return floorEmptyTexture;
+
+            case Sprite::conveyorBlank:
+                return conveyorBlankTexture;
+
+            case Sprite::conveyorPainted:
+                return conveyorPaintedTexture;
 
             case Sprite::ball:
                 return ballTexture;
@@ -321,6 +331,11 @@ namespace Texture {
         vita2d_draw_texture( getTexture( sprite ), 0, 0 );
     }
 
+    void drawTexture_rotate( Sprite sprite, Vec2 pos, float rad )
+    {
+        vita2d_draw_texture_rotate( getTexture( sprite ), pos.x, pos.y, rad );
+    }
+
     void drawTexture_tint( Sprite sprite, Vec2 pos, unsigned int color )
     {
         vita2d_draw_texture_tint( getTexture( sprite ), pos.x, pos.y, color );
@@ -361,6 +376,36 @@ namespace Texture {
             vita2d_draw_texture_tint_part( wallTexture, x, y, face * 30, 0, 30, 30, WALLCOLOR );
     }
 
+    void drawTexture_sliced( Sprite sprite, Vec2 pos, float slice )
+    {
+        int width = vita2d_texture_get_width( getTexture( sprite ) );
+        int height = vita2d_texture_get_height( getTexture( sprite ) );
+        
+        vita2d_draw_texture_part( getTexture( sprite ), pos.x, pos.y, 0, slice, width, height - slice );
+        vita2d_draw_texture_part( getTexture( sprite ), pos.x, pos.y + height - slice, 0, 0, width, slice );
+    }
+
+    void drawTexture_rotate_sliced( Sprite sprite, Vec2 pos, float rad, float slice )
+    {
+        float width = (float)vita2d_texture_get_width( getTexture( sprite ) );
+        float height = (float)vita2d_texture_get_height( getTexture( sprite ) );
+
+        Vec2 sliceCenter{ width/2, slice/2 };
+        float centerDistance = height/2 - sliceCenter.y;
+        sliceCenter.y += centerDistance;
+        sliceCenter.x -= sin( rad ) * ( centerDistance - width/2 );
+        sliceCenter.y += cos( rad ) * ( centerDistance - height/2 );
+
+        Vec2 sliceCenter2{ width/2, slice + ( height - slice )/2 };
+        float centerDistance2 = height/2 - sliceCenter2.y;
+        sliceCenter2.y += centerDistance2;
+        sliceCenter2.x -= sin( rad ) * ( centerDistance2 + width/2 );
+        sliceCenter2.y += cos( rad ) * ( centerDistance2 + height/2 );
+
+        vita2d_draw_texture_part_scale_rotate( getTexture( sprite ), pos.x + sliceCenter.x, pos.y + sliceCenter.y, 0, slice, width, height - slice, 1, 1, rad );
+        vita2d_draw_texture_part_scale_rotate( getTexture( sprite ), pos.x + sliceCenter2.x,pos.y + sliceCenter2.y,0, 0, width, slice, 1, 1, rad );
+    }
+
     void freeTextures()
     {
         vita2d_free_texture( wallTexture );
@@ -370,6 +415,9 @@ namespace Texture {
         vita2d_free_texture( wallFillTexture );
         vita2d_free_texture( stopTexture );
         vita2d_free_texture( paintBlobTexture );
+        vita2d_free_texture( floorEmptyTexture );
+        vita2d_free_texture( conveyorBlankTexture );
+        vita2d_free_texture( conveyorPaintedTexture );
         vita2d_free_texture( background1Texture );
         vita2d_free_texture( background2Texture );
         vita2d_free_texture( background3Texture );

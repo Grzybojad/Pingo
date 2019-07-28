@@ -159,6 +159,27 @@ void Level::draw()
     // Draw prerendered level texture
     vita2d_draw_texture( levelTexture, 0, 0 );
 
+    // DEBUG
+    vita2d_wait_rendering_done();
+
+    // Draw conveyor tiles
+    for( int i = 0; i < tiles.size(); ++i )
+    {
+        for( int j = 0; j < tiles[ i ].size(); ++j )
+        {
+            if( dynamic_cast<ConveyorTile*>( tiles[i][j] ) )
+            {
+                Rect tileRect = Rect( 
+                levelPosition.x + ( j * tileSize ), 
+                levelPosition.y + ( i * tileSize ), 
+                tileSize, 
+                tileSize 
+                );
+                tiles[i][j]->draw( tileRect );
+            }
+        }
+    }
+
     // Draw ball
     ball.draw();
 
@@ -249,12 +270,14 @@ void Level::initLevelTexture()
 
                 Texture::drawWall( tileRect.x, tileRect.y, face );
             }
+            else if( dynamic_cast<ConveyorTile*>( tiles[i][j] ) )
+            {
+                // don't draw, since conveyor tiles are drawn every frame anyway
+            }
             else
             {
                 tiles[i][j]->draw( tileRect );
             }
-
-            
         }
     }
 
@@ -325,6 +348,18 @@ Tile* Level::charToTile( char c )
 
         case 'd':
             return new DoubleFloorTile();
+
+        case '^':
+            return new ConveyorTile( 0 );
+
+        case '>':
+            return new ConveyorTile( 1 );
+
+        case 'v':
+            return new ConveyorTile( 2 );
+
+        case '<':
+            return new ConveyorTile( 3 );
 
         default:
             return new Tile();
@@ -594,6 +629,37 @@ void StopTile::draw( Rect rect )
 {
     FloorTile::draw( rect );
     Texture::drawTexture( Texture::Sprite::stop, Vec2( rect.x, rect.y ) );
+}
+
+ConveyorTile::ConveyorTile( int direction )
+{
+    this->direction = direction;
+    this->animationStep = 0;
+    this->animationLength = vita2d_texture_get_height( Texture::getTexture( Texture::Sprite::conveyorBlank ) );
+    this->animationSpeed = 0.3f;
+    this->state = State::blank;
+}
+
+void ConveyorTile::draw( Rect rect )
+{
+    if( state == State::blank )
+        Texture::drawTexture_rotate_sliced( Texture::Sprite::conveyorBlank, Vec2( rect.x, rect.y ), direction * M_PI / 2, animationStep );
+    else if( state == State::painted )
+        Texture::drawTexture_rotate_sliced( Texture::Sprite::conveyorPainted, Vec2( rect.x, rect.y ), direction * M_PI / 2, animationStep );
+
+    animationStep += animationSpeed * timestep;
+    if( animationStep > animationLength )
+        animationStep -= animationLength;
+}
+
+void ConveyorTile::paint()
+{
+    state = State::painted;
+}
+
+bool ConveyorTile::paintable()
+{
+    return ( state == State::blank );
 }
 
 

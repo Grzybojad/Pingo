@@ -180,6 +180,31 @@ class StopTile : public FloorTile
         void draw( Rect rect ) override;
 };
 
+class ConveyorTile : public FloorTile
+{
+    public:
+        using FloorTile::FloorTile;
+        ConveyorTile( int direction );
+
+        void draw( Rect rect ) override;
+
+    private:
+        enum class State
+        {
+            blank = 0,
+            painted = 1
+        };
+        State state;
+
+        int direction;  // 0 up, 1 right, 2 down, 3 left
+        float animationStep;
+        int animationLength;
+        float animationSpeed;
+
+        void paint() override;
+        bool paintable() override;
+};
+
 class StartTile : public FloorTile
 {
     public:
