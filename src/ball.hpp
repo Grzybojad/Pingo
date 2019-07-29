@@ -25,6 +25,11 @@ class Ball
 
         Rect getRect();
 
+        void moveUp();
+        void moveRight();
+        void moveDown();
+        void moveLeft();
+
         enum class State
         {
             stationary = 0,
@@ -40,9 +45,4 @@ class Ball
 
         double ballSpeed;
         int tileSize;
-
-        void moveUp();
-        void moveRight();
-        void moveDown();
-        void moveLeft();
 };

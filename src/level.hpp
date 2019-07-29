@@ -109,6 +109,9 @@ class Level
         // Is the ball on a stop tile?
         bool ballOnStop();
 
+        // Is the ball on a conveyor tile? //-1 no, 0 up, 1 right, 2 down, 3 left
+        int ballOnConveyor();
+
         // Paint the tile the ball is on
         void paintTile();
 
@@ -187,6 +190,8 @@ class ConveyorTile : public FloorTile
         ConveyorTile( int direction );
 
         void draw( Rect rect ) override;
+
+        int getDirection();
 
     private:
         enum class State

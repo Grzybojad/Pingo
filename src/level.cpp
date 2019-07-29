@@ -123,6 +123,33 @@ void Level::update()
                 ball.setWorldPos( getBallTilePosition() );
                 ball.stop();
             }
+
+            if( ballOnConveyor() != -1 )
+            {
+                ball.setWorldPos( getBallTilePosition() );
+
+                switch( ballOnConveyor() )
+                {
+                    case -1:
+                        break;
+
+                    case 0:
+                        ball.moveUp();
+                        break;
+
+                    case 1:
+                        ball.moveRight();
+                        break;
+
+                    case 2:
+                        ball.moveDown();
+                        break;
+
+                    case 3:
+                        ball.moveLeft();
+                        break;
+                }
+            }
         }
             
 
@@ -492,6 +519,32 @@ bool Level::ballOnStop()
     return false;
 }
 
+int Level::ballOnConveyor()
+{
+    for( int i = 0; i < tiles.size(); ++i )
+    {
+        for( int j = 0; j < tiles[ i ].size(); ++j )
+        {
+            if( dynamic_cast<ConveyorTile*>( tiles[i][j] ) )
+            {
+                Rect smallTile = Rect(
+                    ball.getRect().x + 5,
+                    ball.getRect().y + 5,
+                    -10,
+                    -10
+                );
+                if( checkCollision( ball.getRect() + smallTile, getWorldPosFromTilePos( Vec2( j, i ) ).toRect( tileSize, tileSize ) + smallTile ) )
+                {
+                    ConveyorTile* tile = dynamic_cast<ConveyorTile*>( tiles[i][j] );
+                    return tile->getDirection();
+                }
+            }
+        }
+    }
+
+    return -1;
+}
+
 void Level::paintTile()
 {
     Tile* ballTile = tiles[ getBallTile().y ][ getBallTile().x ];
@@ -650,6 +703,11 @@ void ConveyorTile::draw( Rect rect )
     animationStep += animationSpeed * timestep;
     if( animationStep > animationLength )
         animationStep -= animationLength;
+}
+
+int ConveyorTile::getDirection()
+{
+    return direction;
 }
 
 void ConveyorTile::paint()
