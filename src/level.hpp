@@ -256,13 +256,20 @@ class LevelList
         int lastUnlockedLevel();
         void compleateCurrentLevel();
 
+        bool areAllLevelsFinished();
+        bool areAllStarsCollected();
+
         LevelListElement * accessElement( int index );
 
         // Save and load progress
         void saveProgress( int levelList );
         void loadProgress( int levelList );
 
+        bool seenFinishCongratulations;
+        bool seenCompleteCongratulations;
+
     private:
         std::vector< LevelListElement > levels;
         int currentLevel;
+        
 };

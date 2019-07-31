@@ -911,6 +911,24 @@ void LevelList::compleateCurrentLevel()
         levels[ currentLevel ].unlocked = true;
 }
 
+bool LevelList::areAllLevelsFinished()
+{
+    for( int i = 0; i < levels.size(); ++i )
+        if( !getCompletion( i ) )
+            return false;
+
+    return true;
+}
+
+bool LevelList::areAllStarsCollected()
+{
+    for( int i = 0; i < levels.size(); ++i )
+        if( accessElement( i )->stars != 3 )
+            return false;
+
+    return true;
+}
+
 int LevelList::getNrOfLevels()
 {
     return levels.size();
@@ -947,7 +965,8 @@ void LevelList::saveProgress( int levelList )
     {
         saveData << accessElement( i )->index << "\t"  << accessElement( i )->unlocked << "\t" << accessElement( i )->completed << "\t" << accessElement( i )->stars << "\n";
     }
-    saveData << alreadyShowedCompleteMessage;
+    saveData << seenFinishCongratulations << "\n";;
+    saveData << seenCompleteCongratulations << "\n";;
 
     saveData.close();
 }
@@ -967,8 +986,8 @@ void LevelList::loadProgress( int levelList )
         saveData >> accessElement( i )->completed;
         saveData >> accessElement( i )->stars;
     }
-
-    saveData >> alreadyShowedCompleteMessage;
+    saveData >> seenFinishCongratulations;
+    saveData >> seenCompleteCongratulations;
 
     saveData.close();
 }

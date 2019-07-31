@@ -69,6 +69,4 @@ class Game
         Timer gameTime;
 
         bool progressSaved;
-        bool finishMessage; // All levels finished message box
-        bool gameComplete;  // Game complete message box
 };

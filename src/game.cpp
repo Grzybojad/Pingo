@@ -44,8 +44,6 @@ Game::Game()
     optionsMenu.loadOptions();
 
     progressSaved = false;
-    finishMessage = false;
-    gameComplete = false;
 
     gameState = GameState::initialized;
 }
@@ -205,7 +203,6 @@ void Game::inGame()
                 Sound::levelMusic.stop();
                 Sound::soloud.play( Sound::menuMusic );
                 destroyLevel();
-                //finishMessage = true;
             }
             
         }
@@ -238,14 +235,40 @@ void Game::inMenu()
         mainMenu.update();
         curtain.update();
 
-        // Handle game finish message box
-        if( finishMessage )
+        // This is a mess, but whatever
+        if( levelListList[ 1 ].areAllLevelsFinished() && !levelListList[ 1 ].seenFinishCongratulations )
         {
             if( Input::wasPressed( Input::Button::cross ) || Input::wasPressed( Input::Button::circle ) || Input::wasPressed( Input::Button::start ) )
             {
-                finishMessage = false;
+                levelListList[ 1 ].seenFinishCongratulations = true;
+                levelListList[ 1 ].saveProgress( 1 );
             }
         }
+        else if( levelListList[ 1 ].areAllLevelsFinished() && !levelListList[ 1 ].seenCompleteCongratulations )
+        {
+            if( Input::wasPressed( Input::Button::cross ) || Input::wasPressed( Input::Button::circle ) || Input::wasPressed( Input::Button::start ) )
+            {
+                levelListList[ 1 ].seenCompleteCongratulations = true;
+                levelListList[ 1 ].saveProgress( 1 );
+            }
+        }
+        else if( levelListList[ 2 ].areAllLevelsFinished() && !levelListList[ 2 ].seenFinishCongratulations )
+        {
+            if( Input::wasPressed( Input::Button::cross ) || Input::wasPressed( Input::Button::circle ) || Input::wasPressed( Input::Button::start ) )
+            {
+                levelListList[ 2 ].seenFinishCongratulations = true;
+                levelListList[ 2 ].saveProgress( 2 );
+            }
+        }
+        else if( levelListList[ 2 ].areAllLevelsFinished() && !levelListList[ 2 ].seenCompleteCongratulations )
+        {
+            if( Input::wasPressed( Input::Button::cross ) || Input::wasPressed( Input::Button::circle ) || Input::wasPressed( Input::Button::start ) )
+            {
+                levelListList[ 2 ].seenCompleteCongratulations = true;
+                levelListList[ 2 ].saveProgress( 2 );
+            }
+        }
+
         else
         {
             if( mainMenu.clickedStart() )
@@ -311,73 +334,59 @@ void Game::inMenu()
     // Level select menu
     else if( gameState == GameState::levelMenu )
     {
-        if( gameComplete && !alreadyShowedCompleteMessage )
+        if( Input::wasPressed( Input::Button::circle ) )
         {
-            if( Input::wasPressed( Input::Button::cross ) || Input::wasPressed( Input::Button::circle ) || Input::wasPressed( Input::Button::start ) )
-            {
-                alreadyShowedCompleteMessage = true;
-                levelListList[ selectedLevelList ].saveProgress( selectedLevelList );
-            }
+            gameState = GameState::mainMenu;
         }
-        else
+        // Handle switching between level select screens
+        if( Input::wasPressed( Input::Button::lTrigger ) )
         {
-            if( Input::wasPressed( Input::Button::circle ) )
+            if( selectedLevelList > 0 )
+                selectedLevelList--;
+            else
             {
-                gameState = GameState::mainMenu;
+                selectedLevelList = levelListList.size() - 1;
             }
-            // Handle switching between level select screens
-            if( Input::wasPressed( Input::Button::lTrigger ) )
+            Sound::soloud.play( Sound::menuMove );
+        }
+        else if( Input::wasPressed( Input::Button::rTrigger ) )
+        {
+            if( selectedLevelList < levelListList.size() - 1 )
+                selectedLevelList++;
+            else
             {
-                if( selectedLevelList > 0 )
-                    selectedLevelList--;
-                else
-                {
-                    selectedLevelList = levelListList.size() - 1;
-                }
-                Sound::soloud.play( Sound::menuMove );
+                selectedLevelList = 0;
             }
-            else if( Input::wasPressed( Input::Button::rTrigger ) )
-            {
-                if( selectedLevelList < levelListList.size() - 1 )
-                    selectedLevelList++;
-                else
-                {
-                    selectedLevelList = 0;
-                }
-                Sound::soloud.play( Sound::menuMove );
-            }
-            
-            switch( selectedLevelList )
-            {
-                case 0:
-                case 1:
-                    WALLCOLOR = RGBA8( 144, 145, 194, 255 );
-                    BGCOLOR = RGBA8( 97, 90, 160, 255 );
-                    break;
-                case 2:
-                    WALLCOLOR = RGBA8( 110, 142, 110, 255 );
-                    BGCOLOR = RGBA8( 47, 98, 52, 255 );
-                    break;
-                default:
-                    WALLCOLOR = RGBA8( 144, 145, 194, 255 );
-                    BGCOLOR = RGBA8( 97, 90, 160, 255 );
-                    break;
-            }
+            Sound::soloud.play( Sound::menuMove );
+        }
+        
+        switch( selectedLevelList )
+        {
+            case 0:
+            case 1:
+                WALLCOLOR = RGBA8( 144, 145, 194, 255 );
+                BGCOLOR = RGBA8( 97, 90, 160, 255 );
+                break;
+            case 2:
+                WALLCOLOR = RGBA8( 110, 142, 110, 255 );
+                BGCOLOR = RGBA8( 47, 98, 52, 255 );
+                break;
+            default:
+                WALLCOLOR = RGBA8( 144, 145, 194, 255 );
+                BGCOLOR = RGBA8( 97, 90, 160, 255 );
+                break;
+        }
 
-            if( levelMenus[ selectedLevelList ].selectPressed() )
-            {
-                gameState = GameState::playing;
-                Sound::menuMusic.stop();
-                Sound::soloud.play( Sound::levelMusic );
-                initLevel( levelMenus[ selectedLevelList ].getCursor() );
-            }
-            levelMenus[ selectedLevelList ].update();
+        if( levelMenus[ selectedLevelList ].selectPressed() )
+        {
+            gameState = GameState::playing;
+            Sound::menuMusic.stop();
+            Sound::soloud.play( Sound::levelMusic );
+            initLevel( levelMenus[ selectedLevelList ].getCursor() );
         }
+        levelMenus[ selectedLevelList ].update();
 
         draw();
-
-        //if( levelMenus[ selectedLevelList ].isGameComplete() )
-            //gameComplete = true;
     }
     // Options menu
     else if( gameState == GameState::optionsMenu )
@@ -450,10 +459,14 @@ void Game::draw()
             mainMenu.draw();
             curtain.draw();
 
-            if( finishMessage && !gameComplete )
-                Gui::drawMessageBox( "Congratualations!", "You've completed all the\nlevels currently available to\nplay in Pingo!\nFor your next challange, try\ngetting 3 stars in every level!" );
-            else if( finishMessage && gameComplete )
-                Gui::drawMessageBox( "Congratualations!", "You've completed all the\nlevels currently available to\nplay in Pingo!\nSince you've already collected all the\nstars, you'll have to wait for more\ncontent. Follow me @_grzybojad if you\ndon't want to miss any updates!" );
+            if( levelListList[ 1 ].areAllLevelsFinished() && !levelListList[ 1 ].seenFinishCongratulations )
+                Gui::drawMessageBox( "Congratualations!", "You've completed all the\nlevels of World 1!\nTry getting 3 stars in every\nlevel or try World 2!" );
+            else if( levelListList[ 1 ].areAllLevelsFinished() && !levelListList[ 1 ].seenCompleteCongratulations )
+                Gui::drawMessageBox( "You're amazing!", "You managed to get 3 stars\non all World 1 levels!\nThis is no small feat, I'm\nproud of you. If you didn't\ncheat that is." );
+            else if( levelListList[ 2 ].areAllLevelsFinished() && !levelListList[ 2 ].seenFinishCongratulations )
+                Gui::drawMessageBox( "Congratualations!", "You've completed all the\nlevels of World 2!\nTry getting 3 stars in every\nlevel!" );
+            else if( levelListList[ 2 ].areAllLevelsFinished() && !levelListList[ 2 ].seenCompleteCongratulations )
+                Gui::drawMessageBox( "You're amazing!", "You managed to get 3 stars\non all World 2 levels!\nI hope you had a lot of fun\nplaying them!" );
             break;
 
         case GameState::playing:
@@ -466,9 +479,6 @@ void Game::draw()
 
         case GameState::levelMenu:
             levelMenus[ selectedLevelList ].draw();
-
-            if( gameComplete && !alreadyShowedCompleteMessage )
-                Gui::drawMessageBox( "Amazing!", "You got 3 stars on every single\nlevel! I'm impressed by your skills\nand your determination to master\nthis game. Thank you so much for\nplaying Pingo!\n- Grzybojad" );
 
             break;
 
