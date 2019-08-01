@@ -241,8 +241,8 @@ void OptionsMenu::draw()
     Texture::drawTexture( Texture::Sprite::o_stats , Vec2( SCREEN_WIDTH - 280, 170 ) );
     Gui::drawTextf_position( Gui::Position::alignTopRight, SCREEN_WIDTH - 20, 200, 30, "Time: %s\nSteps: %d\nLevels finished: %d", timeToString( Stats::timePlayed ).c_str(), Stats::totalSteps, Stats::totalLevelFinished );
 
-    // "Go back" text
-    Gui::drawText_position( Gui::Position::alignRight, SCREEN_WIDTH - 20, SCREEN_HEIGHT - 20, 30, "Press O to go back" );
+    // "Go back" button
+    Texture::drawTexture( Texture::Sprite::back, SCREEN_WIDTH - 150, SCREEN_HEIGHT - 85 );
 }
 
 void OptionsMenu::update()

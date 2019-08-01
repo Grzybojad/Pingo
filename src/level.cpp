@@ -243,6 +243,10 @@ void Level::draw()
         Texture::drawTexture_tint_scale( Texture::Sprite::star, Vec2( starPosX + 20, starPosY ), lostStarTint, starScale );
         Texture::drawTexture_tint_scale( Texture::Sprite::star, Vec2( starPosX + 40, starPosY ), lostStarTint, starScale );
     }
+
+    // Draw button info
+    Texture::drawTexture( Texture::Sprite::restartButton, SCREEN_WIDTH - 190, SCREEN_HEIGHT - 165 );
+    Texture::drawTexture( Texture::Sprite::pauseButton, SCREEN_WIDTH - 190, SCREEN_HEIGHT - 85 );
 }
 
 bool Level::complete()

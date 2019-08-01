@@ -11,11 +11,14 @@ namespace Texture {
     vita2d_texture *floorEmptyTexture;
     vita2d_texture *conveyorBlankTexture;
     vita2d_texture *conveyorPaintedTexture;
+    vita2d_texture *restartButtonTexture;
+    vita2d_texture *pauseButtonTexture;
     vita2d_texture *background1Texture;
     vita2d_texture *background2Texture;
     vita2d_texture *background3Texture;
     vita2d_texture *starTexture;
     vita2d_texture *messageBoxTexture;
+    vita2d_texture *backTexture;
     vita2d_texture *logoTexture;
     vita2d_texture *startButtonTexture;
     vita2d_texture *startSelectedTexture;
@@ -73,12 +76,16 @@ namespace Texture {
         conveyorBlankTexture    = vita2d_load_PNG_file( ( pathTexture + "level/conveyorBlank.png" ).c_str() );
         conveyorPaintedTexture  = vita2d_load_PNG_file( ( pathTexture + "level/conveyorPainted.png" ).c_str() );
 
-        background1Texture  = vita2d_load_PNG_file( ( pathTexture + "common/background1.png" ).c_str() );
-        background2Texture  = vita2d_load_PNG_file( ( pathTexture + "common/background2.png" ).c_str() );
-        background3Texture  = vita2d_load_PNG_file( ( pathTexture + "common/background3.png" ).c_str() );
+        restartButtonTexture    = vita2d_load_PNG_file( ( pathTexture + "level/restart.png" ).c_str() );
+        pauseButtonTexture      = vita2d_load_PNG_file( ( pathTexture + "level/pause.png" ).c_str() );
 
-        starTexture         = vita2d_load_PNG_file( ( pathTexture + "common/star.png" ).c_str() );
-        messageBoxTexture   = vita2d_load_PNG_file( ( pathTexture + "common/messageBox.png" ).c_str() );
+        background1Texture      = vita2d_load_PNG_file( ( pathTexture + "common/background1.png" ).c_str() );
+        background2Texture      = vita2d_load_PNG_file( ( pathTexture + "common/background2.png" ).c_str() );
+        background3Texture      = vita2d_load_PNG_file( ( pathTexture + "common/background3.png" ).c_str() );
+
+        starTexture             = vita2d_load_PNG_file( ( pathTexture + "common/star.png" ).c_str() );
+        messageBoxTexture       = vita2d_load_PNG_file( ( pathTexture + "common/messageBox.png" ).c_str() );
+        backTexture             = vita2d_load_PNG_file( ( pathTexture + "common/back.png" ).c_str() );
 
         logoTexture                 = vita2d_load_PNG_file( ( pathTexture + "menu/main/logo.png" ).c_str() );
         startButtonTexture          = vita2d_load_PNG_file( ( pathTexture + "menu/main/startButton.png" ).c_str() );
@@ -159,6 +166,12 @@ namespace Texture {
             case Sprite::conveyorPainted:
                 return conveyorPaintedTexture;
 
+            case Sprite::restartButton:
+                return restartButtonTexture;
+
+            case Sprite::pauseButton:
+                return pauseButtonTexture;
+
             case Sprite::ball:
                 return ballTexture;
 
@@ -179,6 +192,9 @@ namespace Texture {
 
             case Sprite::messageBox:
                 return messageBoxTexture;
+
+            case Sprite::back:
+                return backTexture;
 
             case Sprite::logo:
                 return logoTexture;
@@ -418,6 +434,8 @@ namespace Texture {
         vita2d_free_texture( floorEmptyTexture );
         vita2d_free_texture( conveyorBlankTexture );
         vita2d_free_texture( conveyorPaintedTexture );
+        vita2d_free_texture( restartButtonTexture );
+        vita2d_free_texture( pauseButtonTexture );
         vita2d_free_texture( background1Texture );
         vita2d_free_texture( background2Texture );
         vita2d_free_texture( background3Texture );
@@ -437,6 +455,7 @@ namespace Texture {
         vita2d_free_texture( header2Texture );
         vita2d_free_texture( starTexture );
         vita2d_free_texture( messageBoxTexture );
+        vita2d_free_texture( backTexture );
         vita2d_free_texture( doorPlatformTexture );
         vita2d_free_texture( lf_levelCompleteTexture );
         vita2d_free_texture( lf_nextLevelTexture );

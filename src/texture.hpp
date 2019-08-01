@@ -12,73 +12,77 @@ namespace Texture
 
     enum class Sprite
     {
-        wall = 0,
-        floorBlank = 1,
-        floorPainted = 2,
-        ball = 3,
-        wallFill = 4,
-        stop = 5,
-        paintBlob = 6,
-        floorEmpty = 7,
-        conveyorBlank = 8,
-        conveyorPainted = 9,
+        wall,
+        floorBlank,
+        floorPainted,
+        ball,
+        wallFill,
+        stop,
+        paintBlob,
+        floorEmpty,
+        conveyorBlank,
+        conveyorPainted,
 
-        background1 = 11,
-        background2 = 12,
-        background3 = 13,
+        restartButton,
+        pauseButton,
+
+        background1,
+        background2,
+        background3,
         
-        star = 14,
-        messageBox = 15,
+        star,
+        messageBox,
+        back,
 
-        logo = 21,
-        startButton = 22,
-        startSelected = 23,
-        levelSelectButton = 24,
-        levelSelectSelected = 25,
-        optionsButton = 26,
-        optionsSelected = 27,
+        logo,
+        startButton,
+        startSelected,
+        levelSelectButton,
+        levelSelectSelected,
+        optionsButton,
+        optionsSelected,
 
-        doorClosed = 28,
-        doorOpened = 29,
-        doorLocked = 30,
-        doorLockedOutline = 31,
-        doorPlatform = 35,
-        headerWorld = 36,
-        header1 = 37,
-        header2 = 38,
+        doorClosed,
+        doorOpened,
+        doorLocked,
+        doorLockedOutline,
+        doorPlatform,
+        headerWorld,
+        header1,
+        header2,
 
-        lf_levelComplete = 41,
-        lf_nextLevel = 42,
-        lf_nextLevelSelected = 43,
-        lf_restart = 44,
-        lf_restartSelected = 45,
-        lf_menu = 46,
-        lf_menuSelected = 47,
+        lf_levelComplete,
+        lf_nextLevel,
+        lf_nextLevelSelected,
+        lf_restart,
+        lf_restartSelected,
+        lf_menu,
+        lf_menuSelected,
 
-        p_pausedText = 51,
-        p_return = 52,
-        p_returnSelected = 53,
-        p_restart = 54,
-        p_restartSelected = 55,
-        p_menu = 56,
-        p_menuSelected = 57,
+        p_pausedText,
+        p_return,
+        p_returnSelected,
+        p_restart,
+        p_restartSelected,
+        p_menu,
+        p_menuSelected,
 
-        o_header = 61,
-        o_music = 62,
-        o_musicOn = 63,
-        o_sfx = 64,
-        o_sfxOn = 65,
-        o_touch = 66,
-        o_touchOn = 67,
-        o_stats = 68,
-        o_checkboxOff = 69,
-        o_checkboxOn = 70,
-        o_sliderOff = 71,
-        o_sliderOn = 72,
+        o_header,
+        o_music,
+        o_musicOn,
+        o_sfx,
+        o_sfxOn,
+        o_touch,
+        o_touchOn,
+        o_stats,
+        o_checkboxOff,
+        o_checkboxOn,
+        o_sliderOff,
+        o_sliderOn,
 
-        underConstruction = 80,
+        underConstruction,
 
-        curtain = 100
+        curtain
     };
 
     vita2d_texture * getTexture( Sprite sprite );
@@ -109,11 +113,15 @@ namespace Texture
     extern vita2d_texture *conveyorBlankTexture;
     extern vita2d_texture *conveyorPaintedTexture;
 
+    extern vita2d_texture *restartButtonTexture;
+    extern vita2d_texture *pauseButtonTexture;
+
     extern vita2d_texture *background1Texture;
     extern vita2d_texture *background2Texture;
     extern vita2d_texture *background3Texture;
     extern vita2d_texture *starTexture;
     extern vita2d_texture *messageBoxTexture;
+    extern vita2d_texture *backTexture;
 
     extern vita2d_texture *logoTexture;
     extern vita2d_texture *startButtonTexture;

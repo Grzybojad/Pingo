@@ -106,11 +106,15 @@ vita_create_vpk(${SHORT_NAME}.vpk ${VITA_TITLEID} ${SHORT_NAME}.self
   FILE img/level/conveyorBlank.png    img/level/conveyorBlank.png
   FILE img/level/conveyorPainted.png  img/level/conveyorPainted.png
 
+  FILE img/level/pause.png            img/level/pause.png
+  FILE img/level/restart.png          img/level/restart.png
+
   FILE img/common/background1.png  img/common/background1.png
   FILE img/common/background2.png  img/common/background2.png
   FILE img/common/background3.png  img/common/background3.png
   FILE img/common/star.png         img/common/star.png
   FILE img/common/messageBox.png   img/common/messageBox.png
+  FILE img/common/back.png         img/common/back.png
 
   FILE img/menu/main/logo.png                  img/menu/main/logo.png
   FILE img/menu/main/startButton.png           img/menu/main/startButton.png
