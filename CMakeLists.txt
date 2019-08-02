@@ -132,6 +132,8 @@ vita_create_vpk(${SHORT_NAME}.vpk ${VITA_TITLEID} ${SHORT_NAME}.self
   FILE img/menu/levelSelect/headerWorld.png       img/menu/levelSelect/headerWorld.png
   FILE img/menu/levelSelect/header1.png           img/menu/levelSelect/header1.png
   FILE img/menu/levelSelect/header2.png           img/menu/levelSelect/header2.png
+  FILE img/menu/levelSelect/lTrigger.png              img/menu/levelSelect/lTrigger.png
+  FILE img/menu/levelSelect/rTrigger.png              img/menu/levelSelect/rTrigger.png
 
   FILE img/menu/levelFinish/lf-levelComplete.png      img/menu/levelFinish/lf-levelComplete.png
   FILE img/menu/levelFinish/lf-nextLevel.png          img/menu/levelFinish/lf-nextLevel.png

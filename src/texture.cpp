@@ -34,6 +34,8 @@ namespace Texture {
     vita2d_texture *headerWorldTexture;
     vita2d_texture *header1Texture;
     vita2d_texture *header2Texture;
+    vita2d_texture *lTriggerTexture;
+    vita2d_texture *rTriggerTexture;
     vita2d_texture *lf_levelCompleteTexture;
     vita2d_texture *lf_nextLevelTexture;
     vita2d_texture *lf_nextLevelSelectedTexture;
@@ -103,6 +105,8 @@ namespace Texture {
         headerWorldTexture          = vita2d_load_PNG_file( ( pathTexture + "menu/levelSelect/headerWorld.png" ).c_str() );
         header1Texture              = vita2d_load_PNG_file( ( pathTexture + "menu/levelSelect/header1.png" ).c_str() );
         header2Texture              = vita2d_load_PNG_file( ( pathTexture + "menu/levelSelect/header2.png" ).c_str() );
+        lTriggerTexture             = vita2d_load_PNG_file( ( pathTexture + "menu/levelSelect/lTrigger.png" ).c_str() );
+        rTriggerTexture             = vita2d_load_PNG_file( ( pathTexture + "menu/levelSelect/rTrigger.png" ).c_str() );
 
         lf_levelCompleteTexture     = vita2d_load_PNG_file( ( pathTexture + "menu/levelFinish/lf-levelComplete.png" ).c_str() );
         lf_nextLevelTexture         = vita2d_load_PNG_file( ( pathTexture + "menu/levelFinish/lf-nextLevel.png" ).c_str() );
@@ -240,6 +244,12 @@ namespace Texture {
 
             case Sprite::header2:
                 return header2Texture;
+
+            case Sprite::lTrigger:
+                return lTriggerTexture;
+
+            case Sprite::rTrigger:
+                return rTriggerTexture;
 
             case Sprite::lf_levelComplete:
                 return lf_levelCompleteTexture;
@@ -453,6 +463,8 @@ namespace Texture {
         vita2d_free_texture( headerWorldTexture );
         vita2d_free_texture( header1Texture );
         vita2d_free_texture( header2Texture );
+        vita2d_free_texture( lTriggerTexture );
+        vita2d_free_texture( rTriggerTexture );
         vita2d_free_texture( starTexture );
         vita2d_free_texture( messageBoxTexture );
         vita2d_free_texture( backTexture );

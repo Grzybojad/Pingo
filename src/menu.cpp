@@ -609,6 +609,20 @@ void LevelSelect::draw()
     {
         Gui::drawText_position( Gui::Position::centered, SCREEN_WIDTH / 2, 50, 60, name );
     }
+
+    // Draw L/R icons
+    int upPos = 45;
+    int downPos = 55;
+    if( Input::isHeld( Input::Button::lTrigger ) )
+        Texture::drawTexture( Texture::Sprite::lTrigger, SCREEN_WIDTH/2 - 250, downPos );
+    else
+        Texture::drawTexture( Texture::Sprite::lTrigger, SCREEN_WIDTH/2 - 250, upPos );
+    
+    if( Input::isHeld( Input::Button::rTrigger ) )
+        Texture::drawTexture( Texture::Sprite::rTrigger, SCREEN_WIDTH/2 + 180, downPos );
+    else
+        Texture::drawTexture( Texture::Sprite::rTrigger, SCREEN_WIDTH/2 + 180, upPos );
+    
         
     if( levelList->getNrOfLevels() > 0 )
     {

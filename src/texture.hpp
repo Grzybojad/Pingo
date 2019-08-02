@@ -50,6 +50,8 @@ namespace Texture
         headerWorld,
         header1,
         header2,
+        lTrigger,
+        rTrigger,
 
         lf_levelComplete,
         lf_nextLevel,
@@ -139,6 +141,8 @@ namespace Texture
     extern vita2d_texture *headerWorldTexture;
     extern vita2d_texture *header1Texture;
     extern vita2d_texture *header2Texture;
+    extern vita2d_texture *lTriggerTexture;
+    extern vita2d_texture *rTriggerTexture;
 
     extern vita2d_texture *lf_levelCompleteTexture;
     extern vita2d_texture *lf_nextLevelTexture;
