@@ -283,9 +283,24 @@ void Game::inMenu()
                 Sound::menuMusic.stop();
                 Sound::soloud.play( Sound::levelMusic );
                 
-                // TODO this needs to be changed
-                selectedLevelList = 1;
-                initLevel( levelListList[ selectedLevelList ].lastUnlockedLevel() );
+                if( levelListList[ 1 ].areAllLevelsFinished() && levelListList[ 2 ].areAllLevelsFinished() )
+                {
+                    // If all levels are finished, play 1-1
+                    selectedLevelList = 1;
+                    initLevel( 1 );
+                }
+                else if( levelListList[ 1 ].areAllLevelsFinished() )
+                {
+                    // If all World 1 levels are finished, play last unlocked level of World 2
+                    selectedLevelList = 2;
+                    initLevel( levelListList[ selectedLevelList ].lastUnlockedLevel() );
+                }
+                else if( levelListList[ 2 ].areAllLevelsFinished() )
+                {
+                    // In all other cases, play last unlocked level of World 1
+                    selectedLevelList = 1;
+                    initLevel( levelListList[ selectedLevelList ].lastUnlockedLevel() );
+                }
             }
             else if( mainMenu.clickedLevelSelect() )
             {
