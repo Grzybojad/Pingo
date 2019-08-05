@@ -192,16 +192,39 @@ void Game::inGame()
         if( finishMenu.clickedNextLevel() )
         {
             progressSaved = false;
+
             if( levelListList[ selectedLevelList ].nextLevel() )
             {
                 destroyLevel();
                 initLevel();
+
+                if( selectedLevelList == 2 )
+                {
+                    int level = levelListList[ selectedLevelList ].getCurrentLevel();
+                    if( level == 11 )
+                    {
+                        Sound::stopLevelMusic();
+                        Sound::playLevelMusic( 3 );
+                    }
+                    else if( level == 21 )
+                    {
+                        Sound::playLevelMusic( 4 );
+                    }
+                }
             }
             else
             {
                 gameState = GameState::mainMenu;
-                Sound::levelMusic.stop();
-                Sound::soloud.play( Sound::menuMusic );
+                Sound::stopLevelMusic();
+                if( selectedLevelList != 2 )
+                    Sound::playLevelMusic( 1 );
+                else if( levelListList[ 2 ].getCurrentLevel() > 20 )
+                    Sound::playLevelMusic( 4 );
+                else if( levelListList[ 2 ].getCurrentLevel() > 10 )
+                    Sound::playLevelMusic( 3 );
+                else
+                    Sound::playLevelMusic( 2 );
+
                 destroyLevel();
             }
             
@@ -216,7 +239,7 @@ void Game::inGame()
         {
             progressSaved = false;
             gameState = GameState::mainMenu;
-            Sound::levelMusic.stop();
+            Sound::stopLevelMusic();
             Sound::soloud.play( Sound::menuMusic );
             destroyLevel();
         }
@@ -279,9 +302,6 @@ void Game::inMenu()
                     gameTime.start();
 
                 gameState = GameState::playing;
-
-                Sound::menuMusic.stop();
-                Sound::soloud.play( Sound::levelMusic );
                 
                 if( levelListList[ 1 ].areAllLevelsFinished() && levelListList[ 2 ].areAllLevelsFinished() )
                 {
@@ -301,6 +321,16 @@ void Game::inMenu()
                     selectedLevelList = 1;
                     initLevel( levelListList[ selectedLevelList ].lastUnlockedLevel() );
                 }
+
+                Sound::menuMusic.stop();
+                if( selectedLevelList != 2 )
+                    Sound::playLevelMusic( 1 );
+                else if( levelListList[ 2 ].getCurrentLevel() > 20 )
+                    Sound::playLevelMusic( 4 );
+                else if( levelListList[ 2 ].getCurrentLevel() > 10 )
+                    Sound::playLevelMusic( 3 );
+                else
+                    Sound::playLevelMusic( 2 );
             }
             else if( mainMenu.clickedLevelSelect() )
             {
@@ -339,7 +369,7 @@ void Game::inMenu()
         else if( pauseMenu.clickedMainMenu() )
         {
             gameState = GameState::mainMenu;
-            Sound::levelMusic.stop();
+            Sound::stopLevelMusic();
             Sound::soloud.play( Sound::menuMusic );
             destroyLevel();
         }
@@ -395,9 +425,17 @@ void Game::inMenu()
         if( levelMenus[ selectedLevelList ].selectPressed() )
         {
             gameState = GameState::playing;
-            Sound::menuMusic.stop();
-            Sound::soloud.play( Sound::levelMusic );
             initLevel( levelMenus[ selectedLevelList ].getCursor() );
+
+            Sound::menuMusic.stop();
+            if( selectedLevelList != 2 )
+                Sound::playLevelMusic( 1 );
+            else if( levelListList[ 2 ].getCurrentLevel() > 20 )
+                Sound::playLevelMusic( 4 );
+            else if( levelListList[ 2 ].getCurrentLevel() > 10 )
+                Sound::playLevelMusic( 3 );
+            else
+                Sound::playLevelMusic( 2 );
         }
         levelMenus[ selectedLevelList ].update();
 

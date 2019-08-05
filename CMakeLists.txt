@@ -174,6 +174,9 @@ vita_create_vpk(${SHORT_NAME}.vpk ${VITA_TITLEID} ${SHORT_NAME}.self
 
   FILE sounds/Good-Morning-Doctor-Weird.ogg      sounds/Good-Morning-Doctor-Weird.ogg
   FILE sounds/Puzzle-Dreams-3.ogg                sounds/Puzzle-Dreams-3.ogg
+  FILE sounds/Puzzle-Caves.ogg                   sounds/Puzzle-Caves.ogg
+  FILE sounds/Hypnotic-Puzzle3.ogg               sounds/Hypnotic-Puzzle3.ogg
+  FILE sounds/Rubiks-Dodecahedron.ogg            sounds/Rubiks-Dodecahedron.ogg
 
 
   # Levels

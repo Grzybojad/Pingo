@@ -22,10 +22,16 @@ namespace Sound
 
     extern SoLoud::WavStream menuMusic;
     extern SoLoud::WavStream levelMusic;
+    extern SoLoud::WavStream levelMusic2;
+    extern SoLoud::WavStream levelMusic3;
+    extern SoLoud::WavStream levelMusic4;
 
     extern void initSoloud();
     extern void loadSounds();
 
     extern void setSFXVolume( float volume );
     extern void setMusicVolume( float volume );
+
+    extern void playLevelMusic( int version );
+    extern void stopLevelMusic();
 }
