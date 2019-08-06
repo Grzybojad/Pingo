@@ -4,6 +4,7 @@
 #include <vita2d.h>
 
 #include "texture.hpp"
+#include "input.hpp"
 #include "sound.hpp"
 #include "common.hpp"
 
@@ -26,6 +27,7 @@ class Credits
 
     private:
         void addElement( CreditsEntity* entity );
+        void handleInput();
 
         struct CreditsElement
         {
@@ -66,8 +68,8 @@ class CreditsLogo : public CreditsEntity
 
     private:
         vita2d_texture* logo;
-        const int paddingBottom = 200;
-       
+        const int paddingBottom = 100;
+        const int paddingTop = 50; 
 };
 
 class CreditsHeader : public CreditsEntity
@@ -80,8 +82,9 @@ class CreditsHeader : public CreditsEntity
 
     protected:
         const char* text;
-        const int textSize = 50;
+        const int textSize = 40;
         const int paddingBottom = 20;
+        const int paddingTop = 30;
 };
 
 class CreditsPerson : public CreditsEntity
@@ -95,7 +98,7 @@ class CreditsPerson : public CreditsEntity
     private:
         const char* displayName;
         const char* role;
-        const int textSize = 30;
+        const int textSize = 25;
         const int paddingBottom = 20;
 };
 
@@ -109,4 +112,6 @@ class CreditsTextBlock : public CreditsEntity
 
     protected:
         const char* text;
+        const int textSize = 25;
+        const int paddingBottom = 20;
 };
