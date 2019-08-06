@@ -42,6 +42,8 @@ class Game
 
         void exit();
 
+        void playLevelMusic();
+
         enum class GameState
         {
             exiting,

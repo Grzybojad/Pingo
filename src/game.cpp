@@ -16,7 +16,7 @@ Game::Game()
     Gui::loadFont();
 
     // Initialize level list
-    selectedLevelList = 1;  // TODO Have to change this if adding new World
+    selectedLevelList = 1;
     level.firstInit();
     initCustomLevelList();
     initLevelList();
@@ -205,24 +205,16 @@ void Game::inGame()
                 if( selectedLevelList == 2 )
                 {
                     int level = levelListList[ selectedLevelList ].getCurrentLevel();
-                    if( level == 11 )
+                    if( level == 11 || level == 21 )
                     {
                         Sound::stopLevelMusic();
-                        Sound::playLevelMusic( 3 );
-                    }
-                    else if( level == 21 )
-                    {
-                        Sound::playLevelMusic( 4 );
+                        playLevelMusic();
                     }
                 }
             }
             else
             {
-                //gameState = GameState::mainMenu;
-                //Sound::stopLevelMusic();
-                //Sound::soloud.play( Sound::menuMusic );
-
-                //destroyLevel();
+                // If there's no next level, play the credits
                 credits.init();
                 gameState = GameState::credits;
             }
@@ -322,14 +314,7 @@ void Game::inMenu()
                 }
 
                 Sound::menuMusic.stop();
-                if( selectedLevelList != 2 )
-                    Sound::playLevelMusic( 1 );
-                else if( levelListList[ 2 ].getCurrentLevel() > 20 )
-                    Sound::playLevelMusic( 4 );
-                else if( levelListList[ 2 ].getCurrentLevel() > 10 )
-                    Sound::playLevelMusic( 3 );
-                else
-                    Sound::playLevelMusic( 2 );
+                playLevelMusic();
             }
             else if( mainMenu.clickedLevelSelect() )
             {
@@ -427,14 +412,7 @@ void Game::inMenu()
             initLevel( levelMenus[ selectedLevelList ].getCursor() );
 
             Sound::menuMusic.stop();
-            if( selectedLevelList != 2 )
-                Sound::playLevelMusic( 1 );
-            else if( levelListList[ 2 ].getCurrentLevel() > 20 )
-                Sound::playLevelMusic( 4 );
-            else if( levelListList[ 2 ].getCurrentLevel() > 10 )
-                Sound::playLevelMusic( 3 );
-            else
-                Sound::playLevelMusic( 2 );
+            playLevelMusic();
         }
         levelMenus[ selectedLevelList ].update();
 
@@ -461,7 +439,11 @@ void Game::inCredits()
     credits.update();
 
     if( credits.haveEnded() )
+    {
+        Sound::stopLevelMusic();
+        Sound::soloud.play( Sound::menuMusic );
         gameState = GameState::mainMenu;
+    }
 
     draw();
 }
@@ -563,4 +545,16 @@ void Game::draw()
 
     vita2d_end_drawing();
     vita2d_swap_buffers();
+}
+
+void Game::playLevelMusic()
+{
+    if( selectedLevelList != 2 )
+        Sound::playLevelMusic( 1 );
+    else if( levelListList[ 2 ].getCurrentLevel() > 20 )
+        Sound::playLevelMusic( 4 );
+    else if( levelListList[ 2 ].getCurrentLevel() > 10 )
+        Sound::playLevelMusic( 3 );
+    else
+        Sound::playLevelMusic( 2 );
 }
