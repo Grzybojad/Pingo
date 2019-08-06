@@ -7,11 +7,13 @@ namespace Sound
     SoLoud::Wav menuMove;
     SoLoud::Wav ballHit;
     SoLoud::Wav levelFinish;
+    SoLoud::Wav airLock;
     SoLoud::WavStream menuMusic;
     SoLoud::WavStream levelMusic;
     SoLoud::WavStream levelMusic2;
     SoLoud::WavStream levelMusic3;
     SoLoud::WavStream levelMusic4;
+    SoLoud::WavStream creditsMusic;
 
     void initSoloud()
     {
@@ -23,12 +25,14 @@ namespace Sound
         // Load files
         menuMove.load( ( pathSounds + "menuMove.wav" ).c_str() );
         ballHit.load( ( pathSounds + "ballHit.ogg" ).c_str() );
-        levelFinish.load( ( pathSounds + "levelFinish.wav" ).c_str()  );
-        menuMusic.load( ( pathSounds + "Puzzle-Dreams-3.ogg" ).c_str()  );
-        levelMusic.load( ( pathSounds + "Good-Morning-Doctor-Weird.ogg" ).c_str()  );
-        levelMusic2.load( ( pathSounds + "Puzzle-Caves.ogg" ).c_str()  );
-        levelMusic3.load( ( pathSounds + "Hypnotic-Puzzle3.ogg" ).c_str()  );
-        levelMusic4.load( ( pathSounds + "Rubiks-Dodecahedron.ogg" ).c_str()  );
+        levelFinish.load( ( pathSounds + "levelFinish.wav" ).c_str() );
+        airLock.load( ( pathSounds + "Air-lock.ogg" ).c_str() );
+        menuMusic.load( ( pathSounds + "Puzzle-Dreams-3.ogg" ).c_str() );
+        levelMusic.load( ( pathSounds + "Good-Morning-Doctor-Weird.ogg" ).c_str() );
+        levelMusic2.load( ( pathSounds + "Puzzle-Caves.ogg" ).c_str() );
+        levelMusic3.load( ( pathSounds + "Hypnotic-Puzzle3.ogg" ).c_str() );
+        levelMusic4.load( ( pathSounds + "Rubiks-Dodecahedron.ogg" ).c_str() );
+        creditsMusic.load( ( pathSounds + "8-Bit-Puzzler.ogg" ).c_str() );
 
         // Set options
         menuMusic.setLooping( 1 );

@@ -4,6 +4,7 @@
 #include <vita2d.h>
 
 #include "texture.hpp"
+#include "sound.hpp"
 #include "common.hpp"
 
 //DEBUG

@@ -179,6 +179,9 @@ vita_create_vpk(${SHORT_NAME}.vpk ${VITA_TITLEID} ${SHORT_NAME}.self
   FILE sounds/Puzzle-Caves.ogg                   sounds/Puzzle-Caves.ogg
   FILE sounds/Hypnotic-Puzzle3.ogg               sounds/Hypnotic-Puzzle3.ogg
   FILE sounds/Rubiks-Dodecahedron.ogg            sounds/Rubiks-Dodecahedron.ogg
+  FILE sounds/8-Bit-Puzzler.ogg                  sounds/8-Bit-Puzzler.ogg
+
+  FILE sounds/Air-lock.ogg                       sounds/Air-lock.ogg
 
 
   # Levels

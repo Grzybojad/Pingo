@@ -10,7 +10,7 @@ void Credits::init()
     fadePoint = 0;
     scrollPoint = 0;
 
-    fadeSpeed = 2.0f;
+    fadeSpeed = 1.0f;
     scrollSpeed = 0.8f;
 
     faded = false;
@@ -26,6 +26,9 @@ void Credits::init()
         } 
     );
     length += elements[ 0 ].entity->getHeight();
+
+    Sound::stopLevelMusic();
+    Sound::soloud.play( Sound::airLock );
 }
 
 void Credits::update()
@@ -37,6 +40,7 @@ void Credits::update()
         {
             fadePoint = 255;
             faded = true;
+            Sound::soloud.play( Sound::creditsMusic );
         }
     }
     else if( scrollPoint < length )

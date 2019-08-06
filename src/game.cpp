@@ -447,6 +447,7 @@ void Game::inCredits()
     if( credits.haveEnded() )
     {
         Sound::stopLevelMusic();
+        Sound::creditsMusic.stop();
         Sound::soloud.play( Sound::menuMusic );
         gameState = GameState::mainMenu;
     }
