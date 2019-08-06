@@ -21,13 +21,14 @@ namespace Gui
     // Enum for positioning text
     enum class Position
     {
-        normal = 0,
-        centered = 1,
-        centeredX = 2,
-        centeredY = 3,
-        alignRight = 4,
-        alignTop = 5,
-        alignTopRight = 6
+        normal,
+        centered,
+        centeredX,
+        centeredY,
+        centeredTop,
+        alignRight,
+        alignTop,
+        alignTopRight
     };
 
     // Text drawing functions
@@ -42,6 +43,11 @@ namespace Gui
 
     // Gui elements drawing
     void drawMessageBox( const char *header, const char *body );
+
+    // Text measurements
+    int getTextWidth( unsigned int size, const char *text );
+    int getTextHeight( unsigned int size, const char *text );
+    
 
     // Debug text
     extern std::string debugText;

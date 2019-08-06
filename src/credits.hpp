@@ -7,6 +7,8 @@
 #include "sound.hpp"
 #include "common.hpp"
 
+#include "gui.hpp"
+
 // Forward declaration
 class CreditsEntity;
 
@@ -23,6 +25,8 @@ class Credits
         bool haveEnded();
 
     private:
+        void addElement( CreditsEntity* entity );
+
         struct CreditsElement
         {
             int position;
@@ -62,6 +66,7 @@ class CreditsLogo : public CreditsEntity
 
     private:
         vita2d_texture* logo;
+        const int paddingBottom = 200;
        
 };
 
@@ -75,6 +80,8 @@ class CreditsHeader : public CreditsEntity
 
     protected:
         const char* text;
+        const int textSize = 50;
+        const int paddingBottom = 20;
 };
 
 class CreditsPerson : public CreditsEntity
@@ -88,6 +95,8 @@ class CreditsPerson : public CreditsEntity
     private:
         const char* displayName;
         const char* role;
+        const int textSize = 30;
+        const int paddingBottom = 20;
 };
 
 class CreditsTextBlock : public CreditsEntity

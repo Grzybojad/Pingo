@@ -74,6 +74,9 @@ namespace Gui
             case Position::centeredY:
                 return drawText( x, y + (h/2), size, text );
 
+            case Position::centeredTop:
+                return drawText( x - (w/2), y + h, size, text );
+
             case Position::alignRight:
                 return drawText( x - w, y, size, text );
 
@@ -116,6 +119,9 @@ namespace Gui
 
             case Position::centeredY:
                 return drawText_color( x, y + (h/2), size, color, text );
+
+            case Position::centeredTop:
+                return drawText_color( x - (w/2), y + h, size, color, text );
 
             case Position::alignRight:
                 return drawText_color( x - w, y, size, color, text );
@@ -164,6 +170,17 @@ namespace Gui
         drawText_color_position( Position::centeredX, SCREEN_WIDTH / 2, boxRect.y + ( ( boxRect.h - bodyHeight ) / 2 ) + 20, bodySize, RGBA8( 70, 70, 125, 255 ), body );
 
         drawText_color_position( Position::centered, SCREEN_WIDTH / 2, boxRect.y + boxRect.h - 100, footerSize, RGBA8( 70, 70, 125, 255 ), "Press X to close this message" );
+    }
+
+
+    int getTextWidth( unsigned int size, const char *text )
+    {
+        return vita2d_font_text_width( mainFont[ (int)(size * FONT_SCALE) ], size, text );
+    }
+
+    int getTextHeight( unsigned int size, const char *text )
+    {
+        return vita2d_font_text_height( mainFont[ (int)(size * FONT_SCALE) ], size, text );
     }
 
 

@@ -453,6 +453,7 @@ void Game::inCredits()
     }
 
     draw();
+    calcFrameTime();
 }
 
 void Game::initLevel()
