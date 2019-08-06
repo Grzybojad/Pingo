@@ -21,6 +21,7 @@ class Credits
         void update();
         void draw();
 
+        bool levelHasFaded();
         bool haveEnded();
 
     private:
@@ -39,6 +40,7 @@ class Credits
 
         int length;
 
+        bool faded;
         bool end;
 };
 

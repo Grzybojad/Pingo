@@ -13,6 +13,7 @@ void Credits::init()
     fadeSpeed = 2.0f;
     scrollSpeed = 0.8f;
 
+    faded = false;
     end = false;
 
     length = SCREEN_HEIGHT;
@@ -32,7 +33,11 @@ void Credits::update()
     if( fadePoint < 255 )
     {
         fadePoint += fadeSpeed * timestep;
-        if( fadePoint > 255 ) fadePoint = 255;
+        if( fadePoint > 255 )
+        {
+            fadePoint = 255;
+            faded = true;
+        }
     }
     else if( scrollPoint < length )
     {
@@ -58,6 +63,11 @@ void Credits::draw()
             elements[ i ].entity->draw( elements[ i ].position - scrollPoint );
         }
     }
+}
+
+bool Credits::levelHasFaded()
+{
+    return faded;
 }
 
 bool Credits::haveEnded()

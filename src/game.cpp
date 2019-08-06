@@ -436,7 +436,13 @@ void Game::inMenu()
 
 void Game::inCredits()
 {
+    bool faded = credits.levelHasFaded();
+
     credits.update();
+
+    // Destroy the level once it's not visible
+    if( faded != credits.levelHasFaded() )
+        destroyLevel();
 
     if( credits.haveEnded() )
     {
@@ -536,7 +542,7 @@ void Game::draw()
             break;
 
         case GameState::credits:
-            level.draw();
+            if( !credits.levelHasFaded() ) level.draw(); 
             credits.draw();
             break;
     }
