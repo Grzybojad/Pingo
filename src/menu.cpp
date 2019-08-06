@@ -121,22 +121,22 @@ MainMenu::MainMenu()
 
 void MainMenu::draw()
 {
-    Texture::drawTexture( Texture::Sprite::logo, Vec2( 0, 0 ) );
+    Texture::drawTexture( Texture::Sprite::logo, Vec2( 94, 22 ) );
 
     if( cursor == 0 )
-        Texture::drawTexture( Texture::Sprite::startSelected, Vec2( 0, 0 ) );
+        Texture::drawTexture( Texture::Sprite::startSelected, Vec2( 156, 228 ) );
     else
-        Texture::drawTexture( Texture::Sprite::startButton, Vec2( 0, 0 ) );
+        Texture::drawTexture( Texture::Sprite::startButton, Vec2( 156, 228 ) );
 
     if( cursor == 1 )
-        Texture::drawTexture( Texture::Sprite::levelSelectSelected, Vec2( 0, 0 ) );
+        Texture::drawTexture( Texture::Sprite::levelSelectSelected, Vec2( 221, 276 ) );
     else
-        Texture::drawTexture( Texture::Sprite::levelSelectButton, Vec2( 0, 0 ) );
+        Texture::drawTexture( Texture::Sprite::levelSelectButton, Vec2( 221, 276 ) );
 
     if( cursor == 2 )
-        Texture::drawTexture( Texture::Sprite::optionsSelected, Vec2( 0, 0 ) );
+        Texture::drawTexture( Texture::Sprite::optionsSelected, Vec2( 627, 309 ) );
     else
-        Texture::drawTexture( Texture::Sprite::optionsButton, Vec2( 0, 0 ) );
+        Texture::drawTexture( Texture::Sprite::optionsButton, Vec2( 627, 309 ) );
 }
 
 void MainMenu::handleInput()
@@ -485,20 +485,20 @@ LevelFinish::LevelFinish()
 
 void LevelFinish::draw()
 {
-    Texture::drawTexture( Texture::Sprite::lf_levelComplete, Vec2( 0, 0 ) );
+    Texture::drawTexture( Texture::Sprite::lf_levelComplete, Vec2( 302, 26 ) );
 
     if( cursor == 0 )
-        Texture::drawTexture( Texture::Sprite::lf_nextLevelSelected, Vec2( 0, 0 ) );
+        Texture::drawTexture( Texture::Sprite::lf_nextLevelSelected, Vec2( 304, 261 ) );
     else
-        Texture::drawTexture( Texture::Sprite::lf_nextLevel, Vec2( 0, 0 ) );
+        Texture::drawTexture( Texture::Sprite::lf_nextLevel, Vec2( 304, 261) );
     if( cursor == 1 )
-        Texture::drawTexture( Texture::Sprite::lf_restartSelected, Vec2( 0, 0 ) );
+        Texture::drawTexture( Texture::Sprite::lf_restartSelected, Vec2( 322, 333 ) );
     else
-        Texture::drawTexture( Texture::Sprite::lf_restart, Vec2( 0, 0 ) );   
+        Texture::drawTexture( Texture::Sprite::lf_restart, Vec2( 322, 333 ) );
     if( cursor == 2 )
-        Texture::drawTexture( Texture::Sprite::lf_menuSelected, Vec2( 0, 0 ) );
+        Texture::drawTexture( Texture::Sprite::lf_menuSelected, Vec2( 327, 413 ) );
     else
-        Texture::drawTexture( Texture::Sprite::lf_menu, Vec2( 0, 0 ) );
+        Texture::drawTexture( Texture::Sprite::lf_menu, Vec2( 327, 413 ) );
 
     int starHeight = 140;
     Texture::drawTexture( Texture::Sprite::star, Vec2( SCREEN_WIDTH / 2 - 125, starHeight ) );
