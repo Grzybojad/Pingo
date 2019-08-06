@@ -51,8 +51,6 @@ void Credits::update()
     {
         end = true;
     }
-
-    Gui::debugText = std::to_string( fadePoint ) + " | " + std::to_string( scrollPoint ) + " | " + std::to_string( length );
 }
 
 void Credits::draw()

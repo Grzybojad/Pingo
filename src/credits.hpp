@@ -7,9 +7,6 @@
 #include "sound.hpp"
 #include "common.hpp"
 
-//DEBUG
-#include "gui.hpp"
-
 // Forward declaration
 class CreditsEntity;
 
