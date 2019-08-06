@@ -16,6 +16,7 @@
 #include "sound.hpp"
 #include "timer.hpp"
 #include "stats.hpp"
+#include "credits.hpp"
 #include "common.hpp"
 
 class Game
@@ -29,6 +30,7 @@ class Game
     private:
         void inGame();
         void inMenu();
+        void inCredits();
         
         void initLevelList();
         void initCustomLevelList();
@@ -42,13 +44,14 @@ class Game
 
         enum class GameState
         {
-            exiting = -1,
-            initialized = 0,
-            mainMenu = 1,
-            levelMenu = 2,
-            playing = 3,
-            paused = 4,
-            optionsMenu = 5
+            exiting,
+            initialized,
+            mainMenu,
+            levelMenu,
+            playing,
+            paused,
+            optionsMenu,
+            credits
         };
         GameState gameState;
 
@@ -65,6 +68,7 @@ class Game
 
         AnimatedBackground background;
         Curtain curtain;
+        Credits credits;
 
         Timer gameTime;
 

@@ -138,6 +138,10 @@ void Game::mainLoop()
             case GameState::optionsMenu:
                 inMenu();
                 break;
+
+            case GameState::credits:
+                inCredits();
+                break;
         }
     }
 
@@ -214,18 +218,13 @@ void Game::inGame()
             }
             else
             {
-                gameState = GameState::mainMenu;
-                Sound::stopLevelMusic();
-                if( selectedLevelList != 2 )
-                    Sound::playLevelMusic( 1 );
-                else if( levelListList[ 2 ].getCurrentLevel() > 20 )
-                    Sound::playLevelMusic( 4 );
-                else if( levelListList[ 2 ].getCurrentLevel() > 10 )
-                    Sound::playLevelMusic( 3 );
-                else
-                    Sound::playLevelMusic( 2 );
+                //gameState = GameState::mainMenu;
+                //Sound::stopLevelMusic();
+                //Sound::soloud.play( Sound::menuMusic );
 
-                destroyLevel();
+                //destroyLevel();
+                credits.init();
+                gameState = GameState::credits;
             }
             
         }
@@ -457,6 +456,16 @@ void Game::inMenu()
     calcFrameTime();
 }
 
+void Game::inCredits()
+{
+    credits.update();
+
+    if( credits.haveEnded() )
+        gameState = GameState::mainMenu;
+
+    draw();
+}
+
 void Game::initLevel()
 {
     if( !gameTime.is_started() )
@@ -542,6 +551,11 @@ void Game::draw()
 
         case GameState::optionsMenu:
             optionsMenu.draw();
+            break;
+
+        case GameState::credits:
+            level.draw();
+            credits.draw();
             break;
     }
 

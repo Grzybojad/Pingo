@@ -50,6 +50,8 @@ add_executable(${VITA_APP_NAME}
   src/sound.cpp
   src/stats.hpp
   src/stats.cpp
+  src/credits.hpp
+  src/credits.cpp
   src/common.hpp
   src/common.cpp
 )
