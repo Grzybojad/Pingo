@@ -332,6 +332,12 @@ void Game::inMenu()
             }
         }
 
+        // Check if the code was entered
+        if( mainMenu.isCodeActaivated() )
+        {
+            background.changeToSecretBg();
+        }
+
         draw();
     }
     // Pause menu

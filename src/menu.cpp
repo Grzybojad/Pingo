@@ -117,6 +117,8 @@ MainMenu::MainMenu()
 
     MenuItem * exitButton = new MenuItem( Rect( 660, 390, 250, 120 ), "Exit" );
     addItem( exitButton );
+
+    codeActiavated = false;
 }
 
 void MainMenu::draw()
@@ -145,6 +147,41 @@ void MainMenu::handleInput()
         selectUp();
     if( Input::wasPressed( Input::Button::down ) || Input::wasPressed( Input::Button::lAnalogDown ) || Input::wasPressed( Input::Button::right ) || Input::wasPressed( Input::Button::lAnalogRight ) )
         selectDown();
+
+    if( Input::wasPressed( Input::Button::up ) )
+    {
+        buttonInputs.erase( 0, 1 );
+        buttonInputs.append( "u" );
+    }
+    if( Input::wasPressed( Input::Button::right ) )
+    {
+        buttonInputs.erase( 0, 1 );
+        buttonInputs.append( "r" );
+    }
+    if( Input::wasPressed( Input::Button::down ) )
+    {
+        buttonInputs.erase( 0, 1 );
+        buttonInputs.append( "d" );
+    }
+    if( Input::wasPressed( Input::Button::left ) )
+    {
+        buttonInputs.erase( 0, 1 );
+        buttonInputs.append( "l" );
+    }
+    if( Input::wasPressed( Input::Button::circle ) )
+    {
+        buttonInputs.erase( 0, 1 );
+        buttonInputs.append( "b" );
+    }
+    if( Input::wasPressed( Input::Button::cross ) )
+    {
+        buttonInputs.erase( 0, 1 );
+        buttonInputs.append( "a" );
+    }
+    if( buttonInputs == "uuddlrlrba" )
+    {
+        codeActiavated = true;
+    }
 }
 
 bool MainMenu::clickedStart()
@@ -184,6 +221,11 @@ bool MainMenu::clickedOptions()
             return true;
 
     return false;
+}
+
+bool MainMenu::isCodeActaivated()
+{
+    return codeActiavated;
 }
 
 

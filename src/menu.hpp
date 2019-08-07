@@ -75,8 +75,13 @@ class MainMenu : public Menu
         bool clickedLevelSelect();
         bool clickedOptions();
 
+        bool isCodeActaivated();
+
     protected:
         void handleInput() override;
+
+        std::string buttonInputs = "AAAAAAAAAA";
+        bool codeActiavated;
 };
 
 

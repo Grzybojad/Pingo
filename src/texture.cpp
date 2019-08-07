@@ -16,6 +16,7 @@ namespace Texture {
     vita2d_texture *background1Texture;
     vita2d_texture *background2Texture;
     vita2d_texture *background3Texture;
+    vita2d_texture *background4Texture;
     vita2d_texture *starTexture;
     vita2d_texture *messageBoxTexture;
     vita2d_texture *backTexture;
@@ -84,6 +85,7 @@ namespace Texture {
         background1Texture      = vita2d_load_PNG_file( ( pathTexture + "common/background1.png" ).c_str() );
         background2Texture      = vita2d_load_PNG_file( ( pathTexture + "common/background2.png" ).c_str() );
         background3Texture      = vita2d_load_PNG_file( ( pathTexture + "common/background3.png" ).c_str() );
+        background4Texture      = vita2d_load_PNG_file( ( pathTexture + "common/background4.png" ).c_str() );
 
         starTexture             = vita2d_load_PNG_file( ( pathTexture + "common/star.png" ).c_str() );
         messageBoxTexture       = vita2d_load_PNG_file( ( pathTexture + "common/messageBox.png" ).c_str() );
@@ -190,6 +192,9 @@ namespace Texture {
 
             case Sprite::background3:
                 return background3Texture;
+
+            case Sprite::background4:
+                return background4Texture;
 
             case Sprite::star:
                 return starTexture;
@@ -449,6 +454,7 @@ namespace Texture {
         vita2d_free_texture( background1Texture );
         vita2d_free_texture( background2Texture );
         vita2d_free_texture( background3Texture );
+        vita2d_free_texture( background4Texture );
         vita2d_free_texture( logoTexture );
         vita2d_free_texture( startButtonTexture );
         vita2d_free_texture( startSelectedTexture );
@@ -541,12 +547,21 @@ void AnimatedBackground::draw()
                 case 3:
                     sprite = Texture::Sprite::background3;
                     break;
+                case 4:
+                    sprite = Texture::Sprite::background4;
+                    break;
             }
 
             vita2d_draw_texture_tint( Texture::getTexture( sprite ), i * textureWidth + animationStep, j * textureHeight + animationStep, BGCOLOR );
         }
     }
 }
+
+void AnimatedBackground::changeToSecretBg()
+{
+    variant = 4;
+}
+
 
 Curtain::Curtain()
 {

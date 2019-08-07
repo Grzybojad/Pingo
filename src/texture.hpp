@@ -29,6 +29,7 @@ namespace Texture
         background1,
         background2,
         background3,
+        background4,
         
         star,
         messageBox,
@@ -121,6 +122,7 @@ namespace Texture
     extern vita2d_texture *background1Texture;
     extern vita2d_texture *background2Texture;
     extern vita2d_texture *background3Texture;
+    extern vita2d_texture *background4Texture;
     extern vita2d_texture *starTexture;
     extern vita2d_texture *messageBoxTexture;
     extern vita2d_texture *backTexture;
@@ -186,6 +188,8 @@ class AnimatedBackground
 
         void update();
         void draw();
+
+        void changeToSecretBg();
 
     protected:
         float animationStep;
