@@ -27,6 +27,7 @@ class Credits
 
     private:
         void addElement( CreditsEntity* entity );
+        void addEmpty( int height );
         void handleInput();
 
         struct CreditsElement
@@ -38,11 +39,13 @@ class Credits
 
         float fadePoint;
         float scrollPoint;
+        float waitPoint;
         
         float fadeSpeed;
         float scrollSpeed;
 
         int length;
+        float waitTime;
 
         bool faded;
         bool end;
@@ -91,6 +94,7 @@ class CreditsPerson : public CreditsEntity
 {
     public:
         CreditsPerson( const char* displayName, const char* role );
+        CreditsPerson( const char* displayName );
 
         int getHeight() override;
         void draw( int height ) override;
@@ -100,6 +104,7 @@ class CreditsPerson : public CreditsEntity
         const char* role;
         const int textSize = 25;
         const int paddingBottom = 20;
+        const int spacing = 30;
 };
 
 class CreditsTextBlock : public CreditsEntity
@@ -114,4 +119,5 @@ class CreditsTextBlock : public CreditsEntity
         const char* text;
         const int textSize = 25;
         const int paddingBottom = 20;
+        const unsigned perLine = 40;
 };

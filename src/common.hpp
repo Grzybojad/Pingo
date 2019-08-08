@@ -88,3 +88,5 @@ void calcFrameTime();
 
 // Convert time in seconds to a HH:MM:SS string
 std::string timeToString( int time );
+
+std::string word_wrap( std::string text, unsigned per_line );

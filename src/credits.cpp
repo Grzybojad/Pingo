@@ -9,34 +9,51 @@ void Credits::init()
 {
     fadePoint = 0;
     scrollPoint = 0;
+    waitPoint = 0;
 
     fadeSpeed = 1.0f;
-    scrollSpeed = 0.9f;
+    scrollSpeed = 0.6f;
 
     faded = false;
     end = false;
 
     length = SCREEN_HEIGHT;
+    waitTime = 1200.0f;
 
     addElement( new CreditsLogo( Texture::getTexture( Texture::Sprite::logo ) ) );
 
     addElement( new CreditsHeader( "Pingo development team" ) );
-        addElement( new CreditsPerson( "Grzybojad", "Directing, Programming, Level Design, Gameplay Design" ) );
+        addElement( new CreditsPerson( "Grzybojad", "Programming, Level Design" ) );
         addElement( new CreditsPerson( "Jumbocube", "Art" ) );
 
     addElement( new CreditsHeader( "Music" ) );
-        addElement( new CreditsTextBlock( "All music comes from soundimage.org,\ncomposed by Eric Matyas" ) );
+        addElement( new CreditsTextBlock( "All music comes from soundimage.org, composed by Eric Matyas." ) );
 
     addElement( new CreditsHeader( "Sound Effects" ) );
-        addElement( new CreditsPerson( "ballHit", "wubitog" ) );
-        addElement( new CreditsPerson( "menuMove", "Kenney" ) );
-        addElement( new CreditsPerson( "levelFinish", "Brandon Morris" ) );
-        addElement( new CreditsPerson( "Air-Lock", "soundimage.org" ) );
+        addElement( new CreditsPerson( "wubitog", "Ball hit" ) );
+        addElement( new CreditsPerson( "Kenney", "Menu click" ) );
+        addElement( new CreditsPerson( "Brandon Morris", "Level finish" ) );
+        addElement( new CreditsPerson( "soundimage.org", "Credits intro" ) );
 
-    addElement( new CreditsHeader( "Special thanks to" ) );
-        addElement( new CreditsPerson( "RobDevs", "pingo-edit" ) );
-        addElement( new CreditsPerson( "Dragnu5", "additional level testing" ) );
-        addElement( new CreditsPerson( "You", "being awesome" ) );
+    addElement( new CreditsHeader( "Special thanks" ) );
+        addElement( new CreditsPerson( "Dragnu5", "Testing" ) );
+        addElement( new CreditsPerson( "Xerpi", "LibVita2d" ) );
+        addElement( new CreditsPerson( "VitaSDK team", "VitaSDK" ) );
+        addElement( new CreditsTextBlock( "All the people on Discord who've helped me during development." ) );
+        addElement( new CreditsTextBlock( "Extra Special thanks to RobDevs for creating pingo-edit. It was a massive help during development." ) );
+
+    length += SCREEN_HEIGHT * 0.3;
+
+    addElement( new CreditsHeader( "Disclaimer" ) );
+        addElement( new CreditsTextBlock( "Pingo is a free, open source game distributed under the GPL-3.0 licence. If you paid for it, you've been scammed.") );
+
+    addEmpty( SCREEN_HEIGHT * 0.5 );
+    addElement( new CreditsTextBlock( "Thank you very much for playing Pingo! Beating the game is impressive enough, but can you get 3 stars on every level?" ) );
+    addElement( new CreditsTextBlock( "If you got this far, feel free to contact me on Twitter (@_grzybojad) or on Discord (Grzybojad#7413). I'd love to know what you think about Pingo!" ) );
+    addElement( new CreditsTextBlock( "TIP: try inputing the following button combination in the main menu: up, up, down, down, left, right, left, right, circle, cross.") );
+    
+    // This stops the scrolling 400 pixels earlier
+    addEmpty( -400 );
 
     Sound::stopLevelMusic();
     Sound::soloud.play( Sound::airLock );
@@ -59,6 +76,10 @@ void Credits::update()
     else if( scrollPoint < length )
     {
         scrollPoint += scrollSpeed * timestep;
+    }
+    else if( waitPoint < waitTime )
+    {
+        waitPoint += timestep;
     }
     else
     {
@@ -94,6 +115,11 @@ void Credits::addElement( CreditsEntity* entity )
 {
     elements.push_back( CreditsElement{ length, entity } );
     length += elements.back().entity->getHeight();
+}
+
+void Credits::addEmpty( int height )
+{
+    length += height;
 }
 
 void Credits::handleInput()
@@ -158,6 +184,12 @@ CreditsPerson::CreditsPerson( const char* displayName, const char* role )
     this->role = role;
 }
 
+CreditsPerson::CreditsPerson( const char* displayName )
+{
+    this->displayName = displayName;
+    this->role = "";
+}
+
 int CreditsPerson::getHeight()
 {
     return Gui::getTextHeight( textSize, displayName ) + paddingBottom;
@@ -165,8 +197,15 @@ int CreditsPerson::getHeight()
 
 void CreditsPerson::draw( int height )
 {
-    Gui::drawText_color_position( Gui::Position::alignTopRight, SCREEN_WIDTH/2 - 50, height, textSize, RGBA8( 255, 255, 255, 255 ), displayName );
-    Gui::drawText_color_position( Gui::Position::alignTop, SCREEN_WIDTH/2 + 50, height, textSize, RGBA8( 255, 255, 255, 255 ), role );
+    if( role == "" )
+    {
+        Gui::drawText_color_position( Gui::Position::centeredTop, SCREEN_WIDTH/2, height, textSize, RGBA8( 255, 255, 255, 255 ), displayName );
+    }
+    else
+    {
+        Gui::drawText_color_position( Gui::Position::alignTopRight, SCREEN_WIDTH/2 - spacing, height, textSize, RGBA8( 255, 255, 255, 255 ), role );
+        Gui::drawText_color_position( Gui::Position::alignTop, SCREEN_WIDTH/2 + spacing, height, textSize, RGBA8( 255, 255, 255, 255 ), displayName );
+    }
 }
 
 
@@ -177,10 +216,10 @@ CreditsTextBlock::CreditsTextBlock( const char* text )
 
 int CreditsTextBlock::getHeight()
 {
-    return Gui::getTextHeight( textSize, text ) + paddingBottom;
+    return Gui::getTextHeight( textSize, word_wrap( text, perLine ).c_str() ) + paddingBottom;
 }
 
 void CreditsTextBlock::draw( int height )
 {
-    Gui::drawText_color_position( Gui::Position::centeredTop, SCREEN_WIDTH/2 - 50, height - 30, textSize, RGBA8( 255, 255, 255, 255 ), text );
+    Gui::drawText_color_position( Gui::Position::centeredTop, SCREEN_WIDTH/2, height - 30, textSize, RGBA8( 255, 255, 255, 255 ), word_wrap( text, perLine ).c_str() );
 }
