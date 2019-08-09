@@ -374,7 +374,7 @@ void Game::inMenu()
             gameState = GameState::mainMenu;
         }
         // Handle switching between level select screens
-        if( Input::wasPressed( Input::Button::lTrigger ) )
+        if( Input::wasPressed( Input::Button::lTrigger ) || Input::rectWasTouched( Rect( SCREEN_WIDTH/2 - 250, 45, 75, 40 ) ) )
         {
             if( selectedLevelList > 0 )
                 selectedLevelList--;
@@ -384,7 +384,7 @@ void Game::inMenu()
             }
             Sound::soloud.play( Sound::menuMove );
         }
-        else if( Input::wasPressed( Input::Button::rTrigger ) )
+        else if( Input::wasPressed( Input::Button::rTrigger ) || Input::rectWasTouched( Rect( SCREEN_WIDTH/2 + 180, 45, 75, 40 ) ) )
         {
             if( selectedLevelList < levelListList.size() - 1 )
                 selectedLevelList++;
