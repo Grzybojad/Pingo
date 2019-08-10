@@ -214,9 +214,20 @@ void Game::inGame()
             }
             else
             {
-                // If there's no next level, play the credits
-                credits.init();
-                gameState = GameState::credits;
+                if( selectedLevelList == 2 )
+                {
+                    // If it's the last level of World 2, play the credits
+                    credits.init();
+                    gameState = GameState::credits;
+                }
+                else
+                {
+                    destroyLevel();
+                    Sound::stopLevelMusic();
+                    Sound::soloud.play( Sound::menuMusic );
+                    gameState = GameState::mainMenu;
+                }
+                
             }
             
         }
@@ -306,7 +317,7 @@ void Game::inMenu()
                     selectedLevelList = 2;
                     initLevel( levelListList[ selectedLevelList ].lastUnlockedLevel() );
                 }
-                else if( levelListList[ 2 ].areAllLevelsFinished() )
+                else
                 {
                     // In all other cases, play last unlocked level of World 1
                     selectedLevelList = 1;

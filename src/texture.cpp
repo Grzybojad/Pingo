@@ -7,8 +7,9 @@ namespace Texture {
     vita2d_texture *ballTexture;
     vita2d_texture *wallFillTexture;
     vita2d_texture *stopTexture;
-    vita2d_texture *paintBlobTexture;
     vita2d_texture *floorEmptyTexture;
+    vita2d_texture *floorHalfTexture;
+    vita2d_texture *floorDoubleTexture;
     vita2d_texture *conveyorBlankTexture;
     vita2d_texture *conveyorPaintedTexture;
     vita2d_texture *restartButtonTexture;
@@ -74,8 +75,9 @@ namespace Texture {
         ballTexture             = vita2d_load_PNG_file( ( pathTexture + "level/ball.png" ).c_str() );
         wallFillTexture         = vita2d_load_PNG_file( ( pathTexture + "level/wallFill.png" ).c_str() );
         stopTexture             = vita2d_load_PNG_file( ( pathTexture + "level/stopTile.png" ).c_str() );
-        paintBlobTexture        = vita2d_load_PNG_file( ( pathTexture + "level/paintBlob.png" ).c_str() );
         floorEmptyTexture       = vita2d_load_PNG_file( ( pathTexture + "level/floorEmpty.png" ).c_str() );
+        floorHalfTexture        = vita2d_load_PNG_file( ( pathTexture + "level/floorHalf.png" ).c_str() );
+        floorDoubleTexture      = vita2d_load_PNG_file( ( pathTexture + "level/floorDouble.png" ).c_str() );
         conveyorBlankTexture    = vita2d_load_PNG_file( ( pathTexture + "level/conveyorBlank.png" ).c_str() );
         conveyorPaintedTexture  = vita2d_load_PNG_file( ( pathTexture + "level/conveyorPainted.png" ).c_str() );
 
@@ -160,11 +162,14 @@ namespace Texture {
             case Sprite::stop:
                 return stopTexture;
 
-            case Sprite::paintBlob:
-                return paintBlobTexture;
-
             case Sprite::floorEmpty:
                 return floorEmptyTexture;
+                
+            case Sprite::floorHalf:
+                return floorHalfTexture;
+                
+            case Sprite::floorDouble:
+                return floorDoubleTexture;
 
             case Sprite::conveyorBlank:
                 return conveyorBlankTexture;
@@ -445,8 +450,9 @@ namespace Texture {
         vita2d_free_texture( ballTexture );
         vita2d_free_texture( wallFillTexture );
         vita2d_free_texture( stopTexture );
-        vita2d_free_texture( paintBlobTexture );
         vita2d_free_texture( floorEmptyTexture );
+        vita2d_free_texture( floorHalfTexture );
+        vita2d_free_texture( floorDoubleTexture );
         vita2d_free_texture( conveyorBlankTexture );
         vita2d_free_texture( conveyorPaintedTexture );
         vita2d_free_texture( restartButtonTexture );

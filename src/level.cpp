@@ -660,12 +660,11 @@ void DoubleFloorTile::draw( Rect rect )
     }
     else if( state == State::paintedHalfway )
     {
-        Texture::drawTexture( Texture::Sprite::paintBlob, Vec2( rect.x, rect.y ) );
+        Texture::drawTexture( Texture::Sprite::floorHalf, Vec2( rect.x, rect.y ) );
     }
     else if( state == State::painted )
     {
-        Texture::drawTexture( Texture::Sprite::floorPainted, Vec2( rect.x, rect.y ) );
-        Texture::drawTexture( Texture::Sprite::paintBlob, Vec2( rect.x, rect.y ) );
+        Texture::drawTexture( Texture::Sprite::floorDouble, Vec2( rect.x, rect.y ) );
     }
 }
 

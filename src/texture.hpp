@@ -18,8 +18,9 @@ namespace Texture
         ball,
         wallFill,
         stop,
-        paintBlob,
         floorEmpty,
+        floorHalf,
+        floorDouble,
         conveyorBlank,
         conveyorPainted,
 
@@ -111,8 +112,9 @@ namespace Texture
     extern vita2d_texture *ballTexture;
     extern vita2d_texture *wallFillTexture;
     extern vita2d_texture *stopTexture;
-    extern vita2d_texture *paintBlobTexture;
     extern vita2d_texture *floorEmptyTexture;
+    extern vita2d_texture *floorHalfTexture;
+    extern vita2d_texture *floorDoubleTexture;
     extern vita2d_texture *conveyorBlankTexture;
     extern vita2d_texture *conveyorPaintedTexture;
 

@@ -103,7 +103,10 @@ vita_create_vpk(${SHORT_NAME}.vpk ${VITA_TITLEID} ${SHORT_NAME}.self
   FILE img/level/ball.png             img/level/ball.png
   FILE img/level/wallFill.png         img/level/wallFill.png
   FILE img/level/stopTile.png         img/level/stopTile.png
-  FILE img/level/paintBlob.png        img/level/paintBlob.png
+  #FILE img/level/paintBlob.png        img/level/paintBlob.png
+  FILE img/level/floorHalf.png        img/level/floorHalf.png
+  FILE img/level/floorDouble.png      img/level/floorDouble.png
+
   FILE img/level/floorEmpty.png       img/level/floorEmpty.png
   FILE img/level/conveyorBlank.png    img/level/conveyorBlank.png
   FILE img/level/conveyorPainted.png  img/level/conveyorPainted.png
