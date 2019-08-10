@@ -9,7 +9,7 @@ All this gorgeous art was done by Jumbocube.
 try adding custom level support to Pingo, so that you can play around with it yourself.
 
 # Screenshots
-![Pingo gameplay screenshot](screenshots/gameplay.png)
+![Pingo gameplay screenshot](screenshots/gameplay.jpg)
 ![Pingo menu screenshot](screenshots/mainMenu.png)
 
 # Controls
