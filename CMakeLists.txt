@@ -14,7 +14,7 @@ include("${VITASDK}/share/vita.cmake" REQUIRED)
 set(VITA_APP_NAME "Pingo")
 set(SHORT_NAME Pingo)
 set(VITA_TITLEID  "GRZB00003")
-set(VITA_VERSION  "01.10")
+set(VITA_VERSION  "02.00")
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
@@ -103,7 +103,6 @@ vita_create_vpk(${SHORT_NAME}.vpk ${VITA_TITLEID} ${SHORT_NAME}.self
   FILE img/level/ball.png             img/level/ball.png
   FILE img/level/wallFill.png         img/level/wallFill.png
   FILE img/level/stopTile.png         img/level/stopTile.png
-  #FILE img/level/paintBlob.png        img/level/paintBlob.png
   FILE img/level/floorHalf.png        img/level/floorHalf.png
   FILE img/level/floorDouble.png      img/level/floorDouble.png
 
