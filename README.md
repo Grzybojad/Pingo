@@ -9,8 +9,10 @@ All this gorgeous art was done by Jumbocube.
 try adding custom level support to Pingo, so that you can play around with it yourself.
 
 # Screenshots
-![Pingo gameplay screenshot](screenshots/gameplay.jpg)
+![Pingo gameplay screenshot 1](screenshots/gameplay1.png)
+![Pingo gameplay screenshot 2](screenshots/gameplay2.png)
 ![Pingo menu screenshot](screenshots/mainMenu.png)
+![Pingo level select](screenshots/levelSelect.png)
 
 # Controls
 * Use the DPAD to navigate the menus and the game
