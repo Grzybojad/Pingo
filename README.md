@@ -8,7 +8,7 @@ Try to earn all 3 stars in 60 hand crafted levels!
 All art was done by [Jumbocube](https://twitter.com/Jumbocube1).
 
 [RobDevs made a level editor](https://github.com/robDevs/pingo-edit) that was used during development. You can use it yourself to easily create your own Pingo levels.
-[Here's the tutorial](https://github.com/Grzybojad/Pingo/README_custom_levels.md) on how to use it.
+[Here's the tutorial](https://github.com/Grzybojad/Pingo/blob/master/README_custom_levels.md) on how to use it.
 
 # Screenshots
 ![Pingo gameplay screenshot 1](screenshots/gameplay1.png)
