@@ -530,11 +530,11 @@ void Game::draw()
 
             if( levelListList[ 1 ].areAllLevelsFinished() && !levelListList[ 1 ].seenFinishCongratulations )
                 Gui::drawMessageBox( "Congratualations!", "You've completed all the\nlevels of World 1!\nTry getting 3 stars in every\nlevel or try World 2!" );
-            else if( levelListList[ 1 ].areAllLevelsFinished() && !levelListList[ 1 ].seenCompleteCongratulations )
-                Gui::drawMessageBox( "You're amazing!", "You managed to get 3 stars\non all World 1 levels!\nThis is no small feat, I'm\nproud of you. If you didn't\ncheat that is." );
+            else if( levelListList[ 1 ].areAllStarsCollected() && !levelListList[ 1 ].seenCompleteCongratulations )
+                Gui::drawMessageBox( "You're amazing!", "You managed toc get 3 stars\non all World 1 levels!\nThis is no small feat, I'm\nproud of you. If you didn't\ncheat that is." );
             else if( levelListList[ 2 ].areAllLevelsFinished() && !levelListList[ 2 ].seenFinishCongratulations )
                 Gui::drawMessageBox( "Congratualations!", "You've completed all the\nlevels of World 2!\nTry getting 3 stars in every\nlevel!" );
-            else if( levelListList[ 2 ].areAllLevelsFinished() && !levelListList[ 2 ].seenCompleteCongratulations )
+            else if( levelListList[ 2 ].areAllStarsCollected() && !levelListList[ 2 ].seenCompleteCongratulations )
                 Gui::drawMessageBox( "You're amazing!", "You managed to get 3 stars\non all World 2 levels!\nI hope you had a lot of fun\nplaying them!" );
             break;
 
