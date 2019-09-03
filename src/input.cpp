@@ -78,6 +78,11 @@ namespace Input
             if( buttonWasPressed[ static_cast<int>( Button::frontTouch ) ] )
             {
                 touchOrigin = touchPos;
+
+                buttonIsHeld[ static_cast<int>( Button::swipeRight ) ] = false;
+                buttonIsHeld[ static_cast<int>( Button::swipeUp ) ] = false;
+                buttonIsHeld[ static_cast<int>( Button::swipeLeft ) ] = false;
+                buttonIsHeld[ static_cast<int>( Button::swipeDown ) ] = false;
             }
             else
             {
@@ -94,7 +99,13 @@ namespace Input
                     buttonIsHeld[ static_cast<int>( Button::swipeDown ) ] = ( angle > 3 * M_PI / 8 && angle < 5 * M_PI / 8 );
                 }
             }
-            
+        }
+        else
+        {
+            buttonIsHeld[ static_cast<int>( Button::swipeRight ) ] = false;
+            buttonIsHeld[ static_cast<int>( Button::swipeUp ) ] = false;
+            buttonIsHeld[ static_cast<int>( Button::swipeLeft ) ] = false;
+            buttonIsHeld[ static_cast<int>( Button::swipeDown ) ] = false;
         }
 
         // Set "was pressed" values for swipes
