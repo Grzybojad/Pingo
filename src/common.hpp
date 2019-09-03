@@ -6,6 +6,8 @@
 #include <psp2/kernel/processmgr.h>
 #include <vita2d.h>
 
+#define M_PI		3.14159265358979323846
+
 const int SCREEN_WIDTH = 960;
 const int SCREEN_HEIGHT = 544;
 
@@ -75,6 +77,7 @@ struct Vec2
 };
 
 extern Vec2 operator +( const Vec2& a, const Vec2& b );
+extern Vec2 operator -( const Vec2& a, const Vec2& b );
 extern bool operator ==( const Vec2& a, const Vec2& b );
 extern bool operator !=( const Vec2& a, const Vec2& b );
 

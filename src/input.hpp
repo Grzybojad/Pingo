@@ -36,7 +36,12 @@ namespace Input
         frontTouch = 16,
         backTouch = 17,
 
-        count = 18
+        swipeUp = 18,
+        swipeRight = 19,
+        swipeDown = 20,
+        swipeLeft = 21,
+
+        count = 22
     };
     // Array with a bool for each button to store key presses
     extern bool buttonIsHeld[ static_cast<int>( Button::count ) ];
@@ -47,8 +52,12 @@ namespace Input
     extern SceTouchData touch_old[ SCE_TOUCH_PORT_MAX_NUM ];
     extern SceTouchData touch[ SCE_TOUCH_PORT_MAX_NUM ];
 
-    // Analog stick deadzone
+    // Position where touch started
+    extern Vec2 touchOrigin;
+
+    // Deadzones
     const float ANALOG_DEADZONE = 0.6f;
+    const float SWIPE_DEADZONE = 50.0f;
 
     // Initialize pad settings and variables
     void initInput();

@@ -35,13 +35,13 @@ bool Ball::handleInput()
     {
         wasPressed = true;
 
-        if( Input::wasPressed( Input::Button::up ) || Input::wasPressed( Input::Button::lAnalogUp ) )
+        if( Input::wasPressed( Input::Button::up ) || Input::wasPressed( Input::Button::lAnalogUp ) || Input::wasPressed( Input::Button::swipeUp ) )
             moveUp();
-        else if( Input::wasPressed( Input::Button::right ) || Input::wasPressed( Input::Button::lAnalogRight ) )
+        else if( Input::wasPressed( Input::Button::right ) || Input::wasPressed( Input::Button::lAnalogRight ) || Input::wasPressed( Input::Button::swipeRight ) )
             moveRight();
-        else if( Input::wasPressed( Input::Button::down ) || Input::wasPressed( Input::Button::lAnalogDown ) )
+        else if( Input::wasPressed( Input::Button::down ) || Input::wasPressed( Input::Button::lAnalogDown ) || Input::wasPressed( Input::Button::swipeDown ) )
             moveDown();
-        else if( Input::wasPressed( Input::Button::left ) || Input::wasPressed( Input::Button::lAnalogLeft ) )
+        else if( Input::wasPressed( Input::Button::left ) || Input::wasPressed( Input::Button::lAnalogLeft ) || Input::wasPressed( Input::Button::swipeLeft ) )
             moveLeft();
         else
             wasPressed = false;

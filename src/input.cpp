@@ -8,6 +8,7 @@ namespace Input
     SceCtrlData pad;
     SceTouchData touch_old[ SCE_TOUCH_PORT_MAX_NUM ];
     SceTouchData touch[ SCE_TOUCH_PORT_MAX_NUM ];
+    Vec2 touchOrigin = { -1, -1 };
 
     void initInput()
     {
@@ -64,8 +65,42 @@ namespace Input
             buttonIsHeld[ static_cast<int>( Button::backTouch ) ] = ( touch[ SCE_TOUCH_PORT_BACK ].reportNum > 0 );
         }
 
-        for( int i = 0; i < static_cast<int>( Button::count ); ++i )
+        // Set "was pressed" values for buttons on toushscreens
+        for( int i = 0; i < static_cast<int>( Button::swipeUp ); ++i )
             buttonWasPressed[ i ] = checkPressed( i );
+
+
+        // Swipes
+        if( isHeld( Button::frontTouch ) )
+        {
+            Vec2 touchPos = { (float)touch[ 0 ].report[ 0 ].x / 2, (float)touch[ 0 ].report[ 0 ].y / 2 };
+            
+            if( buttonWasPressed[ static_cast<int>( Button::frontTouch ) ] )
+            {
+                touchOrigin = touchPos;
+            }
+            else
+            {
+                Vec2 dif = touchPos - touchOrigin;
+                float length = sqrt( dif.x * dif.x + dif.y * dif.y );
+
+                if( length > SWIPE_DEADZONE )
+                {
+                    float angle = atan2( dif.y, dif.x );
+
+                    buttonIsHeld[ static_cast<int>( Button::swipeRight ) ] = ( angle < M_PI / 8 && angle > -M_PI / 8 );
+                    buttonIsHeld[ static_cast<int>( Button::swipeUp ) ] = ( angle < -3 * M_PI / 8 && angle > -5 * M_PI / 8 );
+                    buttonIsHeld[ static_cast<int>( Button::swipeLeft ) ] = ( angle < -7 * M_PI / 8 || angle > 7 * M_PI / 8 );
+                    buttonIsHeld[ static_cast<int>( Button::swipeDown ) ] = ( angle > 3 * M_PI / 8 && angle < 5 * M_PI / 8 );
+                }
+            }
+            
+        }
+
+        // Set "was pressed" values for swipes
+        for( int i = static_cast<int>( Button::swipeUp ); i < static_cast<int>( Button::count ); ++i )
+            buttonWasPressed[ i ] = checkPressed( i );
+        
     }
 
     bool checkPressed( int i )
