@@ -154,14 +154,14 @@ void Game::inGame()
 {
     if( !level.complete() )
     {
-        if( Input::wasPressed( Input::Button::start ) || Input::rectWasTouched( Rect( SCREEN_WIDTH - 190, SCREEN_HEIGHT - 80, 200, 85 ) ) )
+        if( Input::wasPressed( Input::Button::start ) )
         {
             gameTime.pause();
             gameState = GameState::paused;
         }
         else
         {
-            if( Input::wasPressed( Input::Button::triangle ) || Input::rectWasTouched( Rect( SCREEN_WIDTH - 190, SCREEN_HEIGHT - 150, 200, 75 ) ) )
+            if( Input::wasPressed( Input::Button::triangle ) )
             {
                 destroyLevel();
                 initLevel();
